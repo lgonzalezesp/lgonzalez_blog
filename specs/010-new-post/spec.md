@@ -1,6 +1,6 @@
 # Spec 010 — Crear posts
 
-- **Estado:** En revisión
+- **Estado:** Hecha ([PR #14](https://github.com/lgonzalezesp/lgonzalez_blog/pull/14))
 - **Rama:** `feature/010-new-post`
 
 ## Contexto / Por qué
