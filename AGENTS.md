@@ -84,7 +84,7 @@ specs/
   _templates/             # plantillas spec/plan/tasks
   NNN-nombre/             # una carpeta por feature
 src/
-  consts.ts               # título, descripción, BLOG_PAGE_SIZE y GISCUS (ids públicos de Discussions)
+  consts.ts               # título, descripción, BLOG_PAGE_SIZE, GISCUS (ids públicos) y AUTHOR (perfiles de GitHub y LinkedIn)
   content.config.ts       # colecciones blog, projects, notes y pages (glob por idioma desde CONTENT_DIR)
   content/
     schemas.ts            # esquemas Zod del frontmatter (probados con Vitest)
@@ -99,6 +99,8 @@ src/
     giscus.ts, giscus-theme.ts  # configuración de Giscus y mensaje de tema (005)
     seo.ts                # buildMeta(): título, canónica, Open Graph, Twitter Card, hreflang (006)
     feed.ts, feed-response.ts  # RSS por idioma: artículos y notas (006)
+    share.ts              # enlace oficial de compartir en LinkedIn (007)
+    og-image.ts, og-path.ts  # imagen social generada (satori + sharp) para contenido sin portada (007)
   assets/                 # imágenes y fuentes (og-default.svg/png: imagen social por defecto, 1200×627)
   components/             # componentes .astro (Header, Footer, PostCard, ProjectCard, ThemeToggle…)
   layouts/
@@ -106,7 +108,7 @@ src/
     BlogPost.astro        # artículos y notas (tiempo de lectura y tabla de contenidos en artículos)
     Project.astro         # detalle de proyecto
   views/                  # cuerpo de cada página, con prop `lang` (Home, BlogIndex, Projects, Notes, Tags, Tag, About)
-  pages/                  # rutas: es en la raíz, en bajo /en/; envoltorios finos de views/
+  pages/                  # rutas: es en la raíz, en bajo /en/; envoltorios finos de views/; og/ genera /og/<colección>/<id>.png
   i18n/
     ui.ts                 # diccionario de UI ES/EN (las claves de ES definen el tipo)
     utils.ts              # useTranslations (t), getLangFromUrl, formatDate
@@ -188,7 +190,7 @@ Reglas:
 - URLs por idioma: `/` · `/en/`, `/blog/` · `/en/blog/` (páginas `/blog/pagina/N/` · `/en/blog/page/N/`), `/blog/<slug>/` · `/en/blog/<slug>/`, `/proyectos/` · `/en/projects/` (y `<slug>/`), `/notas/` · `/en/notes/` (y `<slug>/`), `/etiquetas/` · `/en/tags/` (y `<tag>/`), `/sobre-mi/` · `/en/about/`.
 - Imágenes con el componente de imágenes de Astro y **`alt` obligatorio**. Las portadas miden al menos **1200×627** (son también la imagen al compartir; si no, el build falla).
 - Feeds: `/rss.xml` (ES) y `/en/rss.xml` (EN); sitemap en `/sitemap-index.xml`; `robots.txt` generado.
-- **Cero JS en cliente por defecto**; usa islas solo si aportan valor y justifícalo en `plan.md`. Excepciones aprobadas: el modo oscuro (`ThemeToggle.astro` y el script inline de `Base.astro`, spec 004), la carga bajo demanda de Giscus (`Comments.astro`, spec 005) y la analítica de Vercel, sin cookies y solo en builds de Vercel (`Analytics.astro`, spec 006).
+- **Cero JS en cliente por defecto**; usa islas solo si aportan valor y justifícalo en `plan.md`. Excepciones aprobadas: el modo oscuro (`ThemeToggle.astro` y el script inline de `Base.astro`, spec 004), la carga bajo demanda de Giscus (`Comments.astro`, spec 005) la analítica de Vercel, sin cookies y solo en builds de Vercel (`Analytics.astro`, spec 006), y «Copiar enlace» (`ShareButtons.astro`, spec 007; compartir en LinkedIn es un enlace sin JS).
 - Commits con **Conventional Commits** (`feat:`, `fix:`, `docs:`, `chore:`…), referenciando la spec cuando aplique (p. ej. `feat(003-i18n): selector de idioma`).
 - **Una rama por spec**: `feature/NNN-nombre` desde `develop`, mergeada a `develop` vía PR (ver Gitflow).
 

@@ -47,7 +47,7 @@ for (const path of ['/blog/usando-mdx/', '/blog/articulo-con-codigo/', '/en/']) 
 	});
 }
 
-test('a post with a cover shares its cover; one without uses the default image', async ({ page }) => {
+test('a post with a cover shares its cover; sections use the default image', async ({ page }) => {
 	await page.goto('/blog/usando-mdx/');
 	const withCover = await ogImage(page);
 	expect(withCover).not.toMatch(/og-default/);
@@ -55,7 +55,10 @@ test('a post with a cover shares its cover; one without uses the default image',
 		'Degradado abstracto usado como imagen de ejemplo',
 	);
 
+	// Since 007, content without cover gets a generated image; the default one is for section pages.
 	await page.goto('/blog/articulo-con-codigo/');
+	expect(await ogImage(page)).toBe('https://lgonzalez.dev/og/blog/es/articulo-con-codigo.png');
+	await page.goto('/en/projects/');
 	expect(await ogImage(page)).toMatch(/og-default/);
 });
 
