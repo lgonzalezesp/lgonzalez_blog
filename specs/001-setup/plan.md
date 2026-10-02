@@ -81,6 +81,7 @@
 | `site` = dominio definitivo        | `tests/unit/001-setup/config.test.ts`    | —                                                                                    |
 | Repo y `.gitignore`                | —                                        | Revisión manual                                                                      |
 | `AGENTS.md` refleja la realidad    | —                                        | Revisión manual                                                                      |
+| Reglas `.claude/rules/`            | —                                        | Revisión manual (`/memory` las lista)                                                |
 | Infraestructura de pruebas         | `tests/unit/001-setup/container.test.ts` | `smoke.spec.ts`                                                                      |
 | 404                                | —                                        | `smoke.spec.ts` (404 + página propia)                                                |
 | Accesibilidad portada              | —                                        | `tests/e2e/001-setup/a11y.spec.ts`                                                   |

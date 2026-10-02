@@ -20,6 +20,7 @@ Las pruebas se escriben antes o junto a la implementación que cubren y deben ve
 - [x] T13 — Actualizar `AGENTS.md` (estructura, comandos, notas de Astro)
 - [x] T14 — Push, PR `feature/001-setup → develop`, CI en verde
 - [x] T15 — GitHub: `develop` por defecto y protección de `main` y `develop` (PR + CI obligatorio). Requirió hacer público el repo (protección de ramas no disponible en repos privados del plan gratuito).
+- [x] T16 — Reglas de Claude Code en `.claude/rules/` (SDD, Gitflow, pruebas, contenido, UI, tooling) y referencia en `AGENTS.md`
 
 ## Cierre
 

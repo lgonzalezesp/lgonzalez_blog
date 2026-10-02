@@ -21,6 +21,7 @@ Necesitamos una base de proyecto Astro limpia, tipada y con herramientas de cali
 - [x] La URL del sitio (`site`) apunta al dominio definitivo.
 - [x] `.gitignore` adecuado; repo conectado a `lgonzalezesp/lgonzalez_blog`.
 - [x] La sección "Estructura" y "Comandos" de `AGENTS.md` refleja la realidad.
+- [x] Reglas de Claude Code en `.claude/rules/` coherentes con `AGENTS.md`.
 - [x] Infraestructura de pruebas lista: Vitest (con Astro Container API) para unitarias y Playwright (con axe-core) para funcionales, ejecutándose sobre el build.
 - [x] Scripts `test:unit`, `test:e2e` y `test` definidos.
 - [x] Gestor de paquetes npm: `package-lock.json` commiteado, Node fijado en `.nvmrc` y `engines`.

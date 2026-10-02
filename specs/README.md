@@ -6,7 +6,7 @@ Cada spec debe entregar **pruebas unitarias** (Vitest) y **pruebas funcionales**
 
 | #   | Feature                                               | Spec     | Plan                            | Tasks                         | Estado                                                                       |
 | --- | ----------------------------------------------------- | -------- | ------------------------------- | ----------------------------- | ---------------------------------------------------------------------------- |
-| 001 | [Setup del proyecto](./001-setup/spec.md)             | Aprobada | [Aprobado](./001-setup/plan.md) | [15/15](./001-setup/tasks.md) | En revisión ([PR #1](https://github.com/lgonzalezesp/lgonzalez_blog/pull/1)) |
+| 001 | [Setup del proyecto](./001-setup/spec.md)             | Aprobada | [Aprobado](./001-setup/plan.md) | [16/16](./001-setup/tasks.md) | En revisión ([PR #1](https://github.com/lgonzalezesp/lgonzalez_blog/pull/1)) |
 | 002 | [Modelo de contenido](./002-content-model/spec.md)    | Borrador | —                               | —                             | Pendiente                                                                    |
 | 003 | [Internacionalización ES/EN](./003-i18n/spec.md)      | Borrador | —                               | —                             | Pendiente                                                                    |
 | 004 | [Páginas y diseño](./004-pages-design/spec.md)        | Borrador | —                               | —                             | Pendiente                                                                    |

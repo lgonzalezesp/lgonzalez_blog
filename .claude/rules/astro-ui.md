@@ -1,0 +1,20 @@
+---
+paths:
+  - 'src/**/*.astro'
+  - 'src/pages/**'
+  - 'src/layouts/**'
+  - 'src/components/**'
+  - 'src/i18n/**'
+  - 'src/styles/**'
+---
+
+# Páginas, componentes y estilos
+
+- Componentes y layouts en PascalCase (`PostCard.astro`); rutas en kebab-case. Español en la raíz, inglés bajo `/en/` (desde 003).
+- **Cero JS en cliente por defecto.** No uses `client:*` ni `<script>` salvo que el `plan.md` lo justifique; prefiere HTML/CSS (p. ej. `<details>`, enlaces simples).
+- **Sin texto de UI hardcodeado** (desde 003): todo literal visible, `aria-label`, `title` y `alt` genérico sale del diccionario de `src/i18n/` y existe en ES y EN.
+- Estilos con Tailwind 4 (`@import 'tailwindcss'` en `src/styles/global.css`, sin `tailwind.config.*`). Nada de librerías de UI ni CSS-in-JS.
+- Imágenes con `<Image>`/`<Picture>` de `astro:assets` y `alt` obligatorio.
+- Accesibilidad: HTML semántico (`header`, `nav`, `main`, `article`, `footer`), un solo `h1` por página, foco visible, contraste WCAG AA, `lang` correcto en `<html>`.
+- Privacidad: ningún script, fuente, iframe ni píxel de terceros. Excepción aprobada: Giscus (005) y Vercel Analytics/Speed Insights sin cookies (006).
+- Rendimiento: Lighthouse ≥ 95 en rendimiento, accesibilidad, buenas prácticas y SEO; fuentes locales mediante la API de fuentes de Astro.

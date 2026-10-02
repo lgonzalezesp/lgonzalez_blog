@@ -2,6 +2,8 @@
 
 Instrucciones para cualquier agente de IA (Claude Code, Copilot, Cursor, Codex…) que trabaje en este repositorio.
 
+Este archivo es la fuente canónica. `.claude/rules/` lo detalla por tema y ruta para Claude Code; si algo cambia aquí, actualiza también la regla afectada (y al revés).
+
 ## Proyecto
 
 Blog personal de Luis González en **lgonzalez.dev**: proyectos, ideas, comentarios y notas.
@@ -75,6 +77,7 @@ Las rutas marcadas con _(NNN)_ aún no existen; se crean en esa spec.
 ```
 AGENTS.md                 # este archivo (canónico)
 CLAUDE.md                 # importa AGENTS.md para Claude Code
+.claude/rules/            # reglas de Claude Code por tema/ruta (detallan AGENTS.md, no lo sustituyen)
 specs/
   constitution.md         # principios no negociables
   README.md               # índice de features y estado
