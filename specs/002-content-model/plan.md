@@ -1,7 +1,7 @@
 # Plan 002 — Modelo de contenido
 
 - **Spec:** [spec.md](./spec.md)
-- **Estado:** Borrador
+- **Estado:** Aprobado
 
 ## Enfoque técnico
 
@@ -97,21 +97,21 @@ Sin inventar contenido real del autor (textos marcados como ejemplo):
 
 ## Validación contra la constitución
 
-| Principio              | ¿Cumple? | Nota                                                                       |
-| ---------------------- | -------- | -------------------------------------------------------------------------- |
-| 1. Simplicidad         | ✅       | Content Collections nativas, sin CMS ni base de datos                      |
-| 2. Dueño de los datos  | ✅       | Markdown/MDX en el repo                                                    |
-| 3. Bilingüe            | ✅       | Carpetas `es/`/`en/`, `lang` validado, `translationKey` obligatorio        |
-| 4. Rendimiento / a11y  | ✅       | `cover.alt` obligatorio; axe en las páginas nuevas                         |
-| 5. Privacidad          | ✅       | Sin cambios                                                                |
-| 6. Cero JS por defecto | ✅       | Solo HTML generado en build                                                |
-| 7. Spec = verdad       | ✅       | Rutas y campos documentados aquí y en `AGENTS.md`                          |
-| 8. URLs estables       | ✅       | Aún no hay nada publicado; las rutas elegidas son las definitivas (ver P1) |
-| 9. Todo se prueba      | ✅       | Ver trazabilidad                                                           |
+| Principio              | ¿Cumple? | Nota                                                                   |
+| ---------------------- | -------- | ---------------------------------------------------------------------- |
+| 1. Simplicidad         | ✅       | Content Collections nativas, sin CMS ni base de datos                  |
+| 2. Dueño de los datos  | ✅       | Markdown/MDX en el repo                                                |
+| 3. Bilingüe            | ✅       | Carpetas `es/`/`en/`, `lang` validado, `translationKey` obligatorio    |
+| 4. Rendimiento / a11y  | ✅       | `cover.alt` obligatorio; axe en las páginas nuevas                     |
+| 5. Privacidad          | ✅       | Sin cambios                                                            |
+| 6. Cero JS por defecto | ✅       | Solo HTML generado en build                                            |
+| 7. Spec = verdad       | ✅       | Rutas y campos documentados aquí y en `AGENTS.md`                      |
+| 8. URLs estables       | ✅       | Aún no hay nada publicado; las rutas elegidas son las definitivas (P1) |
+| 9. Todo se prueba      | ✅       | Ver trazabilidad                                                       |
 
-## Decisiones que necesitan tu visto bueno
+## Decisiones (aprobadas con el plan)
 
-- **P1 — URLs de notas:** `/notas/<slug>/` en español y `/en/notes/<slug>/` en inglés (segmento traducido). Alternativa: `/notes/` en ambos idiomas. Afecta a URLs estables, así que conviene fijarlo ahora.
+- **P1 — URLs de notas:** `/notas/<slug>/` en español y `/en/notes/<slug>/` en inglés (segmento traducido).
 - **P2 — `translationKey` obligatorio** en todo el contenido, aunque no tenga traducción (una línea más en el frontmatter, pero el selector de idioma de 003 queda trivial).
 - **P3 — Borradores visibles en previews de Vercel** (`VERCEL_ENV=preview`), como dice la spec; en local, solo con `npm run dev`.
 
