@@ -1,0 +1,20 @@
+---
+// Placeholder until the author writes the real page (spec 004).
+import { SITE_TITLE } from '../consts';
+import { sectionAlternates } from '../i18n/routes';
+import type { Lang } from '../i18n/ui';
+import { useTranslations } from '../i18n/utils';
+import Base from '../layouts/Base.astro';
+
+interface Props {
+	lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<Base title={`${t('about.title')} | ${SITE_TITLE}`} lang={lang} alternates={sectionAlternates('about')}>
+	<h1>{t('about.title')}</h1>
+	<p>{t('about.placeholder')}</p>
+</Base>

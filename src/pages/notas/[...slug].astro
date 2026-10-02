@@ -1,5 +1,6 @@
 ---
 import { type CollectionEntry, render } from 'astro:content';
+import { entryAlternates } from '../../i18n/routes';
 import BlogPost from '../../layouts/BlogPost.astro';
 import { entryPaths } from '../../lib/collections';
 
@@ -9,12 +10,13 @@ export function getStaticPaths() {
 
 interface Props {
 	entry: CollectionEntry<'notes'>;
+	translation?: CollectionEntry<'notes'>;
 }
 
-const { entry } = Astro.props;
+const { entry, translation } = Astro.props;
 const { Content } = await render(entry);
 ---
 
-<BlogPost {...entry.data}>
+<BlogPost {...entry.data} alternates={entryAlternates('notes', entry, translation)}>
 	<Content />
 </BlogPost>

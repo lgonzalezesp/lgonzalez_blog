@@ -22,7 +22,7 @@ test('una ruta inexistente muestra la página 404 propia', async ({ page }) => {
 	const response = await page.goto('/esta-pagina-no-existe/');
 	expect(response?.status()).toBe(404);
 	await expect(page.getByRole('heading', { level: 1 })).toHaveText('404');
-	await expect(page.getByRole('link', { name: /inicio/i })).toHaveAttribute('href', '/');
+	await expect(page.getByRole('main').getByRole('link', { name: /inicio/i })).toHaveAttribute('href', '/');
 });
 
 test('las utilidades de Tailwind se aplican', async ({ page }) => {

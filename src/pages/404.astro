@@ -1,24 +1,30 @@
 ---
-import BaseHead from '../components/BaseHead.astro';
-import Footer from '../components/Footer.astro';
-import Header from '../components/Header.astro';
+// A static host serves a single 404.html, so this page speaks both languages.
 import { SITE_TITLE } from '../consts';
+import { sectionUrl } from '../i18n/routes';
+import { useTranslations } from '../i18n/utils';
+import Base from '../layouts/Base.astro';
+
+const es = useTranslations('es');
+const en = useTranslations('en');
 ---
 
-<!doctype html>
-<html lang="es">
-	<head>
-		<BaseHead title={`Página no encontrada | ${SITE_TITLE}`} description="La página que buscas no existe." />
-	</head>
-	<body>
-		<Header />
-		<main class="text-center">
-			<h1>404</h1>
-			<p>La página que buscas no existe o se ha movido.</p>
-			<p>
-				<a href="/">Volver al inicio</a>
-			</p>
-		</main>
-		<Footer />
-	</body>
-</html>
+<Base
+	title={`${es('notFound.title')} | ${SITE_TITLE}`}
+	description={es('notFound.message')}
+	lang="es"
+	alternates={{}}
+	mainClass="text-center"
+>
+	<h1>404</h1>
+	<p>{es('notFound.message')}</p>
+	<p>
+		<a href={sectionUrl('home', 'es')}>{es('notFound.back')}</a>
+	</p>
+	<div lang="en">
+		<p>{en('notFound.message')}</p>
+		<p>
+			<a href={sectionUrl('home', 'en')}>{en('notFound.back')}</a>
+		</p>
+	</div>
+</Base>

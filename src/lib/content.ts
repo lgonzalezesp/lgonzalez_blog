@@ -1,6 +1,7 @@
 // Pure helpers over content entries. No `astro:content` imports, so they can be unit tested.
+import type { Lang } from '../i18n/ui';
 
-export type Lang = 'es' | 'en';
+export type { Lang };
 
 export interface ContentEntry {
 	id: string;

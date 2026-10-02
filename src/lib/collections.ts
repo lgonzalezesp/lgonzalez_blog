@@ -5,6 +5,7 @@ import {
 	filterPublished,
 	type Lang,
 	slugFromId,
+	findTranslation,
 	sortByDateDesc,
 } from './content';
 
@@ -25,10 +26,16 @@ export async function getPublished<C extends CollectionKey>(
 	return sortByDateDesc(lang ? published.filter((entry) => entry.data.lang === lang) : published);
 }
 
-/** `getStaticPaths` for the detail pages of a collection in one language: `/…/<slug>/`. */
+/**
+ * `getStaticPaths` for the detail pages of a collection in one language: `/…/<slug>/`.
+ * Each page also gets its published translation (if any) for hreflang and the language picker.
+ */
 export async function entryPaths<C extends CollectionKey>(collection: C, lang: Lang) {
-	return (await getPublished(collection, lang)).map((entry) => ({
-		params: { slug: slugFromId(entry.id) },
-		props: { entry },
-	}));
+	const all = (await getPublished(collection)) as (CollectionEntry<C> & ContentEntry)[];
+	return all
+		.filter((entry) => entry.data.lang === lang)
+		.map((entry) => ({
+			params: { slug: slugFromId(entry.id) },
+			props: { entry, translation: findTranslation(all, entry) },
+		}));
 }

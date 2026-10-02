@@ -95,10 +95,16 @@ src/
     content.ts            # utilidades puras: idioma, slug, borradores, orden, traducciones
     collections.ts        # getPublished() y entryPaths(): único acceso a las colecciones
   assets/                 # imágenes y fuentes procesadas por Astro
-  components/             # componentes .astro
-  layouts/                # layouts de página
-  pages/                  # rutas (es en raíz, en bajo /en/ desde 003)
-  i18n/                   # diccionarios de UI y utilidades de idioma (003)
+  components/             # componentes .astro (LanguagePicker, Header, Footer…)
+  layouts/
+    Base.astro            # html lang, head con hreflang, cabecera, main y pie: toda página lo usa
+    BlogPost.astro        # artículos y notas, sobre Base.astro
+  views/                  # cuerpo de las páginas de sección, con prop `lang` (Home, BlogIndex, About)
+  pages/                  # rutas: es en la raíz, en bajo /en/; envoltorios finos de views/
+  i18n/
+    ui.ts                 # diccionario de UI ES/EN (las claves de ES definen el tipo)
+    utils.ts              # useTranslations (t), getLangFromUrl, formatDate
+    routes.ts             # todas las URLs por idioma, alternates y selector de idioma
   styles/global.css       # estilos globales + import de Tailwind
 public/                   # estáticos servidos tal cual (favicon, robots.txt…)
 tests/
@@ -170,7 +176,8 @@ Reglas:
 - Rutas, contenido, utilidades y pruebas en **kebab-case**; componentes y layouts `.astro` en **PascalCase** (convención de Astro).
 - Todo contenido lleva **frontmatter validado por esquema**; nunca desactives la validación.
 - Las traducciones de un mismo post comparten el campo `translationKey`.
-- **Ningún texto de UI hardcodeado**: todo pasa por el diccionario de `src/i18n/`, en ES y EN.
+- **Ningún texto de UI hardcodeado**: todo pasa por el diccionario de `src/i18n/ui.ts` (`t('clave')`), en ES y EN. Las URLs se construyen con `src/i18n/routes.ts`, nunca a mano.
+- URLs por idioma: `/` · `/en/`, `/blog/` · `/en/blog/`, `/sobre-mi/` · `/en/about/`, `/blog/<slug>/` · `/en/blog/<slug>/`, `/notas/<slug>/` · `/en/notes/<slug>/`.
 - Imágenes con el componente de imágenes de Astro y **`alt` obligatorio**.
 - **Cero JS en cliente por defecto**; usa islas solo si aportan valor y justifícalo en `plan.md`.
 - Commits con **Conventional Commits** (`feat:`, `fix:`, `docs:`, `chore:`…), referenciando la spec cuando aplique (p. ej. `feat(003-i18n): selector de idioma`).
