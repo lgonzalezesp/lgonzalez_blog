@@ -1,6 +1,6 @@
 # Spec 007 — Compartir en LinkedIn
 
-- **Estado:** Borrador
+- **Estado:** Aprobada
 - **Rama:** `feature/007-linkedin-share`
 
 ## Contexto / Por qué
