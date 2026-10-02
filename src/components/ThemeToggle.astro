@@ -39,6 +39,8 @@ const t = useTranslations(Astro.props.lang);
 				/* storage unavailable: the choice lasts for this page only */
 			}
 			sync();
+			// Lets other components follow the change (e.g. the Giscus comments, spec 005).
+			document.dispatchEvent(new CustomEvent('themechange', { detail: { theme } }));
 		});
 		systemDark.addEventListener('change', sync);
 	}

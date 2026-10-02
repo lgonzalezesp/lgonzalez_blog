@@ -61,6 +61,9 @@ const es = {
 	'pagination.next': 'Siguiente',
 	'pagination.status': 'Página {page} de {total}',
 	'toc.title': 'En este artículo',
+	'comments.title': 'Comentarios',
+	'comments.noscript':
+		'Activa JavaScript para ver y escribir comentarios (se publican en GitHub Discussions).',
 } as const;
 
 export type UiKey = keyof typeof es;
@@ -121,6 +124,9 @@ const en: Record<UiKey, string> = {
 	'pagination.next': 'Next',
 	'pagination.status': 'Page {page} of {total}',
 	'toc.title': 'On this page',
+	'comments.title': 'Comments',
+	'comments.noscript':
+		'Enable JavaScript to read and write comments (they are published on GitHub Discussions).',
 };
 
 export const ui: Record<Lang, Record<UiKey, string>> = { es, en };

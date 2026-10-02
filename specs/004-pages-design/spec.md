@@ -1,6 +1,6 @@
 # Spec 004 — Páginas y diseño
 
-- **Estado:** En revisión ([PR #4](https://github.com/lgonzalezesp/lgonzalez_blog/pull/4))
+- **Estado:** Hecha ([PR #4](https://github.com/lgonzalezesp/lgonzalez_blog/pull/4))
 - **Rama:** `feature/004-pages-design`
 
 ## Contexto / Por qué
