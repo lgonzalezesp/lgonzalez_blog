@@ -15,6 +15,5 @@ export const GISCUS = {
 	repo: 'lgonzalezesp/lgonzalez_blog',
 	repoId: 'R_kgDOU4DNYA',
 	category: 'Comments',
-	// Pending: create the "Comments" category (Announcement) and install the Giscus app (tasks T2–T3).
-	categoryId: '',
+	categoryId: 'DIC_kwDOU4DNYM4DG4mz',
 } as const;

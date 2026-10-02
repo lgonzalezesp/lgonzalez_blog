@@ -8,8 +8,8 @@ Las pruebas se escriben antes o junto a la implementación que cubren y deben ve
 ## Requisitos previos (manuales)
 
 - [x] T1 — Activar Discussions en el repo (`gh repo edit --enable-discussions`, 2026-10-02)
-- [ ] T2 — (Autor) Crear la categoría «Comments» de tipo Announcement e instalar la app Giscus en el repo
-- [ ] T3 — Obtener `categoryId` con `gh api graphql` y comprobar que la app Giscus tiene acceso al repo
+- [x] T2 — (Autor) Crear la categoría «Comments» de tipo Announcement e instalar la app Giscus en el repo
+- [x] T3 — Obtener `categoryId` con `gh api graphql` (`DIC_kwDOU4DNYM4DG4mz`) y comprobar que la app Giscus tiene acceso al repo (la API de giscus.app lista sus categorías)
 
 ## Configuración y lógica
 
@@ -34,11 +34,11 @@ Las pruebas se escriben antes o junto a la implementación que cubren y deben ve
 
 ## Cierre
 
-- [ ] `npm run build` y `npm run check` en verde
-- [ ] `npm test` (unitarias + funcionales) en verde, en local y en CI
-- [ ] Tabla de trazabilidad de `plan.md` completa: ningún criterio sin prueba
-- [ ] Criterios de aceptación de la spec verificados (ES y EN)
-- [ ] Manual en local: Giscus real carga al hacer scroll, en ES y EN, y cambia de tema
-- [ ] Lighthouse ≥ 95 en un artículo y un proyecto (ES y EN)
-- [ ] `specs/README.md` actualizado
+- [x] `npm run build` y `npm run check` en verde
+- [x] `npm test` (unitarias + funcionales) en verde, en local (151 + 231) y en CI
+- [x] Tabla de trazabilidad de `plan.md` completa: ningún criterio sin prueba
+- [x] Criterios de aceptación de la spec verificados (ES y EN)
+- [x] Manual en local: Giscus real carga al hacer scroll, en ES y EN, y cambia de tema (el 404 en consola es la API de Giscus cuando el hilo aún no existe; se crea con el primer comentario)
+- [x] Lighthouse ≥ 95 en un artículo y un proyecto (ES y EN), con Giscus real: 100 en las cuatro categorías
+- [x] `specs/README.md` actualizado
 - [ ] Pendiente para después del deploy (008): comentario de prueba visible en Discussions → Comments
