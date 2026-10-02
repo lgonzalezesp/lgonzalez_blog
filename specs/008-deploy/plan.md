@@ -96,7 +96,7 @@
 ## Ajustes durante la implementación
 
 - Dos proyectos en `playwright.smoke.config.ts` (`deploy` y `domain`) y dos scripts (`test:smoke`, `test:smoke:domain`), en lugar de saltar pruebas según el entorno.
-- `vercel.json` no fija la rama de producción (se configura en Vercel): el autor la cambió de `develop` (rama por defecto del repo) a `main`.
+- `vercel.json` no fija la rama de producción: se configura en Vercel, que al importar toma la rama por defecto del repo (`develop`); hay que cambiarla a `main` (Settings → Environments → Production → Branch Tracking).
 
 ## Riesgos
 
