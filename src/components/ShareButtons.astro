@@ -1,0 +1,57 @@
+---
+// "Share on LinkedIn" is a plain link to LinkedIn's official share URL (no SDK, scripts or cookies).
+// "Copy link" needs the clipboard API: it stays hidden until its script runs (spec 007, plan P2).
+import type { Lang } from '../i18n/ui';
+import { useTranslations } from '../i18n/utils';
+import { linkedInShareUrl } from '../lib/share';
+
+interface Props {
+	lang: Lang;
+	/** Absolute canonical URL of the page, in the language being read. */
+	url: string;
+}
+
+const { lang, url } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<div class="share flex flex-wrap items-center gap-3 text-sm" role="group" aria-label={t('share.label')}>
+	<a
+		class="linkedin inline-flex items-center gap-2 rounded border border-border px-3 py-1 text-fg no-underline hover:bg-surface"
+		href={linkedInShareUrl(url)}
+		target="_blank"
+		rel="noopener noreferrer"
+	>
+		<svg aria-hidden="true" viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+			<path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.95v5.66H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"></path>
+		</svg>
+		{t('share.linkedin')}
+		<span class="sr-only">{t('share.newTab')}</span>
+	</a>
+	<button
+		type="button"
+		class="copy-link rounded border border-border px-3 py-1 text-fg hover:bg-surface"
+		data-url={url}
+		data-copied={t('share.copied')}
+		data-failed={t('share.copyFailed')}
+		hidden
+	>
+		{t('share.copy')}
+	</button>
+	<span class="copy-status text-muted" role="status" aria-live="polite"></span>
+</div>
+
+<script>
+	for (const button of document.querySelectorAll<HTMLButtonElement>('.share .copy-link')) {
+		const status = button.parentElement?.querySelector('.copy-status');
+		button.hidden = false;
+		button.addEventListener('click', async () => {
+			try {
+				await navigator.clipboard.writeText(button.dataset.url ?? location.href);
+				if (status) status.textContent = button.dataset.copied ?? '';
+			} catch {
+				if (status) status.textContent = button.dataset.failed ?? '';
+			}
+		});
+	}
+</script>

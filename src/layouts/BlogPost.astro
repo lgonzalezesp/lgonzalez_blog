@@ -5,9 +5,11 @@ import { Image } from 'astro:assets';
 import Comments from '../components/Comments.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 import ReadingTime from '../components/ReadingTime.astro';
+import ShareButtons from '../components/ShareButtons.astro';
 import TableOfContents from '../components/TableOfContents.astro';
 import TagList from '../components/TagList.astro';
 import type { Alternates } from '../i18n/routes';
+import type { OgImage } from '../lib/seo';
 import type { Lang } from '../i18n/ui';
 import { useTranslations } from '../i18n/utils';
 import type { TocItem } from '../lib/toc';
@@ -22,10 +24,14 @@ interface Props {
 	tags?: string[];
 	lang: Lang;
 	alternates: Alternates;
+	/** Generated social image, used when there is no cover. */
+	generatedImage?: OgImage;
 	readingMinutes?: number;
 	toc?: TocItem[];
 	/** Giscus comments at the end (posts only, not notes). */
 	comments?: boolean;
+	/** Share buttons at the top and at the end (posts only, not notes). */
+	share?: boolean;
 }
 
 const {
@@ -37,10 +43,13 @@ const {
 	tags = [],
 	lang,
 	alternates,
+	generatedImage,
 	readingMinutes,
 	toc = [],
 	comments = false,
+	share = false,
 } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
 const t = useTranslations(lang);
 ---
 
@@ -48,6 +57,7 @@ const t = useTranslations(lang);
 	title={title}
 	description={description}
 	image={cover}
+	generatedImage={generatedImage}
 	article={{ publishedTime: pubDate, modifiedTime: updatedDate, tags }}
 	lang={lang}
 	alternates={alternates}
@@ -76,6 +86,7 @@ const t = useTranslations(lang);
 				</p>
 			)}
 			<TagList tags={tags} lang={lang} />
+			{share && <ShareButtons lang={lang} url={canonical} />}
 		</header>
 		<div class="mb-8">
 			<TableOfContents items={toc} lang={lang} />
@@ -83,6 +94,11 @@ const t = useTranslations(lang);
 		<div class="prose">
 			<slot />
 		</div>
+		{share && (
+			<footer class="mt-12">
+				<ShareButtons lang={lang} url={canonical} />
+			</footer>
+		)}
 	</article>
 	{comments && <Comments lang={lang} />}
 </Base>

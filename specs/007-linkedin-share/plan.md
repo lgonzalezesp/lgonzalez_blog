@@ -1,7 +1,7 @@
 # Plan 007 — Compartir en LinkedIn
 
 - **Spec:** [spec.md](./spec.md)
-- **Estado:** Borrador
+- **Estado:** Aprobado
 
 ## Enfoque técnico
 
@@ -63,12 +63,19 @@
 | 8. URLs estables       | ✅       | Se comparte siempre la canónica                                                             |
 | 9. Todo se prueba      | ✅       | Ver trazabilidad                                                                            |
 
-## Decisiones que necesitan tu visto bueno
+## Decisiones (aprobadas con el plan)
 
 - **P1 — URL del perfil de LinkedIn** (pregunta abierta): `https://www.linkedin.com/in/luis-gonzalez-espejo/`.
 - **P2 — «Copiar enlace» con JS mínimo** (cuarta excepción al principio 6); el botón no aparece sin JS.
 - **P3 — Imágenes OG generadas** (pregunta abierta): sí, para contenido **sin portada** (artículos, proyectos y notas), con `satori` como única dependencia nueva. Con portada, se usa la portada.
 - **P4 — Dónde van los botones:** artículos y proyectos, arriba y al final (no en notas). El enlace se abre en una pestaña nueva.
+
+## Ajustes durante la implementación
+
+- `npm audit` marcó `fflate` 0.7.3 (dependencia exacta de `satori`; GHSA-px8p-9vwx-vf98, `unzipSync` con ZIP64 malformados). Satori solo usa `inflateSync` para descomprimir nuestras propias fuentes, pero la regla es auditoría limpia: se fija `fflate` 0.7.5 (parche compatible) con `overrides` en `package.json`.
+- `src/lib/og-path.ts` (ruta y metadatos de la imagen generada) se separa de `og-image.ts` para que las páginas no carguen satori ni las fuentes.
+- La prueba de 006 que esperaba la imagen por defecto en un artículo sin portada se actualizó: desde 007 ese artículo usa su imagen generada, y la de por defecto queda para las páginas de sección.
+- `profile.spec.ts` busca el perfil en el pie del sitio (`contentinfo`) y con nombre exacto, porque los artículos tienen su propio `<footer>` con «Compartir en LinkedIn».
 
 ## Riesgos
 

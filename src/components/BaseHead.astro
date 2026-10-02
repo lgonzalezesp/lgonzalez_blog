@@ -15,13 +15,15 @@ interface Props {
 	description: string;
 	/** Cover of the content; cropped to 1200×627 for social networks. */
 	image?: { src: ImageMetadata; alt: string };
+	/** Generated social image (spec 007), used when there is no cover. */
+	generatedImage?: OgImage;
 	lang: Lang;
 	alternates: Alternates;
 	article?: MetaInput['article'];
 	noindex?: boolean;
 }
 
-const { title, description, image, lang, alternates, article, noindex } = Astro.props;
+const { title, description, image, generatedImage, lang, alternates, article, noindex } = Astro.props;
 const t = useTranslations(lang);
 
 const OG_SIZE = { width: 1200, height: 627 };
@@ -37,7 +39,7 @@ const meta = buildMeta({
 	description,
 	lang,
 	alternates,
-	image: image && (await ogImage(image.src, image.alt, 'jpg')),
+	image: image ? await ogImage(image.src, image.alt, 'jpg') : generatedImage,
 	defaultImage: await ogImage(OgDefault, t('og.defaultAlt'), 'png'),
 	article,
 	noindex,

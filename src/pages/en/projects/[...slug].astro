@@ -1,6 +1,7 @@
 ---
 import { type CollectionEntry, render } from 'astro:content';
 import { entryAlternates } from '../../../i18n/routes';
+import { generatedOgImage } from '../../../lib/og-path';
 import Project from '../../../layouts/Project.astro';
 import { entryPaths } from '../../../lib/collections';
 
@@ -17,6 +18,10 @@ const { entry, translation } = Astro.props;
 const { Content } = await render(entry);
 ---
 
-<Project {...entry.data} alternates={entryAlternates('projects', entry, translation)}>
+<Project
+	{...entry.data}
+	alternates={entryAlternates('projects', entry, translation)}
+	generatedImage={generatedOgImage('projects', entry)}
+>
 	<Content />
 </Project>
