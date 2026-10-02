@@ -13,7 +13,7 @@ Cada spec debe entregar **pruebas unitarias** (Vitest) y **pruebas funcionales**
 | 005 | [Comentarios (Giscus)](./005-comments/spec.md)        | Aprobada | [Aprobado](./005-comments/plan.md)       | [12/12](./005-comments/tasks.md)       | Hecha ([PR #5](https://github.com/lgonzalezesp/lgonzalez_blog/pull/5))   |
 | 006 | [SEO, feeds y analítica](./006-seo-analytics/spec.md) | Aprobada | [Aprobado](./006-seo-analytics/plan.md)  | [14/14](./006-seo-analytics/tasks.md)  | Hecha ([PR #6](https://github.com/lgonzalezesp/lgonzalez_blog/pull/6))   |
 | 007 | [Compartir en LinkedIn](./007-linkedin-share/spec.md) | Aprobada | [Aprobado](./007-linkedin-share/plan.md) | [16/16](./007-linkedin-share/tasks.md) | Hecha ([PR #7](https://github.com/lgonzalezesp/lgonzalez_blog/pull/7))   |
-| 008 | [Despliegue en Vercel](./008-deploy/spec.md)          | Aprobada | [Aprobado](./008-deploy/plan.md)         | [9/20](./008-deploy/tasks.md)          | En curso                                                                 |
+| 008 | [Despliegue en Vercel](./008-deploy/spec.md)          | Aprobada | [Aprobado](./008-deploy/plan.md)         | [13/20](./008-deploy/tasks.md)         | En curso                                                                 |
 | 009 | [Favicon](./009-favicon/spec.md)                      | Aprobada | [Aprobado](./009-favicon/plan.md)        | [10/10](./009-favicon/tasks.md)        | Hecha ([PR #13](https://github.com/lgonzalezesp/lgonzalez_blog/pull/13)) |
 | 010 | [Crear posts](./010-new-post/spec.md)                 | Aprobada | [Aprobado](./010-new-post/plan.md)       | [12/12](./010-new-post/tasks.md)       | Hecha ([PR #14](https://github.com/lgonzalezesp/lgonzalez_blog/pull/14)) |
 
@@ -21,3 +21,9 @@ Cada spec debe entregar **pruebas unitarias** (Vitest) y **pruebas funcionales**
 
 - [x] Comprar el dominio **lgonzalez.dev** (recomendado: Vercel Domains; alternativas: Cloudflare Registrar, Porkbun). Activar renovación automática, privacidad WHOIS y bloqueo de transferencia. Comprado en Vercel Domains el 2026-10-02 (vence el 2027-10-02).
 - [x] Habilitar GitHub Discussions en `lgonzalezesp/lgonzalez_blog` e instalar la app Giscus (antes de 005).
+- [x] Conectar `lgonzalez.dev` como dominio principal de Vercel, con `www` redirigiendo con 308 (2026-10-02).
+- [ ] Confirmar Node 24.x en el proyecto de Vercel.
+- [ ] Activar **Web Analytics** en Vercel (Speed Insights ya está activo).
+- [ ] Publicar un comentario de prueba en un artículo y verlo en Discussions → Comments (005).
+- [ ] Comprobar la vista previa de un artículo en ES y otro en EN con LinkedIn Post Inspector (007).
+- [ ] Comprobar una vez que un build roto en una preview no afecta a producción (008, T20).
