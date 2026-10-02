@@ -15,6 +15,18 @@
 
 - [ ] <Condición verificable, observable desde fuera.>
 
+## Pruebas
+
+Cada criterio de aceptación debe quedar cubierto por al menos una prueba (ES y EN cuando aplique).
+
+### Unitarias (Vitest)
+
+- [ ] <Qué lógica/componente se prueba y qué se espera.>
+
+### Funcionales (Playwright)
+
+- [ ] <Qué recorrido del lector se prueba y qué se espera.>
+
 ## Fuera de alcance
 
 - <Lo que explícitamente NO cubre esta feature.>

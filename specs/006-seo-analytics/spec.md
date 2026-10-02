@@ -22,6 +22,21 @@ El contenido debe encontrarse en buscadores, poder seguirse por RSS y verse bien
 - [ ] `sitemap.xml` con ambos idiomas y `robots.txt` que lo referencia.
 - [ ] Vercel Web Analytics y Speed Insights activos, sin cookies.
 
+## Pruebas
+
+### Unitarias (Vitest)
+
+- [ ] El componente de metadatos genera título, descripción, canónica, Open Graph y Twitter Card a partir de un contenido.
+- [ ] La URL de `og:image` y la canónica son siempre absolutas; se usa la imagen por defecto si no hay portada.
+- [ ] El generador de RSS incluye solo contenido publicado del idioma correcto, ordenado por fecha.
+
+### Funcionales (Playwright)
+
+- [ ] Cada tipo de página tiene `<title>`, `meta description`, canónica y etiquetas OG/Twitter no vacías, en ES y EN.
+- [ ] `/rss.xml` y `/en/rss.xml` son XML válidos y están enlazados desde el `<head>`.
+- [ ] `sitemap.xml` contiene URLs de ambos idiomas y ningún borrador; `robots.txt` lo referencia.
+- [ ] Tras cargar las páginas, el navegador no tiene cookies.
+
 ## Fuera de alcance
 
 - Generación automática de imágenes OG por post (se trata en 007).

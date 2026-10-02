@@ -21,6 +21,22 @@ Necesitamos una base de proyecto Astro limpia, tipada y con herramientas de cali
 - [ ] La URL del sitio (`site`) apunta al dominio definitivo.
 - [ ] `.gitignore` adecuado; repo conectado a `lgonzalezesp/lgonzalez_blog`.
 - [ ] La sección "Estructura" y "Comandos" de `AGENTS.md` refleja la realidad.
+- [ ] Infraestructura de pruebas lista: Vitest (con Astro Container API) para unitarias y Playwright (con axe-core) para funcionales, ejecutándose sobre el build.
+- [ ] Scripts `test:unit`, `test:e2e` y `test` definidos.
+- [ ] GitHub Actions ejecuta `check`, `lint` y `npm test` en cada PR y en `main`; un fallo bloquea el merge.
+
+## Pruebas
+
+### Unitarias (Vitest)
+
+- [ ] Prueba de humo: Vitest arranca y renderiza un componente `.astro` de ejemplo con la Container API.
+- [ ] La configuración expone `site` con el dominio definitivo.
+
+### Funcionales (Playwright)
+
+- [ ] La portada del build responde 200 y tiene `<title>`.
+- [ ] Una ruta inexistente devuelve la página 404.
+- [ ] La portada no tiene violaciones de accesibilidad graves (axe-core).
 
 ## Fuera de alcance
 

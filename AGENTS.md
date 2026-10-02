@@ -18,6 +18,9 @@ Blog personal de Luis González en **lgonzalez.dev**: proyectos, ideas, comentar
 - **Shiki** para resaltado de código (incluido en Astro)
 - **Giscus** para comentarios (GitHub Discussions)
 - **Vercel Web Analytics** y **Speed Insights** (sin cookies)
+- **Vitest** + **Astro Container API** para pruebas unitarias
+- **Playwright** (+ **axe-core**) para pruebas funcionales y de accesibilidad
+- **GitHub Actions** para ejecutar las pruebas en cada PR
 
 ## Metodología: Spec-Driven Development (SDD)
 
@@ -37,6 +40,31 @@ Este proyecto se gobierna por especificaciones. **La spec es la fuente de verdad
 5. Si durante la implementación la realidad difiere de la spec, **actualiza la spec** en el mismo cambio para que código y spec coincidan.
 
 El índice de features y su estado está en `specs/README.md`.
+
+## Pruebas (obligatorias en cada spec)
+
+Cada spec debe crear **pruebas unitarias del código** y **pruebas funcionales del comportamiento**:
+
+- **Unitarias (Vitest):** utilidades, esquemas de contenido, diccionarios i18n y componentes `.astro` renderizados con la Astro Container API. Prueban la lógica de forma aislada y rápida.
+- **Funcionales (Playwright):** recorren el sitio construido en un navegador real como lo haría un lector (navegar, cambiar idioma, modo oscuro, compartir, comentar…). Incluyen comprobaciones de accesibilidad con axe-core.
+
+Reglas:
+
+1. **Cada criterio de aceptación de `spec.md` tiene al menos una prueba** que lo verifica. La sección "Pruebas" de la spec y la tabla de trazabilidad de `plan.md` lo documentan.
+2. **Pruebas primero:** en `tasks.md`, las tareas de pruebas van antes o junto a la implementación que cubren; una prueba se ve fallar antes de hacerla pasar.
+3. Todo lo que dependa del idioma se prueba en **ES y EN**.
+4. Las pruebas no usan red externa: los servicios de terceros (Giscus, LinkedIn) se verifican por el HTML/URL generados, no llamándolos.
+5. Nunca borres, desactives ni marques como `skip` una prueba para conseguir un build en verde; si la prueba está mal, corrígela y explica por qué.
+6. Una corrección de bug incluye una prueba que reproduce el bug.
+
+Ubicación:
+
+```
+tests/
+  unit/<NNN-feature>/        # *.test.ts (Vitest)
+  e2e/<NNN-feature>/         # *.spec.ts (Playwright)
+  fixtures/                  # contenido de prueba
+```
 
 ## Estructura del repositorio
 
@@ -60,6 +88,11 @@ src/
   i18n/                   # diccionarios de UI y utilidades de idioma
   styles/
 public/                   # estáticos (favicon, imágenes OG por defecto, robots.txt)
+tests/
+  unit/                   # Vitest
+  e2e/                    # Playwright
+  fixtures/
+.github/workflows/        # CI: check + lint + pruebas en cada PR
 ```
 
 > La carpeta `src/` se crea en la feature `001-setup`. Mantén esta sección actualizada si la estructura cambia.
@@ -74,6 +107,9 @@ public/                   # estáticos (favicon, imágenes OG por defecto, robot
 | Tipos + esquemas de contenido | `npm run check` |
 | Lint | `npm run lint` |
 | Formato | `npm run format` |
+| Pruebas unitarias | `npm run test:unit` |
+| Pruebas funcionales (sobre el build) | `npm run test:e2e` |
+| Todas las pruebas | `npm test` |
 
 > Los scripts se definen en `001-setup`. Si cambian, actualiza esta tabla.
 
@@ -93,7 +129,8 @@ public/                   # estáticos (favicon, imágenes OG por defecto, robot
 Una feature está terminada solo si:
 
 - [ ] `npm run build` y `npm run check` pasan sin errores.
-- [ ] Todos los criterios de aceptación de su `spec.md` se cumplen.
+- [ ] Existen pruebas unitarias y funcionales para la feature, y `npm test` pasa en local y en CI.
+- [ ] Todos los criterios de aceptación de su `spec.md` se cumplen y cada uno está cubierto por una prueba.
 - [ ] Funciona en **ambos idiomas** (ES y EN).
 - [ ] Lighthouse ≥ 95 en rendimiento, accesibilidad, buenas prácticas y SEO en las páginas afectadas.
 - [ ] `tasks.md` está completo y `specs/README.md` refleja el nuevo estado.
@@ -106,3 +143,4 @@ Una feature está terminada solo si:
 - Romper URLs ya publicadas (si una ruta cambia, añade redirección).
 - Publicar contenido con `draft: true` en producción.
 - Hacer `push` a `main` o desplegar sin que el usuario lo pida.
+- Dar una feature por terminada sin pruebas, o saltarse/desactivar pruebas que fallan.

@@ -2,6 +2,8 @@
 
 Flujo SDD: **Specify → Plan → Tasks → Implement → Review**. Ver `AGENTS.md` y `constitution.md`.
 
+Cada spec debe entregar **pruebas unitarias** (Vitest) y **pruebas funcionales** (Playwright) que cubran todos sus criterios de aceptación. La infraestructura de pruebas se monta en 001.
+
 | # | Feature | Spec | Plan | Tasks | Estado |
 | --- | --- | --- | --- | --- | --- |
 | 001 | [Setup del proyecto](./001-setup/spec.md) | Borrador | — | — | Pendiente |

@@ -23,6 +23,28 @@ LinkedIn es el canal principal para difundir los artículos y proyectos. Compart
 - [ ] Enlace al perfil de LinkedIn del autor en "Sobre mí" y en el pie.
 - [ ] Validado en **LinkedIn Post Inspector**: título, descripción e imagen correctos en ES y EN.
 
+## Pruebas
+
+### Unitarias (Vitest)
+
+- [ ] La utilidad de compartir construye la URL oficial de LinkedIn con la URL canónica correctamente codificada (incluye caracteres especiales y acentos).
+- [ ] El componente del botón usa el texto traducido y tiene nombre accesible, `target` y `rel` seguros.
+- [ ] La imagen OG generada mide 1200×627 y contiene el título en el idioma del post.
+
+### Funcionales (Playwright)
+
+Sin llamar a LinkedIn: se verifica el enlace generado.
+
+- [ ] Cada post y proyecto muestra el botón arriba y al final, en ES y EN.
+- [ ] El enlace apunta a LinkedIn con la URL del idioma que se está leyendo.
+- [ ] La página no carga ningún script ni cookie de LinkedIn.
+- [ ] "Copiar enlace" copia la URL canónica al portapapeles y anuncia la confirmación de forma accesible.
+- [ ] `og:image` de un post responde 200 con una imagen de 1200×627.
+
+### Verificación manual (una vez, tras el deploy)
+
+- [ ] LinkedIn Post Inspector con un post en ES y otro en EN.
+
 ## Fuera de alcance
 
 - Publicación automática en LinkedIn al hacer deploy.

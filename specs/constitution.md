@@ -10,3 +10,4 @@ Principios no negociables. Todo `plan.md` debe validarse contra ellos; cualquier
 6. **Cero JS en cliente por defecto.** Las islas interactivas solo se usan cuando aportan valor claro al lector.
 7. **La spec es la fuente de verdad.** Código y spec deben coincidir; si divergen, se actualiza la spec en el mismo cambio.
 8. **URLs estables.** Una URL publicada no se rompe; los cambios de ruta llevan redirección.
+9. **Todo se prueba.** Cada spec entrega **pruebas unitarias** (lógica y componentes) y **pruebas funcionales** (comportamiento en el navegador) que cubren todos sus criterios de aceptación. Sin pruebas en verde, la feature no está terminada ni se despliega.

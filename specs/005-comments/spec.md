@@ -21,6 +21,26 @@ Los lectores deben poder comentar los artículos sin que el blog necesite base d
 - [ ] Giscus se carga de forma diferida (no penaliza el rendimiento inicial).
 - [ ] Los comentarios aparecen en la categoría "Comments" de Discussions.
 
+## Pruebas
+
+### Unitarias (Vitest)
+
+- [ ] El componente de comentarios genera la configuración correcta de Giscus: repo, categoría, mapeo por ruta, idioma (`es`/`en`) y tema según modo.
+- [ ] La utilidad de sincronización de tema produce el mensaje correcto para claro y oscuro.
+
+### Funcionales (Playwright)
+
+Sin llamar a GitHub: la red de Giscus se intercepta.
+
+- [ ] Un post muestra la sección de comentarios al final; las páginas sin comentarios no la muestran.
+- [ ] El script de Giscus no se pide hasta que la sección entra en pantalla (carga diferida).
+- [ ] En `/en/…` Giscus se configura en inglés; en ES, en español.
+- [ ] Al cambiar el modo claro/oscuro se envía el cambio de tema a Giscus.
+
+### Verificación manual (una vez, tras el deploy)
+
+- [ ] Publicar un comentario de prueba y comprobar que aparece en Discussions → "Comments".
+
 ## Fuera de alcance
 
 - Comentarios anónimos (Giscus requiere cuenta de GitHub).

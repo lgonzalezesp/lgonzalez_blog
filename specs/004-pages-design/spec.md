@@ -25,6 +25,26 @@ El blog necesita una presentación minimalista, legible y accesible que ponga el
 - [ ] WCAG 2.1 AA (contraste, foco visible, navegación por teclado).
 - [ ] Lighthouse ≥ 95 en todas las categorías.
 
+## Pruebas
+
+### Unitarias (Vitest)
+
+- [ ] Cálculo del tiempo de lectura (texto vacío, corto, largo; mínimo 1 minuto).
+- [ ] Generación de la tabla de contenidos a partir de los encabezados.
+- [ ] Paginación: número de páginas, elementos por página, página fuera de rango.
+- [ ] Agrupación de contenido por etiqueta.
+- [ ] Componentes (Container API): tarjeta de post y de proyecto renderizan título, fecha, etiquetas y enlaces; las imágenes llevan `alt`.
+
+### Funcionales (Playwright)
+
+- [ ] Todas las páginas listadas responden 200 en ES y EN.
+- [ ] Navegación desde la cabecera a cada sección y desde una tarjeta al detalle.
+- [ ] Paginación del blog y filtrado por etiqueta funcionan.
+- [ ] Modo oscuro: respeta la preferencia del sistema, el toggle cambia el tema y la elección persiste al recargar.
+- [ ] Móvil (320 px) y escritorio: sin scroll horizontal; menú usable en móvil.
+- [ ] Navegación completa por teclado con foco visible.
+- [ ] axe-core sin violaciones graves en cada tipo de página.
+
 ## Fuera de alcance
 
 - Búsqueda (mejora futura con Pagefind).

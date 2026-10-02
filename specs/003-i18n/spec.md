@@ -22,6 +22,24 @@ El blog se dirige a lectores hispanohablantes y anglohablantes. El español es e
 - [ ] `<html lang>` correcto y etiquetas `hreflang` entre traducciones.
 - [ ] Los listados solo muestran contenido del idioma actual.
 
+## Pruebas
+
+### Unitarias (Vitest)
+
+- [ ] Los diccionarios ES y EN tienen exactamente las mismas claves y ningún valor vacío.
+- [ ] La utilidad de traducción devuelve el texto correcto por idioma y falla de forma visible ante una clave inexistente.
+- [ ] Detección de idioma por URL: `/…` → `es`, `/en/…` → `en`.
+- [ ] Generación de la URL equivalente en el otro idioma (con y sin traducción disponible).
+- [ ] Formato de fechas en ES y EN.
+
+### Funcionales (Playwright)
+
+- [ ] `/` tiene `<html lang="es">` y `/en/` tiene `<html lang="en">`.
+- [ ] El selector de idioma en un post traducido lleva a su traducción; en uno sin traducción, a la portada del otro idioma.
+- [ ] Las etiquetas `hreflang` enlazan las traducciones en ambos sentidos.
+- [ ] El listado en `/en/` no muestra contenido en español (y viceversa).
+- [ ] Ningún texto de interfaz en español aparece en las páginas `/en/`.
+
 ## Fuera de alcance
 
 - Traducción automática del contenido.

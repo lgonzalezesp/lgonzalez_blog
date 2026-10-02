@@ -20,6 +20,18 @@ Publicar debe ser tan simple como hacer merge a `main`, y cada cambio debe poder
 - [ ] Preview automática en cada PR (los `draft` visibles solo en previews).
 - [ ] Dominio `lgonzalez.dev` conectado con HTTPS; `www` redirige al dominio raíz.
 - [ ] Un build fallido no reemplaza la versión publicada.
+- [ ] No se despliega a producción si las pruebas de CI fallan.
+
+## Pruebas
+
+### Unitarias (Vitest)
+
+- [ ] La lógica de borradores muestra `draft` en entorno preview y los oculta en producción según la variable de entorno de Vercel.
+
+### Funcionales (Playwright)
+
+- [ ] Pruebas de humo contra la URL de la preview de cada PR (portada, un post, `/en/`, 404) ejecutadas desde CI.
+- [ ] Contra producción, tras el deploy: `https://lgonzalez.dev` responde 200, `http://` y `www` redirigen a `https://lgonzalez.dev`.
 
 ## Fuera de alcance
 
