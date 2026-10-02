@@ -1,0 +1,60 @@
+---
+// The text lives in src/content/pages/{es,en}/about.md, so the author edits Markdown, not code.
+import { Image } from 'astro:assets';
+import { render } from 'astro:content';
+import { AUTHOR, SITE_TITLE } from '../consts';
+import { sectionAlternates } from '../i18n/routes';
+import type { Lang } from '../i18n/ui';
+import { useTranslations } from '../i18n/utils';
+import Base from '../layouts/Base.astro';
+import { getPageEntry } from '../lib/collections';
+
+interface Props {
+	lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const page = await getPageEntry('about', lang);
+const { Content } = await render(page);
+const { title, description, cover } = page.data;
+---
+
+<Base
+	title={`${title} | ${SITE_TITLE}`}
+	description={description}
+	image={cover}
+	lang={lang}
+	alternates={sectionAlternates('about')}
+>
+	<h1 class="mb-8 text-3xl font-bold sm:text-4xl">{title}</h1>
+	{cover && (
+		<Image
+			src={cover.src}
+			alt={cover.alt}
+			width={240}
+			height={240}
+			class="mb-8 h-40 w-40 rounded-full object-cover"
+		/>
+	)}
+	<div class="prose">
+		<Content />
+	</div>
+	<section class="mt-12" aria-labelledby="find-me">
+		<h2 id="find-me" class="mb-4 text-2xl font-bold">
+			{t('about.findMe')}
+		</h2>
+		<ul class="flex flex-wrap gap-4">
+			<li>
+				<a href={AUTHOR.linkedin} rel="me">
+					LinkedIn
+				</a>
+			</li>
+			<li>
+				<a href={AUTHOR.github} rel="me">
+					GitHub
+				</a>
+			</li>
+		</ul>
+	</section>
+</Base>

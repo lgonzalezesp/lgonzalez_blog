@@ -1,0 +1,19 @@
+---
+import { getTagGroups } from '../../../lib/collections';
+import TagView from '../../../views/TagView.astro';
+
+export async function getStaticPaths() {
+	const others = await getTagGroups('es');
+	return (await getTagGroups('en')).map((group) => {
+		const other = others.find((candidate) => candidate.slug === group.slug);
+		return {
+			params: { tag: group.slug },
+			props: { group, alternate: other && { lang: 'es' as const, label: other.label } },
+		};
+	});
+}
+
+const { group, alternate } = Astro.props;
+---
+
+<TagView lang="en" group={group} alternate={alternate} />

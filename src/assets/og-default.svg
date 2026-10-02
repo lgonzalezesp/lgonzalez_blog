@@ -1,0 +1,12 @@
+<!--
+  Default Open Graph image (1200×627), used when content has no cover.
+  Regenerate the PNG after editing:
+  node -e "require('sharp')('src/assets/og-default.svg').png().toFile('src/assets/og-default.png')"
+-->
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="627" viewBox="0 0 1200 627">
+	<rect width="1200" height="627" fill="#18181b"/>
+	<rect x="0" y="0" width="16" height="627" fill="#93c5fd"/>
+	<text x="96" y="300" fill="#f4f4f5" font-family="Helvetica, Arial, sans-serif" font-size="96" font-weight="700">Luis González</text>
+	<text x="100" y="390" fill="#93c5fd" font-family="Helvetica, Arial, sans-serif" font-size="48">lgonzalez.dev</text>
+	<rect x="100" y="450" width="120" height="6" fill="#3f3f46"/>
+</svg>

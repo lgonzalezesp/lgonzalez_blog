@@ -1,0 +1,27 @@
+---
+import { entryUrl } from '../i18n/routes';
+import type { Lang } from '../i18n/ui';
+import FormattedDate from './FormattedDate.astro';
+import TagList from './TagList.astro';
+
+interface Props {
+	note: { id: string; data: { title: string; pubDate: Date; tags: string[]; lang: Lang } };
+	lang: Lang;
+	headingLevel?: 2 | 3;
+}
+
+const { note, lang, headingLevel = 2 } = Astro.props;
+const Heading = `h${headingLevel}` as 'h2' | 'h3';
+---
+
+<article class="flex flex-col gap-1 border-l-4 border-border pl-4">
+	<Heading class="text-lg leading-snug font-bold">
+		<a href={entryUrl('notes', note)} class="text-fg no-underline hover:text-accent hover:underline">
+			{note.data.title}
+		</a>
+	</Heading>
+	<p class="text-sm text-muted">
+		<FormattedDate date={note.data.pubDate} lang={lang} />
+	</p>
+	<TagList tags={note.data.tags} lang={lang} />
+</article>

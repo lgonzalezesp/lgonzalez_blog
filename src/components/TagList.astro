@@ -1,0 +1,26 @@
+---
+import { tagUrl } from '../i18n/routes';
+import type { Lang } from '../i18n/ui';
+import { useTranslations } from '../i18n/utils';
+
+interface Props {
+	tags: string[];
+	lang: Lang;
+	class?: string;
+}
+
+const { tags, lang, class: className } = Astro.props;
+const t = useTranslations(lang);
+---
+
+{tags.length > 0 && (
+	<ul class:list={['flex flex-wrap gap-x-3 gap-y-1 text-sm', className]} aria-label={t('post.tags')}>
+		{tags.map((tag) => (
+			<li>
+				<a href={tagUrl(tag, lang)} class="text-muted no-underline hover:text-accent hover:underline">
+					#{tag}
+				</a>
+			</li>
+		))}
+	</ul>
+)}

@@ -1,0 +1,33 @@
+---
+import { type CollectionEntry, render } from 'astro:content';
+import { entryAlternates } from '../../../i18n/routes';
+import { generatedOgImage } from '../../../lib/og-path';
+import BlogPost from '../../../layouts/BlogPost.astro';
+import { entryPaths } from '../../../lib/collections';
+import { readingTime } from '../../../lib/reading-time';
+import { buildToc } from '../../../lib/toc';
+
+export function getStaticPaths() {
+	return entryPaths('blog', 'en');
+}
+
+interface Props {
+	entry: CollectionEntry<'blog'>;
+	translation?: CollectionEntry<'blog'>;
+}
+
+const { entry, translation } = Astro.props;
+const { Content, headings } = await render(entry);
+---
+
+<BlogPost
+	{...entry.data}
+	alternates={entryAlternates('blog', entry, translation)}
+	generatedImage={generatedOgImage('blog', entry)}
+	readingMinutes={readingTime(entry.body ?? '')}
+	toc={buildToc(headings)}
+	comments
+	share
+>
+	<Content />
+</BlogPost>

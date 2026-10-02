@@ -17,17 +17,17 @@
 
 ## Validación contra la constitución
 
-| Principio | ¿Cumple? | Nota |
-| --- | --- | --- |
-| 1. Simplicidad | ✅ | |
-| 2. Dueño de los datos | ✅ | |
-| 3. Bilingüe | ✅ | |
-| 4. Rendimiento / a11y | ✅ | |
-| 5. Privacidad | ✅ | |
-| 6. Cero JS por defecto | ✅ | |
-| 7. Spec = verdad | ✅ | |
-| 8. URLs estables | ✅ | |
-| 9. Todo se prueba | ✅ | |
+| Principio              | ¿Cumple? | Nota |
+| ---------------------- | -------- | ---- |
+| 1. Simplicidad         | ✅       |      |
+| 2. Dueño de los datos  | ✅       |      |
+| 3. Bilingüe            | ✅       |      |
+| 4. Rendimiento / a11y  | ✅       |      |
+| 5. Privacidad          | ✅       |      |
+| 6. Cero JS por defecto | ✅       |      |
+| 7. Spec = verdad       | ✅       |      |
+| 8. URLs estables       | ✅       |      |
+| 9. Todo se prueba      | ✅       |      |
 
 ## Riesgos
 
@@ -40,9 +40,9 @@
 
 ### Trazabilidad criterio → prueba
 
-| Criterio de aceptación | Prueba unitaria | Prueba funcional |
-| --- | --- | --- |
-| <criterio> | `tests/unit/NNN-.../x.test.ts` | `tests/e2e/NNN-.../x.spec.ts` |
+| Criterio de aceptación | Prueba unitaria                | Prueba funcional              |
+| ---------------------- | ------------------------------ | ----------------------------- |
+| <criterio>             | `tests/unit/NNN-.../x.test.ts` | `tests/e2e/NNN-.../x.spec.ts` |
 
 ## Verificación
 

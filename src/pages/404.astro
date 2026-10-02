@@ -1,0 +1,31 @@
+---
+// A static host serves a single 404.html, so this page speaks both languages.
+import { SITE_TITLE } from '../consts';
+import { sectionUrl } from '../i18n/routes';
+import { useTranslations } from '../i18n/utils';
+import Base from '../layouts/Base.astro';
+
+const es = useTranslations('es');
+const en = useTranslations('en');
+---
+
+<Base
+	title={`${es('notFound.title')} | ${SITE_TITLE}`}
+	description={es('notFound.message')}
+	lang="es"
+	alternates={{}}
+	noindex
+	mainClass="text-center"
+>
+	<h1>404</h1>
+	<p>{es('notFound.message')}</p>
+	<p>
+		<a href={sectionUrl('home', 'es')}>{es('notFound.back')}</a>
+	</p>
+	<div lang="en">
+		<p>{en('notFound.message')}</p>
+		<p>
+			<a href={sectionUrl('home', 'en')}>{en('notFound.back')}</a>
+		</p>
+	</div>
+</Base>

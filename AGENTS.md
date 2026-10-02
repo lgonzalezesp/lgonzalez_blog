@@ -2,12 +2,15 @@
 
 Instrucciones para cualquier agente de IA (Claude Code, Copilot, Cursor, Codex…) que trabaje en este repositorio.
 
+Este archivo es la fuente canónica. `.claude/rules/` lo detalla por tema y ruta para Claude Code; si algo cambia aquí, actualiza también la regla afectada (y al revés).
+
 ## Proyecto
 
 Blog personal de Luis González en **lgonzalez.dev**: proyectos, ideas, comentarios y notas.
 
 - Idiomas: **español (por defecto, sin prefijo)** e **inglés (bajo `/en/`)**.
 - Repositorio: https://github.com/lgonzalezesp/lgonzalez_blog (público, necesario para Giscus).
+- Ramas `main` y `develop` protegidas: solo PR con el check `CI` en verde; `develop` es la rama por defecto.
 - Hosting: Vercel (salida estática). Producción = rama `main`; `develop` = preview estable; previews en cada PR.
 - Flujo de ramas: **Gitflow**. Gestor de paquetes: **npm**.
 
@@ -69,34 +72,75 @@ tests/
 
 ## Estructura del repositorio
 
+Las rutas marcadas con _(NNN)_ aún no existen; se crean en esa spec.
+
 ```
 AGENTS.md                 # este archivo (canónico)
 CLAUDE.md                 # importa AGENTS.md para Claude Code
+.claude/rules/            # reglas de Claude Code por tema/ruta (detallan AGENTS.md, no lo sustituyen)
 specs/
   constitution.md         # principios no negociables
   README.md               # índice de features y estado
   _templates/             # plantillas spec/plan/tasks
   NNN-nombre/             # una carpeta por feature
 src/
+  consts.ts               # título, descripción, BLOG_PAGE_SIZE, GISCUS (ids públicos) y AUTHOR (perfiles de GitHub y LinkedIn)
+  content.config.ts       # colecciones blog, projects, notes y pages (glob por idioma desde CONTENT_DIR)
   content/
-    blog/{es,en}/         # artículos
-    projects/{es,en}/     # fichas de proyectos
-    notes/{es,en}/        # notas cortas (opcional)
-  content.config.ts       # esquemas de las colecciones
-  components/             # componentes .astro
-  layouts/                # layouts de página
-  pages/                  # rutas (es en raíz, en bajo /en/)
-  i18n/                   # diccionarios de UI y utilidades de idioma
-  styles/
-public/                   # estáticos (favicon, imágenes OG por defecto, robots.txt)
+    schemas.ts            # esquemas Zod del frontmatter (probados con Vitest)
+    blog/{es,en}/         # artículos → /blog/<slug>/ y /en/blog/<slug>/
+    projects/{es,en}/     # proyectos → /proyectos/<slug>/ y /en/projects/<slug>/
+    notes/{es,en}/        # notas cortas → /notas/<slug>/ y /en/notes/<slug>/
+    pages/{es,en}/        # páginas en Markdown (about.md → /sobre-mi/ y /en/about/)
+  lib/
+    content.ts            # utilidades puras: idioma, slug, borradores, orden, traducciones
+    collections.ts        # getPublished(), entryPaths(), getPageEntry(), getTagGroups(): único acceso a las colecciones
+    reading-time.ts, toc.ts, pagination.ts, tags.ts  # lógica pura de 004
+    giscus.ts, giscus-theme.ts  # configuración de Giscus y mensaje de tema (005)
+    seo.ts                # buildMeta(): título, canónica, Open Graph, Twitter Card, hreflang (006)
+    feed.ts, feed-response.ts  # RSS por idioma: artículos y notas (006)
+    share.ts              # enlace oficial de compartir en LinkedIn (007)
+    og-image.ts, og-path.ts  # imagen social generada (satori + sharp) para contenido sin portada (007)
+  assets/                 # imágenes y fuentes (og-default.svg/png: imagen social por defecto, 1200×627)
+  components/             # componentes .astro (Header, Footer, PostCard, ProjectCard, ThemeToggle…)
+  layouts/
+    Base.astro            # html lang, hreflang, tema, skip link, cabecera, main y pie: toda página lo usa
+    BlogPost.astro        # artículos y notas (tiempo de lectura y tabla de contenidos en artículos)
+    Project.astro         # detalle de proyecto
+  views/                  # cuerpo de cada página, con prop `lang` (Home, BlogIndex, Projects, Notes, Tags, Tag, About)
+  pages/                  # rutas: es en la raíz, en bajo /en/; envoltorios finos de views/; og/ genera /og/<colección>/<id>.png
+  i18n/
+    ui.ts                 # diccionario de UI ES/EN (las claves de ES definen el tipo)
+    utils.ts              # useTranslations (t), getLangFromUrl, formatDate
+    routes.ts             # todas las URLs por idioma, alternates y selector de idioma
+  styles/global.css       # estilos globales + import de Tailwind
+public/                   # estáticos servidos tal cual (favicon, robots.txt…)
 tests/
-  unit/                   # Vitest
-  e2e/                    # Playwright
+  unit/NNN-feature/       # Vitest (*.test.ts)
+  e2e/NNN-feature/        # Playwright (*.spec.ts)
+  smoke/                  # humo contra despliegues reales (008)
   fixtures/
-.github/workflows/        # CI: check + lint + pruebas en cada PR
+    content/              # contenido con el que se construye el sitio en las e2e (CONTENT_DIR)
+    invalid-content/      # mini-proyecto con frontmatter inválido (002)
+astro.config.mjs          # site, integraciones, Tailwind (plugin de Vite), fuentes
+vitest.config.ts          # Vitest sobre la config de Vite de Astro
+playwright.config.ts      # e2e sobre build + preview en :4322 (nunca el dev server)
+playwright.smoke.config.ts  # humo contra un despliegue real (SMOKE_BASE_URL)
+vercel.json               # build de Vercel (npm ci, dist, trailingSlash)
+CHANGELOG.md              # cambios por versión (en cada release)
+eslint.config.js          # ESLint (flat config)
+.prettierrc.json          # Prettier (+ plugin de Astro)
+.nvmrc                    # versión de Node (24 LTS)
+.github/workflows/ci.yml  # CI: check + lint + formato + pruebas
+.github/workflows/smoke.yml  # humo tras cada deploy de Vercel
 ```
 
-> La carpeta `src/` se crea en la feature `001-setup`. Mantén esta sección actualizada si la estructura cambia.
+## Notas de Astro
+
+- Astro 7. Documentación: https://docs.astro.build — consulta la guía correspondiente antes de tocar [rutas](https://docs.astro.build/en/guides/routing/), [componentes](https://docs.astro.build/en/basics/astro-components/), [content collections](https://docs.astro.build/en/guides/content-collections/), [estilos/Tailwind](https://docs.astro.build/en/guides/styling/) o [i18n](https://docs.astro.build/en/guides/internationalization/).
+- Cuando detecta que lo ejecuta un agente de IA, `astro dev` y `astro preview` arrancan **en segundo plano**. Gestiónalos con `astro dev stop|status|logs` (igual con `preview`). Para forzar primer plano usa `--ignore-lock` (así lo hace `playwright.config.ts`).
+- Tailwind 4 se integra con `@tailwindcss/vite` e `@import 'tailwindcss'` en `src/styles/global.css`; no hay `tailwind.config.*`.
+- Componentes en la Container API para pruebas: `experimental_AstroContainer` de `astro/container`.
 
 ## Gestor de paquetes: npm
 
@@ -107,13 +151,13 @@ tests/
 
 ## Flujo de ramas: Gitflow
 
-| Rama | Sale de | Se mergea a | Uso |
-| --- | --- | --- | --- |
-| `main` | — | — | Producción. Solo recibe merges de `release/*` y `hotfix/*`. Cada merge lleva tag `vX.Y.Z`. |
-| `develop` | `main` | — | Integración. Base de todo el trabajo nuevo. |
-| `feature/NNN-nombre` | `develop` | `develop` | Una por spec (p. ej. `feature/003-i18n`). |
-| `release/X.Y.Z` | `develop` | `main` y `develop` | Preparar una versión: solo ajustes, changelog y versión. |
-| `hotfix/X.Y.Z` | `main` | `main` y `develop` | Correcciones urgentes en producción. |
+| Rama                 | Sale de   | Se mergea a        | Uso                                                                                        |
+| -------------------- | --------- | ------------------ | ------------------------------------------------------------------------------------------ |
+| `main`               | —         | —                  | Producción. Solo recibe merges de `release/*` y `hotfix/*`. Cada merge lleva tag `vX.Y.Z`. |
+| `develop`            | `main`    | —                  | Integración. Base de todo el trabajo nuevo.                                                |
+| `feature/NNN-nombre` | `develop` | `develop`          | Una por spec (p. ej. `feature/003-i18n`).                                                  |
+| `release/X.Y.Z`      | `develop` | `main` y `develop` | Preparar una versión: solo ajustes, changelog y versión.                                   |
+| `hotfix/X.Y.Z`       | `main`    | `main` y `develop` | Correcciones urgentes en producción.                                                       |
 
 Reglas:
 
@@ -124,31 +168,47 @@ Reglas:
 - Borra la rama tras el merge.
 - Mensajes de commit con Conventional Commits (ver Convenciones).
 
+## Despliegue (Vercel)
+
+- Vercel despliega desde GitHub (`vercel.json`: `npm ci`, `npm run build`, `dist`, `trailingSlash`). **Producción = `main`** en `https://lgonzalez.dev` (`www` redirige al raíz); `develop` y cada PR tienen su **preview** (protegida por Vercel; los borradores solo se ven ahí, por `VERCEL_ENV=preview`).
+- Tras cada deploy correcto, el workflow `Smoke` (`.github/workflows/smoke.yml`) ejecuta `tests/smoke/` contra su URL; en producción, también el dominio y las redirecciones. Necesita el secreto `VERCEL_AUTOMATION_BYPASS_SECRET` para las previews.
+- **Release** (solo si el usuario la pide):
+  1. `release/X.Y.Z` desde `develop`: `version` en `package.json` y entrada en `CHANGELOG.md`.
+  2. PR `release/X.Y.Z → main` (merge commit) con CI en verde → tag `vX.Y.Z` en el merge → Vercel publica.
+  3. PR `release/X.Y.Z → develop` (merge commit) y borrar la rama.
+  4. Comprobar el workflow `Smoke` de producción.
+- **Hotfix:** igual, desde `main` en `hotfix/X.Y.Z` (versión PATCH), con PR a `main` y a `develop`.
+
 ## Comandos
 
-| Acción | Comando |
-| --- | --- |
-| Instalar dependencias | `npm ci` |
-| Servidor de desarrollo | `npm run dev` |
-| Build de producción | `npm run build` |
-| Previsualizar build | `npm run preview` |
-| Tipos + esquemas de contenido | `npm run check` |
-| Lint | `npm run lint` |
-| Formato | `npm run format` |
-| Pruebas unitarias | `npm run test:unit` |
-| Pruebas funcionales (sobre el build) | `npm run test:e2e` |
-| Todas las pruebas | `npm test` |
+| Acción                               | Comando                                                          |
+| ------------------------------------ | ---------------------------------------------------------------- |
+| Instalar dependencias                | `npm ci`                                                         |
+| Servidor de desarrollo               | `npm run dev`                                                    |
+| Build de producción                  | `npm run build`                                                  |
+| Previsualizar build                  | `npm run preview`                                                |
+| Tipos + esquemas de contenido        | `npm run check`                                                  |
+| Lint                                 | `npm run lint`                                                   |
+| Formato                              | `npm run format`                                                 |
+| Comprobar formato (CI)               | `npm run format:check`                                           |
+| Pruebas unitarias                    | `npm run test:unit`                                              |
+| Pruebas funcionales (sobre el build) | `npm run test:e2e`                                               |
+| Todas las pruebas                    | `npm test`                                                       |
+| Humo contra un despliegue            | `SMOKE_BASE_URL=<url> npm run test:smoke`                        |
+| Dominio y redirecciones (producción) | `SMOKE_BASE_URL=https://lgonzalez.dev npm run test:smoke:domain` |
 
-> Los scripts se definen en `001-setup`. Si cambian, actualiza esta tabla.
+> Si cambian los scripts de `package.json`, actualiza esta tabla.
 
 ## Convenciones
 
-- Archivos y rutas en **kebab-case**.
+- Rutas, contenido, utilidades y pruebas en **kebab-case**; componentes y layouts `.astro` en **PascalCase** (convención de Astro).
 - Todo contenido lleva **frontmatter validado por esquema**; nunca desactives la validación.
 - Las traducciones de un mismo post comparten el campo `translationKey`.
-- **Ningún texto de UI hardcodeado**: todo pasa por el diccionario de `src/i18n/`, en ES y EN.
-- Imágenes con el componente de imágenes de Astro y **`alt` obligatorio**.
-- **Cero JS en cliente por defecto**; usa islas solo si aportan valor y justifícalo en `plan.md`.
+- **Ningún texto de UI hardcodeado**: todo pasa por el diccionario de `src/i18n/ui.ts` (`t('clave')`), en ES y EN. Las URLs se construyen con `src/i18n/routes.ts`, nunca a mano.
+- URLs por idioma: `/` · `/en/`, `/blog/` · `/en/blog/` (páginas `/blog/pagina/N/` · `/en/blog/page/N/`), `/blog/<slug>/` · `/en/blog/<slug>/`, `/proyectos/` · `/en/projects/` (y `<slug>/`), `/notas/` · `/en/notes/` (y `<slug>/`), `/etiquetas/` · `/en/tags/` (y `<tag>/`), `/sobre-mi/` · `/en/about/`.
+- Imágenes con el componente de imágenes de Astro y **`alt` obligatorio**. Las portadas miden al menos **1200×627** (son también la imagen al compartir; si no, el build falla).
+- Feeds: `/rss.xml` (ES) y `/en/rss.xml` (EN); sitemap en `/sitemap-index.xml`; `robots.txt` generado.
+- **Cero JS en cliente por defecto**; usa islas solo si aportan valor y justifícalo en `plan.md`. Excepciones aprobadas: el modo oscuro (`ThemeToggle.astro` y el script inline de `Base.astro`, spec 004), la carga bajo demanda de Giscus (`Comments.astro`, spec 005) la analítica de Vercel, sin cookies y solo en builds de Vercel (`Analytics.astro`, spec 006), y «Copiar enlace» (`ShareButtons.astro`, spec 007; compartir en LinkedIn es un enlace sin JS).
 - Commits con **Conventional Commits** (`feat:`, `fix:`, `docs:`, `chore:`…), referenciando la spec cuando aplique (p. ej. `feat(003-i18n): selector de idioma`).
 - **Una rama por spec**: `feature/NNN-nombre` desde `develop`, mergeada a `develop` vía PR (ver Gitflow).
 

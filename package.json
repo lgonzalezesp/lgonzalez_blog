@@ -1,0 +1,55 @@
+{
+	"name": "lgonzalez-blog",
+	"type": "module",
+	"version": "0.1.0",
+	"engines": {
+		"node": "^22.12.0 || ^24.0.0 || >=26.0.0",
+		"npm": ">=10"
+	},
+	"scripts": {
+		"dev": "astro dev",
+		"build": "astro build",
+		"preview": "astro preview",
+		"astro": "astro",
+		"test:unit": "vitest run",
+		"test:e2e": "playwright test",
+		"test": "npm run test:unit && npm run test:e2e",
+		"check": "astro check",
+		"lint": "eslint .",
+		"format": "prettier --write .",
+		"format:check": "prettier --check .",
+		"test:smoke": "playwright test --config playwright.smoke.config.ts --project deploy",
+		"test:smoke:domain": "playwright test --config playwright.smoke.config.ts --project domain"
+	},
+	"dependencies": {
+		"@astrojs/mdx": "^8.0.2",
+		"@astrojs/rss": "^4.0.19",
+		"@astrojs/sitemap": "^3.7.4",
+		"@tailwindcss/vite": "^4.3.3",
+		"astro": "^7.3.5",
+		"satori": "^0.35.0",
+		"sharp": "^0.35.0",
+		"tailwindcss": "^4.3.3"
+	},
+	"allowScripts": {
+		"esbuild": true
+	},
+	"private": true,
+	"devDependencies": {
+		"@astrojs/check": "^0.9.10",
+		"@axe-core/playwright": "^4.13.0",
+		"@eslint/js": "^10.0.1",
+		"@playwright/test": "^1.63.0",
+		"eslint": "^10.11.0",
+		"eslint-plugin-astro": "^3.2.1",
+		"globals": "^17.13.0",
+		"prettier": "^3.9.9",
+		"prettier-plugin-astro": "^1.1.0",
+		"typescript": "^6.0.3",
+		"typescript-eslint": "^8.71.0",
+		"vitest": "^5.0.3"
+	},
+	"overrides": {
+		"fflate": "0.7.5"
+	}
+}

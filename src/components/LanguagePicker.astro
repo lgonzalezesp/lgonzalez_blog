@@ -1,0 +1,18 @@
+---
+// Plain link to the same page in the other language (no JS). Its text is the target
+// language's own name ("English" / "Español"), marked with `lang` (WCAG 3.1.2).
+import { type Alternates, otherLang, switchUrl } from '../i18n/routes';
+import { type Lang, ui } from '../i18n/ui';
+
+interface Props {
+	lang: Lang;
+	alternates: Alternates;
+}
+
+const { lang, alternates } = Astro.props;
+const target = otherLang(lang);
+---
+
+<a class="language-picker text-sm" href={switchUrl(alternates, lang)} hreflang={target} lang={target}>
+	{ui[target]['lang.name']}
+</a>

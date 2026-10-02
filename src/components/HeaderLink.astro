@@ -1,0 +1,27 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+
+type Props = HTMLAttributes<'a'> & {
+	/** Only active on an exact match (home links), instead of on any page below `href`. */
+	exact?: boolean;
+};
+
+const { href, class: className, exact = false, ...props } = Astro.props;
+const pathname = Astro.url.pathname;
+const target = String(href);
+const isCurrent = pathname === target;
+const isActive = isCurrent || (!exact && pathname.startsWith(target));
+---
+
+<a
+	href={href}
+	class:list={[
+		'inline-block py-1 text-fg no-underline hover:text-accent',
+		{ 'font-bold underline decoration-accent decoration-2 underline-offset-8': isActive },
+		className,
+	]}
+	aria-current={isCurrent ? 'page' : undefined}
+	{...props}
+>
+	<slot />
+</a>

@@ -1,0 +1,82 @@
+---
+import type { ImageMetadata } from 'astro';
+import { Image } from 'astro:assets';
+import Comments from '../components/Comments.astro';
+import ProjectStatus from '../components/ProjectStatus.astro';
+import ShareButtons from '../components/ShareButtons.astro';
+import TagList from '../components/TagList.astro';
+import type { Alternates } from '../i18n/routes';
+import type { OgImage } from '../lib/seo';
+import type { Lang } from '../i18n/ui';
+import { useTranslations } from '../i18n/utils';
+import Base from './Base.astro';
+
+interface Props {
+	title: string;
+	description: string;
+	cover?: { src: ImageMetadata; alt: string };
+	tags: string[];
+	stack: string[];
+	status: 'active' | 'completed' | 'archived';
+	repoUrl?: string;
+	demoUrl?: string;
+	lang: Lang;
+	alternates: Alternates;
+	/** Generated social image, used when there is no cover. */
+	generatedImage?: OgImage;
+}
+
+const { title, description, cover, tags, stack, status, repoUrl, demoUrl, lang, alternates, generatedImage } =
+	Astro.props;
+const t = useTranslations(lang);
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+---
+
+<Base
+	title={title}
+	description={description}
+	image={cover}
+	generatedImage={generatedImage}
+	lang={lang}
+	alternates={alternates}
+>
+	<article>
+		<header class="mb-8 flex flex-col gap-3">
+			{cover && (
+				<Image
+					src={cover.src}
+					alt={cover.alt}
+					width={1020}
+					height={510}
+					class="mb-4 aspect-[2/1] w-full rounded-lg object-cover"
+					loading="eager"
+				/>
+			)}
+			<h1 class="text-3xl leading-tight font-bold sm:text-4xl">{title}</h1>
+			<p class="text-lg text-muted">{description}</p>
+			<dl class="grid grid-cols-[auto_1fr] gap-x-4 gap-y-2 text-sm">
+				<dt class="font-bold">{t('project.status')}</dt>
+				<dd>
+					<ProjectStatus status={status} lang={lang} />
+				</dd>
+				<dt class="font-bold">{t('project.stack')}</dt>
+				<dd>{stack.join(' · ')}</dd>
+			</dl>
+			{(repoUrl || demoUrl) && (
+				<p class="flex gap-4">
+					{repoUrl && <a href={repoUrl}>{t('project.repo')}</a>}
+					{demoUrl && <a href={demoUrl}>{t('project.demo')}</a>}
+				</p>
+			)}
+			<TagList tags={tags} lang={lang} />
+			<ShareButtons lang={lang} url={canonical} />
+		</header>
+		<div class="prose">
+			<slot />
+		</div>
+		<footer class="mt-12">
+			<ShareButtons lang={lang} url={canonical} />
+		</footer>
+	</article>
+	<Comments lang={lang} />
+</Base>

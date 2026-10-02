@@ -1,6 +1,6 @@
 # Spec 008 — Despliegue en Vercel
 
-- **Estado:** Borrador
+- **Estado:** Aprobada
 - **Rama:** `feature/008-deploy`
 
 ## Contexto / Por qué

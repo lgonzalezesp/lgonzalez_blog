@@ -1,0 +1,51 @@
+---
+import type { ImageMetadata } from 'astro';
+import { Image } from 'astro:assets';
+import { entryUrl } from '../i18n/routes';
+import type { Lang } from '../i18n/ui';
+import FormattedDate from './FormattedDate.astro';
+import TagList from './TagList.astro';
+
+interface Props {
+	post: {
+		id: string;
+		data: {
+			title: string;
+			description: string;
+			pubDate: Date;
+			tags: string[];
+			lang: Lang;
+			cover?: { src: ImageMetadata; alt: string };
+		};
+	};
+	lang: Lang;
+	/** Heading level of the title, so listings keep a correct outline. */
+	headingLevel?: 2 | 3;
+}
+
+const { post, lang, headingLevel = 2 } = Astro.props;
+const Heading = `h${headingLevel}` as 'h2' | 'h3';
+const { title, description, pubDate, tags, cover } = post.data;
+---
+
+<article class="flex flex-col gap-2">
+	{cover && (
+		<Image
+			src={cover.src}
+			alt={cover.alt}
+			width={720}
+			height={360}
+			class="aspect-[2/1] w-full rounded-lg object-cover"
+		/>
+	)}
+	<Heading class="text-xl leading-snug font-bold">
+		<a href={entryUrl('blog', post)} class="text-fg no-underline hover:text-accent hover:underline">
+			{title}
+		</a>
+	</Heading>
+	<p class="text-sm text-muted">
+		<FormattedDate date={pubDate} lang={lang} />
+	</p>
+	<p>{description}</p>
+	<TagList tags={tags} lang={lang} />
+</article>

@@ -1,0 +1,55 @@
+name: Smoke
+
+# Runs after every successful Vercel deployment (Vercel reports them to GitHub as deployment statuses):
+# smoke tests against the deployment URL, and the domain checks in production (spec 008).
+on:
+  deployment_status:
+
+permissions:
+  contents: read
+
+jobs:
+  smoke:
+    name: Smoke (${{ github.event.deployment.environment }})
+    if: github.event.deployment_status.state == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      SMOKE_BASE_URL: ${{ github.event.deployment_status.environment_url || github.event.deployment_status.target_url }}
+      VERCEL_AUTOMATION_BYPASS_SECRET: ${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}
+      IS_PRODUCTION: ${{ contains(github.event.deployment.environment, 'Production') }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.deployment.sha }}
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - run: npm ci
+
+      - name: Previews need the Vercel protection bypass secret
+        if: env.IS_PRODUCTION != 'true'
+        run: |
+          if [ -z "$VERCEL_AUTOMATION_BYPASS_SECRET" ]; then
+            echo "::error::Falta el secreto VERCEL_AUTOMATION_BYPASS_SECRET (Vercel → Settings → Deployment Protection → Protection Bypass for Automation)."
+            exit 1
+          fi
+
+      - run: npx playwright install --with-deps chromium
+
+      - name: Smoke tests on ${{ env.SMOKE_BASE_URL }}
+        run: npm run test:smoke
+
+      - name: Domain, HTTPS and redirects (production)
+        if: env.IS_PRODUCTION == 'true'
+        run: npm run test:smoke:domain
+
+      - uses: actions/upload-artifact@v7
+        if: failure()
+        with:
+          name: smoke-report
+          path: playwright-report/
+          retention-days: 7

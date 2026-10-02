@@ -1,0 +1,55 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [develop, main]
+  push:
+    branches: [develop, main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  ci:
+    name: CI
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - run: npm ci
+
+      - name: Check (tipos + contenido)
+        run: npm run check
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Formato
+        run: npm run format:check
+
+      - name: Pruebas unitarias
+        run: npm run test:unit
+
+      - name: Instalar navegador de Playwright
+        run: npx playwright install --with-deps chromium
+
+      - name: Pruebas funcionales
+        run: npm run test:e2e
+
+      - name: Subir informe de Playwright
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 7

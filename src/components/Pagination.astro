@@ -1,0 +1,35 @@
+---
+import { blogPageUrl } from '../i18n/routes';
+import type { Lang } from '../i18n/ui';
+import { useTranslations } from '../i18n/utils';
+
+interface Props {
+	page: { number: number; total: number; prev?: number; next?: number };
+	lang: Lang;
+}
+
+const { page, lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+{page.total > 1 && (
+	<nav aria-label={t('pagination.label')} class="mt-12 flex items-center justify-between gap-4">
+		{page.prev ? (
+			<a href={blogPageUrl(page.prev, lang)} rel="prev">
+				← {t('pagination.prev')}
+			</a>
+		) : (
+			<span />
+		)}
+		<span class="text-sm text-muted" aria-current="page">
+			{t('pagination.status', { page: page.number, total: page.total })}
+		</span>
+		{page.next ? (
+			<a href={blogPageUrl(page.next, lang)} rel="next">
+				{t('pagination.next')} →
+			</a>
+		) : (
+			<span />
+		)}
+	</nav>
+)}
