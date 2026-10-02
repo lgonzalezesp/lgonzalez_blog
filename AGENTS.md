@@ -69,6 +69,8 @@ tests/
 
 ## Estructura del repositorio
 
+Las rutas marcadas con _(NNN)_ aún no existen; se crean en esa spec.
+
 ```
 AGENTS.md                 # este archivo (canónico)
 CLAUDE.md                 # importa AGENTS.md para Claude Code
@@ -78,25 +80,38 @@ specs/
   _templates/             # plantillas spec/plan/tasks
   NNN-nombre/             # una carpeta por feature
 src/
-  content/
-    blog/{es,en}/         # artículos
-    projects/{es,en}/     # fichas de proyectos
-    notes/{es,en}/        # notas cortas (opcional)
+  consts.ts               # título y descripción del sitio
   content.config.ts       # esquemas de las colecciones
+  content/
+    blog/                 # artículos (por idioma {es,en}/ en 002)
+    projects/             # fichas de proyectos (002)
+    notes/                # notas cortas (002)
+  assets/                 # imágenes y fuentes procesadas por Astro
   components/             # componentes .astro
   layouts/                # layouts de página
-  pages/                  # rutas (es en raíz, en bajo /en/)
-  i18n/                   # diccionarios de UI y utilidades de idioma
-  styles/
-public/                   # estáticos (favicon, imágenes OG por defecto, robots.txt)
+  pages/                  # rutas (es en raíz, en bajo /en/ desde 003)
+  i18n/                   # diccionarios de UI y utilidades de idioma (003)
+  styles/global.css       # estilos globales + import de Tailwind
+public/                   # estáticos servidos tal cual (favicon, robots.txt…)
 tests/
-  unit/                   # Vitest
-  e2e/                    # Playwright
-  fixtures/
-.github/workflows/        # CI: check + lint + pruebas en cada PR
+  unit/NNN-feature/       # Vitest (*.test.ts)
+  e2e/NNN-feature/        # Playwright (*.spec.ts)
+  fixtures/               # contenido de prueba (002)
+astro.config.mjs          # site, integraciones, Tailwind (plugin de Vite), fuentes
+vitest.config.ts          # Vitest sobre la config de Vite de Astro
+playwright.config.ts      # e2e sobre build + preview en :4321
+eslint.config.js          # ESLint (flat config)
+.prettierrc.json          # Prettier (+ plugin de Astro)
+.nvmrc                    # versión de Node (24 LTS)
+.github/workflows/ci.yml  # CI: check + lint + formato + pruebas
 ```
 
-> La carpeta `src/` se crea en la feature `001-setup`. Mantén esta sección actualizada si la estructura cambia.
+## Notas de Astro
+
+- Astro 7. Documentación: https://docs.astro.build — consulta la guía correspondiente antes de tocar [rutas](https://docs.astro.build/en/guides/routing/), [componentes](https://docs.astro.build/en/basics/astro-components/), [content collections](https://docs.astro.build/en/guides/content-collections/), [estilos/Tailwind](https://docs.astro.build/en/guides/styling/) o [i18n](https://docs.astro.build/en/guides/internationalization/).
+- Cuando detecta que lo ejecuta un agente de IA, `astro dev` y `astro preview` arrancan **en segundo plano**. Gestiónalos con `astro dev stop|status|logs` (igual con `preview`). Para forzar primer plano usa `--ignore-lock` (así lo hace `playwright.config.ts`).
+- Tailwind 4 se integra con `@tailwindcss/vite` e `@import 'tailwindcss'` en `src/styles/global.css`; no hay `tailwind.config.*`.
+- Componentes en la Container API para pruebas: `experimental_AstroContainer` de `astro/container`.
 
 ## Gestor de paquetes: npm
 
@@ -107,13 +122,13 @@ tests/
 
 ## Flujo de ramas: Gitflow
 
-| Rama | Sale de | Se mergea a | Uso |
-| --- | --- | --- | --- |
-| `main` | — | — | Producción. Solo recibe merges de `release/*` y `hotfix/*`. Cada merge lleva tag `vX.Y.Z`. |
-| `develop` | `main` | — | Integración. Base de todo el trabajo nuevo. |
-| `feature/NNN-nombre` | `develop` | `develop` | Una por spec (p. ej. `feature/003-i18n`). |
-| `release/X.Y.Z` | `develop` | `main` y `develop` | Preparar una versión: solo ajustes, changelog y versión. |
-| `hotfix/X.Y.Z` | `main` | `main` y `develop` | Correcciones urgentes en producción. |
+| Rama                 | Sale de   | Se mergea a        | Uso                                                                                        |
+| -------------------- | --------- | ------------------ | ------------------------------------------------------------------------------------------ |
+| `main`               | —         | —                  | Producción. Solo recibe merges de `release/*` y `hotfix/*`. Cada merge lleva tag `vX.Y.Z`. |
+| `develop`            | `main`    | —                  | Integración. Base de todo el trabajo nuevo.                                                |
+| `feature/NNN-nombre` | `develop` | `develop`          | Una por spec (p. ej. `feature/003-i18n`).                                                  |
+| `release/X.Y.Z`      | `develop` | `main` y `develop` | Preparar una versión: solo ajustes, changelog y versión.                                   |
+| `hotfix/X.Y.Z`       | `main`    | `main` y `develop` | Correcciones urgentes en producción.                                                       |
 
 Reglas:
 
@@ -126,24 +141,25 @@ Reglas:
 
 ## Comandos
 
-| Acción | Comando |
-| --- | --- |
-| Instalar dependencias | `npm ci` |
-| Servidor de desarrollo | `npm run dev` |
-| Build de producción | `npm run build` |
-| Previsualizar build | `npm run preview` |
-| Tipos + esquemas de contenido | `npm run check` |
-| Lint | `npm run lint` |
-| Formato | `npm run format` |
-| Pruebas unitarias | `npm run test:unit` |
-| Pruebas funcionales (sobre el build) | `npm run test:e2e` |
-| Todas las pruebas | `npm test` |
+| Acción                               | Comando                |
+| ------------------------------------ | ---------------------- |
+| Instalar dependencias                | `npm ci`               |
+| Servidor de desarrollo               | `npm run dev`          |
+| Build de producción                  | `npm run build`        |
+| Previsualizar build                  | `npm run preview`      |
+| Tipos + esquemas de contenido        | `npm run check`        |
+| Lint                                 | `npm run lint`         |
+| Formato                              | `npm run format`       |
+| Comprobar formato (CI)               | `npm run format:check` |
+| Pruebas unitarias                    | `npm run test:unit`    |
+| Pruebas funcionales (sobre el build) | `npm run test:e2e`     |
+| Todas las pruebas                    | `npm test`             |
 
-> Los scripts se definen en `001-setup`. Si cambian, actualiza esta tabla.
+> Si cambian los scripts de `package.json`, actualiza esta tabla.
 
 ## Convenciones
 
-- Archivos y rutas en **kebab-case**.
+- Rutas, contenido, utilidades y pruebas en **kebab-case**; componentes y layouts `.astro` en **PascalCase** (convención de Astro).
 - Todo contenido lleva **frontmatter validado por esquema**; nunca desactives la validación.
 - Las traducciones de un mismo post comparten el campo `translationKey`.
 - **Ningún texto de UI hardcodeado**: todo pasa por el diccionario de `src/i18n/`, en ES y EN.

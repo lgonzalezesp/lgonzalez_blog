@@ -1,6 +1,6 @@
 # Spec 001 — Setup del proyecto
 
-- **Estado:** Borrador
+- **Estado:** En progreso
 - **Rama:** `feature/001-setup`
 
 ## Contexto / Por qué
