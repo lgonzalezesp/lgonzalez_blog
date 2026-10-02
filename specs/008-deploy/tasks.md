@@ -34,7 +34,7 @@ Las pruebas se escriben antes o junto a la implementación que cubren y deben ve
 
 - [ ] T17 — 005: comentario de prueba visible en Discussions → Comments
 - [ ] T18 — 006: Web Analytics y Speed Insights con datos; sin cookies en producción. Scripts activos y sin cookies verificados; falta ver datos en el panel de Vercel (Analytics y Speed Insights)
-- [ ] T19 — 007: LinkedIn Post Inspector con un artículo en ES y otro en EN
+- [x] T19 — 007: LinkedIn Post Inspector con un artículo en ES y otro en EN: título, descripción, tipo `article` e imagen (1200×627) correctos en ES y EN, sin redirecciones (2026-10-02). Avisos menores del inspector: «No author found» y fecha de publicación mostrada en hora local (1 oct 21:00 en vez de 2 oct)
 - [ ] T20 — Comprobar una vez que un build roto en una preview no afecta a producción
 
 ## Cierre
