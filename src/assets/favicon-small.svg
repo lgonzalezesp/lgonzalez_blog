@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+	<title>lgonzalez.dev</title>
+	<style>
+		.bg { fill: #1d4ed8; }
+		.fg { stroke: #ffffff; }
+		@media (prefers-color-scheme: dark) {
+			.bg { fill: #93c5fd; }
+			.fg { stroke: #0b1220; }
+		}
+	</style>
+	<rect class="bg" width="64" height="64" rx="14" />
+	<g id="letters" class="fg" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round">
+		<path d="M13 13V51H24" />
+		<path d="M54 22A11 19 0 1 0 54 42V33H44.5" />
+	</g>
+</svg>

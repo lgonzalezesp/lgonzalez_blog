@@ -18,6 +18,7 @@ Cada apartado corresponde a una especificación de [`specs/`](./specs/README.md)
 | 006 | **SEO, feeds y analítica** | Metadatos, Open Graph y Twitter Card, URLs canónicas, RSS por idioma, sitemap y `robots.txt`. Vercel Web Analytics y Speed Insights, sin cookies.                                                                               |
 | 007 | **Compartir en LinkedIn**  | Botón de compartir (un enlace, sin scripts de LinkedIn), «Copiar enlace», imagen social de 1200×627 generada en el build para el contenido sin portada y enlace al perfil del autor.                                            |
 | 008 | **Despliegue**             | Vercel con producción en `main` y previews protegidas en `develop` y en cada PR. Pruebas de humo tras cada despliegue. Proceso de release y hotfix.                                                                             |
+| 009 | **Favicon**                | Iniciales LG con una pata de perro, con modo oscuro. Generado desde un SVG fuente (`npm run icons`): `.ico`, icono de Apple e iconos de 192/512 con `manifest.webmanifest`.                                                     |
 
 ## Principios
 
@@ -60,6 +61,7 @@ Los borradores (`draft: true`) se ven en `npm run dev` y en las previews de Verc
 | Pruebas unitarias                    | `npm run test:unit`                                              |
 | Pruebas funcionales (sobre el build) | `npm run test:e2e`                                               |
 | Todas las pruebas                    | `npm test`                                                       |
+| Regenerar favicon e iconos           | `npm run icons`                                                  |
 | Humo contra un despliegue            | `SMOKE_BASE_URL=<url> npm run test:smoke`                        |
 | Dominio y redirecciones (producción) | `SMOKE_BASE_URL=https://lgonzalez.dev npm run test:smoke:domain` |
 
