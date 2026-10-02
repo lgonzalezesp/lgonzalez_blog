@@ -101,7 +101,7 @@ src/
     feed.ts, feed-response.ts  # RSS por idioma: artículos y notas (006)
     share.ts              # enlace oficial de compartir en LinkedIn (007)
     og-image.ts, og-path.ts  # imagen social generada (satori + sharp) para contenido sin portada (007)
-  assets/                 # imágenes y fuentes (og-default.svg/png: imagen social por defecto, 1200×627)
+  assets/                 # imágenes y fuentes (og-default.svg/png: imagen social por defecto, 1200×627; favicon-source.svg y favicon-small.svg: fuentes del favicon, 009)
   components/             # componentes .astro (Header, Footer, PostCard, ProjectCard, ThemeToggle…)
   layouts/
     Base.astro            # html lang, hreflang, tema, skip link, cabecera, main y pie: toda página lo usa
@@ -114,7 +114,7 @@ src/
     utils.ts              # useTranslations (t), getLangFromUrl, formatDate
     routes.ts             # todas las URLs por idioma, alternates y selector de idioma
   styles/global.css       # estilos globales + import de Tailwind
-public/                   # estáticos servidos tal cual (favicon, robots.txt…)
+public/                   # estáticos servidos tal cual: favicon, iconos y manifest (generados con `npm run icons`, 009), robots.txt…
 tests/
   unit/NNN-feature/       # Vitest (*.test.ts)
   e2e/NNN-feature/        # Playwright (*.spec.ts)
@@ -126,6 +126,7 @@ astro.config.mjs          # site, integraciones, Tailwind (plugin de Vite), fuen
 vitest.config.ts          # Vitest sobre la config de Vite de Astro
 playwright.config.ts      # e2e sobre build + preview en :4322 (nunca el dev server)
 playwright.smoke.config.ts  # humo contra un despliegue real (SMOKE_BASE_URL)
+scripts/generate-favicons.mjs  # genera los iconos de public/ desde el SVG fuente (`npm run icons`)
 vercel.json               # build de Vercel (npm ci, dist, trailingSlash)
 CHANGELOG.md              # cambios por versión (en cada release)
 eslint.config.js          # ESLint (flat config)
@@ -196,6 +197,7 @@ Reglas:
 | Todas las pruebas                    | `npm test`                                                       |
 | Humo contra un despliegue            | `SMOKE_BASE_URL=<url> npm run test:smoke`                        |
 | Dominio y redirecciones (producción) | `SMOKE_BASE_URL=https://lgonzalez.dev npm run test:smoke:domain` |
+| Regenerar favicon e iconos           | `npm run icons`                                                  |
 
 > Si cambian los scripts de `package.json`, actualiza esta tabla.
 

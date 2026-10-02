@@ -14,6 +14,7 @@ Cada spec debe entregar **pruebas unitarias** (Vitest) y **pruebas funcionales**
 | 006 | [SEO, feeds y analítica](./006-seo-analytics/spec.md) | Aprobada | [Aprobado](./006-seo-analytics/plan.md)  | [14/14](./006-seo-analytics/tasks.md)  | Hecha ([PR #6](https://github.com/lgonzalezesp/lgonzalez_blog/pull/6)) |
 | 007 | [Compartir en LinkedIn](./007-linkedin-share/spec.md) | Aprobada | [Aprobado](./007-linkedin-share/plan.md) | [16/16](./007-linkedin-share/tasks.md) | Hecha ([PR #7](https://github.com/lgonzalezesp/lgonzalez_blog/pull/7)) |
 | 008 | [Despliegue en Vercel](./008-deploy/spec.md)          | Aprobada | [Aprobado](./008-deploy/plan.md)         | [8/20](./008-deploy/tasks.md)          | En curso                                                               |
+| 009 | [Favicon](./009-favicon/spec.md)                      | Aprobada | [Aprobado](./009-favicon/plan.md)        | [10/10](./009-favicon/tasks.md)        | En revisión                                                            |
 
 ## Tareas manuales (fuera del código)
 

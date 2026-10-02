@@ -100,3 +100,9 @@
 - `npm run check && npm run lint && npm run format:check && npm test` en local y en CI.
 - Manual: ver el favicon real en la pestaña (claro y oscuro) y el icono de iOS en la vista de la preview de Vercel; revisar el render a 16, 32 y 180 px.
 - Lighthouse ≥ 95 en portada y un artículo (ES y EN).
+
+## Ajustes durante la implementación
+
+- Los iconos de Apple, 192 y 512 se generan con la tarjeta cuadrada (`rx="0"`): la plataforma aplica su propio redondeo y así no hay esquinas transparentes. El `favicon.svg` conserva la tarjeta redondeada.
+- La prueba funcional del modo oscuro usa un viewport de 256 px y muestrea un píxel dentro de la tarjeta (Chromium no renderiza un SVG a 64 px exactos).
+- `BaseHead` se prueba con la Container API configurando `site` (necesario para las URLs absolutas de `buildMeta`).

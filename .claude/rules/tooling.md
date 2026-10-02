@@ -13,6 +13,8 @@ paths:
   - 'tsconfig.json'
   - 'vercel.json'
   - 'playwright.smoke.config.ts'
+  - 'scripts/**'
+  - 'public/**'
 ---
 
 # Dependencias, configuración y CI
@@ -24,6 +26,7 @@ paths:
 - El job de `.github/workflows/ci.yml` se llama **`CI`** y es el check obligatorio de la protección de `main` y `develop`: no lo renombres ni elimines pasos (`check`, `lint`, `format:check`, `test:unit`, `test:e2e`) sin actualizar la protección y la spec.
 - `playwright.config.ts` usa `astro preview --ignore-lock`: sin ese flag, Astro lanza el servidor en segundo plano al detectar un agente y Playwright falla. No lo quites.
 - `vercel.json` fija `npm ci`, `npm run build`, `dist` y `trailingSlash: true` (lo comprueba `tests/unit/008-deploy/vercel-config.test.ts`). El workflow `Smoke` corre en `deployment_status`; no lo conviertas en check obligatorio de la protección de ramas (depende de que Vercel termine).
+- El favicon y los iconos de `public/` (`favicon.svg`, `favicon.ico`, `apple-touch-icon.png`, `icon-192.png`, `icon-512.png`) **se generan**: edita `src/assets/favicon-source.svg` (o `favicon-small.svg`, solo para el `.ico`), ejecuta `npm run icons` y commitea los archivos. Una prueba falla si lo versionado no coincide con la fuente (spec 009).
 - `site` en `astro.config.mjs` es `https://lgonzalez.dev`; cambiarlo afecta a RSS, sitemap, canónicas y Giscus.
 - Si cambias scripts de `package.json`, actualiza la tabla "Comandos" de `AGENTS.md`.
 - Al terminar: `npm run check && npm run lint && npm run format:check && npm test`.

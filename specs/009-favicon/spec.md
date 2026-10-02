@@ -1,6 +1,6 @@
 # Spec 009 — Favicon
 
-- **Estado:** Aprobada
+- **Estado:** En revisión
 - **Rama:** `feature/009-favicon`
 
 ## Contexto / Por qué
@@ -17,30 +17,30 @@ El diseño son las iniciales **LG** con una **pata de perro**, en los colores de
 
 ## Criterios de aceptación
 
-- [ ] El favicon es un diseño propio: iniciales **LG** y una pata de perro. No queda rastro del logo de Astro.
-- [ ] Legible a 16×16 y a 32×32 px (las letras y la pata se distinguen).
-- [ ] `favicon.svg` se adapta al modo claro/oscuro del navegador (`prefers-color-scheme`).
-- [ ] Existen `favicon.ico` (32×32), `apple-touch-icon.png` (180×180) e iconos de 192×192 y 512×512 px.
-- [ ] `manifest.webmanifest` válido con nombre, colores e iconos; enlazado desde el `<head>`.
-- [ ] Todas las páginas (ES y EN, incluida la 404) enlazan los iconos en el `<head>` con rutas absolutas desde la raíz, y todos responden 200 con el tipo y el tamaño correctos.
-- [ ] Los formatos se generan desde un único SVG fuente con un script de npm; los archivos generados se versionan.
-- [ ] Sin dependencias nuevas, sin JS en cliente ni peticiones externas.
-- [ ] Lighthouse ≥ 95 en las páginas afectadas.
+- [x] El favicon es un diseño propio: iniciales **LG** y una pata de perro. No queda rastro del logo de Astro.
+- [x] Legible a 16×16 y a 32×32 px (las letras y la pata se distinguen).
+- [x] `favicon.svg` se adapta al modo claro/oscuro del navegador (`prefers-color-scheme`).
+- [x] Existen `favicon.ico` (32×32), `apple-touch-icon.png` (180×180) e iconos de 192×192 y 512×512 px.
+- [x] `manifest.webmanifest` válido con nombre, colores e iconos; enlazado desde el `<head>`.
+- [x] Todas las páginas (ES y EN, incluida la 404) enlazan los iconos en el `<head>` con rutas absolutas desde la raíz, y todos responden 200 con el tipo y el tamaño correctos.
+- [x] Los formatos se generan desde un único SVG fuente con un script de npm; los archivos generados se versionan.
+- [x] Sin dependencias nuevas, sin JS en cliente ni peticiones externas.
+- [x] Lighthouse ≥ 95 en las páginas afectadas.
 
 ## Pruebas
 
 ### Unitarias (Vitest)
 
-- [ ] El SVG fuente es válido, usa `prefers-color-scheme` y no contiene el logo de Astro.
-- [ ] Los PNG e ICO generados miden lo esperado (32, 180, 192 y 512 px) y no están en blanco.
-- [ ] El manifest es JSON válido y sus iconos existen en `public/`.
-- [ ] `BaseHead` incluye los enlaces del favicon, del icono de Apple y del manifest.
+- [x] El SVG fuente es válido, usa `prefers-color-scheme` y no contiene el logo de Astro.
+- [x] Los PNG e ICO generados miden lo esperado (32, 180, 192 y 512 px) y no están en blanco.
+- [x] El manifest es JSON válido y sus iconos existen en `public/`.
+- [x] `BaseHead` incluye los enlaces del favicon, del icono de Apple y del manifest.
 
 ### Funcionales (Playwright)
 
-- [ ] En ES y EN (portada, un artículo y la 404) el `<head>` enlaza los iconos y cada uno responde 200 con el `Content-Type` correcto.
-- [ ] El manifest se descarga, es JSON válido y sus iconos responden 200.
-- [ ] Una captura del favicon en modo claro y en modo oscuro muestra el SVG con colores distintos y legibles.
+- [x] En ES y EN (portada, un artículo y la 404) el `<head>` enlaza los iconos y cada uno responde 200 con el `Content-Type` correcto.
+- [x] El manifest se descarga, es JSON válido y sus iconos responden 200.
+- [x] Una captura del favicon en modo claro y en modo oscuro muestra el SVG con colores distintos y legibles.
 
 ## Fuera de alcance
 
