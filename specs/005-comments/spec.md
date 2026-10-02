@@ -1,6 +1,6 @@
 # Spec 005 — Comentarios (Giscus)
 
-- **Estado:** Borrador
+- **Estado:** Aprobada
 - **Rama:** `feature/005-comments`
 
 ## Contexto / Por qué
