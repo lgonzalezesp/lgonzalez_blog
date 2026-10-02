@@ -87,7 +87,9 @@ Sin inventar contenido real del autor (textos marcados como ejemplo):
 - `tests/unit/002-content-model/*.test.ts`, `tests/e2e/002-content-model/*.spec.ts` — crear
 - `tests/fixtures/invalid-content/**` — crear — mini-proyecto con frontmatter inválido
 - `tests/e2e/001-setup/smoke.spec.ts`, `a11y.spec.ts` — modificar — `/blog/using-mdx/` pasa a `/blog/usando-mdx/` (el post de la plantilla se mueve a `es/`)
-- `eslint.config.js` — modificar — ignorar `**/.astro` (lo genera el fixture)
+- `eslint.config.js` — modificar — ignorar `**/.astro/` (lo genera el fixture)
+- `src/pages/about.astro` — modificar — `cover` en vez de `heroImage`
+- `playwright.config.ts` — modificar — puerto propio (`4322`) y sin reutilizar servidores (bug descubierto, ver Riesgos)
 - `AGENTS.md` — modificar — añadir `src/lib/` y `tests/fixtures/` a la estructura; formato del frontmatter
 - `.claude/rules/content.md` — modificar — campos obligatorios por colección
 
@@ -121,6 +123,8 @@ Sin inventar contenido real del autor (textos marcados como ejemplo):
 - `lang` duplicado con la carpeta puede desincronizarse → `assertLangMatchesFolder` en `getPublished` hace fallar el build con el nombre del archivo.
 - `astro sync` sobre el fixture tarda unos segundos y genera `.astro/` dentro de `tests/fixtures/` → ya ignorado por `.gitignore` (`.astro/` aplica a cualquier nivel); se añade `**/.astro` a ESLint.
 - La API de Content Collections de Astro 7 puede diferir de versiones anteriores → consultar la guía oficial antes de implementar.
+- **Descubierto al implementar:** con `reuseExistingServer`, si `astro dev` estaba arrancado en `:4321`, Playwright ejecutaba las pruebas funcionales contra el servidor de desarrollo (borradores visibles, sin build). → Las pruebas funcionales usan `:4322` y siempre arrancan `build` + `preview` desde cero; prueba de regresión en `tests/e2e/001-setup/smoke.spec.ts` (la portada no contiene `/@vite/client`).
+- **Descubierto al implementar:** un servidor `astro dev` arrancado antes de cambiar `content.config.ts` no recoge las colecciones ni las rutas nuevas (todo 404) → reiniciarlo (`astro dev stop` y `npm run dev`).
 - Mover el post MDX cambia la URL usada en las pruebas de 001 → se actualizan esas pruebas (no se borran) y se explica en el commit.
 
 ## Estrategia de pruebas

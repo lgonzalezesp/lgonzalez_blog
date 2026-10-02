@@ -1,6 +1,7 @@
 import { defineConfig, devices } from '@playwright/test';
 
-const PORT = 4321;
+// Not 4321: that is `astro dev`, and the tests must never hit the dev server.
+const PORT = 4322;
 
 export default defineConfig({
 	testDir: './tests/e2e',
@@ -19,7 +20,8 @@ export default defineConfig({
 		// detects an AI agent (otherwise it auto-backgrounds and exits).
 		command: `npm run build && npm run preview -- --port ${PORT} --ignore-lock`,
 		url: `http://localhost:${PORT}`,
-		reuseExistingServer: !process.env.CI,
+		// Always build and serve fresh, so a stale or dev server is never reused.
+		reuseExistingServer: false,
 		timeout: 180_000,
 	},
 });
