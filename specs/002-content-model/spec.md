@@ -1,6 +1,6 @@
 # Spec 002 — Modelo de contenido
 
-- **Estado:** En revisión
+- **Estado:** En revisión ([PR #2](https://github.com/lgonzalezesp/lgonzalez_blog/pull/2))
 - **Rama:** `feature/002-content-model`
 
 ## Contexto / Por qué
