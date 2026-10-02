@@ -1,7 +1,7 @@
 # Plan 009 — Favicon
 
 - **Spec:** [spec.md](./spec.md)
-- **Estado:** Borrador
+- **Estado:** Aprobado
 
 ## Enfoque técnico
 
