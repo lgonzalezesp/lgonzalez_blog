@@ -1,6 +1,6 @@
 # Spec 010 — Crear posts
 
-- **Estado:** Borrador
+- **Estado:** Aprobada
 - **Rama:** `feature/010-new-post`
 
 ## Contexto / Por qué
