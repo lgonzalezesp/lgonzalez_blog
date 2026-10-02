@@ -1,28 +1,41 @@
 # build output
 dist/
-# generated types
+# generated types, dev/preview server logs and locks
 .astro/
 
 # dependencies
 node_modules/
 
-# logs
-npm-debug.log*
+# logs and caches
+*.log
+*.tsbuildinfo
+.eslintcache
 
-# environment variables
+# environment variables (keep the example template)
 .env
 .env.*
+!.env.example
 
 # test output
 test-results/
 playwright-report/
+blob-report/
+playwright/.cache/
 coverage/
 
 # Vercel
 .vercel/
 
-# macOS
-.DS_Store
+# AI agents: personal settings (shared ones like AGENTS.md stay tracked)
+.claude/settings.local.json
+CLAUDE.local.md
 
-# editors
+# editors: keep only shared VS Code settings
+.vscode/*
+!.vscode/extensions.json
+!.vscode/launch.json
 .idea/
+
+# OS
+.DS_Store
+Thumbs.db
