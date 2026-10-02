@@ -24,7 +24,7 @@ Las pruebas se escriben antes o junto a la implementación que cubren y deben ve
 
 ## Perfil del autor
 
-- [ ] T12 — (Autor) URL del perfil de LinkedIn
+- [x] T12 — (Autor) URL del perfil de LinkedIn: `https://www.linkedin.com/in/luis-gonzalez-espejo/`
 - [ ] T13 — Prueba funcional: `profile.spec.ts` → ver fallar
 - [ ] T14 — Implementación: `AUTHOR` en `src/consts.ts`, enlace en el pie y en «Sobre mí» (`rel="me"`) → ver pasar
 

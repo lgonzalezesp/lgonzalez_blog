@@ -26,7 +26,7 @@
 
 ### Perfil de LinkedIn del autor (P1)
 
-- `AUTHOR.linkedin` en `src/consts.ts` (**URL pendiente: la tiene que dar el autor**).
+- `AUTHOR.linkedin` en `src/consts.ts`: `https://www.linkedin.com/in/luis-gonzalez-espejo/` (sin el parámetro `?isSelfProfile=true`, que solo sirve en la sesión del autor).
 - Enlace en el pie (junto a GitHub y RSS) y en «Sobre mí» (lista «Encuéntrame en» / «Find me on» bajo el texto, con GitHub y LinkedIn), con `rel="me"`.
 
 ## Archivos afectados
@@ -65,7 +65,7 @@
 
 ## Decisiones que necesitan tu visto bueno
 
-- **P1 — URL de tu perfil de LinkedIn** (pregunta abierta): necesito que me la des (p. ej. `https://www.linkedin.com/in/…`).
+- **P1 — URL del perfil de LinkedIn** (pregunta abierta): `https://www.linkedin.com/in/luis-gonzalez-espejo/`.
 - **P2 — «Copiar enlace» con JS mínimo** (cuarta excepción al principio 6); el botón no aparece sin JS.
 - **P3 — Imágenes OG generadas** (pregunta abierta): sí, para contenido **sin portada** (artículos, proyectos y notas), con `satori` como única dependencia nueva. Con portada, se usa la portada.
 - **P4 — Dónde van los botones:** artículos y proyectos, arriba y al final (no en notas). El enlace se abre en una pestaña nueva.
