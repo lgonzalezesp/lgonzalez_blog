@@ -1,7 +1,7 @@
 # Plan 006 — SEO, feeds y analítica
 
 - **Spec:** [spec.md](./spec.md)
-- **Estado:** Borrador
+- **Estado:** Aprobado
 
 ## Enfoque técnico
 
@@ -72,12 +72,19 @@ Toda la lógica pasa a una función pura, probada con Vitest, y `BaseHead.astro`
 | 8. URLs estables       | ✅       | `/rss.xml` se mantiene (español); se añade `/en/rss.xml`                               |
 | 9. Todo se prueba      | ✅       | Ver trazabilidad                                                                       |
 
-## Decisiones que necesitan tu visto bueno
+## Decisiones (aprobadas con el plan)
 
 - **P1 — Qué entra en el RSS:** artículos **y notas** de cada idioma (los proyectos no).
 - **P2 — Analítica sin paquetes npm:** fragmento HTML oficial de Vercel, activo solo en builds de Vercel (producción y previews). Para verla habrá que activar Web Analytics y Speed Insights en el panel de Vercel (spec 008).
 - **P3 — Imagen OG por defecto** con el nombre del sitio y el dominio, sin idioma; las portadas se recortan a 1200×627.
 - **P4 — Sitemap sin `hreflang`** (las alternativas ya están en cada página).
+
+## Ajustes durante la implementación
+
+- **Tamaño mínimo de portada (1200×627).** Las pruebas detectaron que Astro nunca amplía imágenes: la portada de ejemplo (960×480) generaba una imagen OG de 960×480 anunciada como 1200×627. Se intentó validarlo en el esquema, pero con el content layer `image()` aún no tiene medidas al validar; la comprobación (`assertCoverSize`) va en `getPublished()`/`getPageEntry()` y hace fallar el build con el nombre del archivo. Los marcadores de la plantilla se ampliaron a 1920×960.
+- El sitemap ya excluía la 404 sin configuración: no se tocó `astro.config.mjs`.
+- `src/lib/feed-response.ts` separa la respuesta RSS (con `astro:content`) de `feed.ts` (puro, probado).
+- El fragmento de Vercel usa parámetros rest (`...args`) en vez de `arguments` (regla `prefer-rest-params` de ESLint); la cola recibe la misma lista de argumentos.
 
 ## Riesgos
 

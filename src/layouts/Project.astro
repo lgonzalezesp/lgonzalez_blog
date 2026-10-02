@@ -26,7 +26,7 @@ const { title, description, cover, tags, stack, status, repoUrl, demoUrl, lang, 
 const t = useTranslations(lang);
 ---
 
-<Base title={title} description={description} image={cover?.src} lang={lang} alternates={alternates}>
+<Base title={title} description={description} image={cover} lang={lang} alternates={alternates}>
 	<article>
 		<header class="mb-8 flex flex-col gap-3">
 			{cover && (

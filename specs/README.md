@@ -11,7 +11,7 @@ Cada spec debe entregar **pruebas unitarias** (Vitest) y **pruebas funcionales**
 | 003 | [Internacionalización ES/EN](./003-i18n/spec.md)      | Aprobada | [Aprobado](./003-i18n/plan.md)          | [17/17](./003-i18n/tasks.md)          | Hecha ([PR #3](https://github.com/lgonzalezesp/lgonzalez_blog/pull/3)) |
 | 004 | [Páginas y diseño](./004-pages-design/spec.md)        | Aprobada | [Aprobado](./004-pages-design/plan.md)  | [20/20](./004-pages-design/tasks.md)  | Hecha ([PR #4](https://github.com/lgonzalezesp/lgonzalez_blog/pull/4)) |
 | 005 | [Comentarios (Giscus)](./005-comments/spec.md)        | Aprobada | [Aprobado](./005-comments/plan.md)      | [12/12](./005-comments/tasks.md)      | Hecha ([PR #5](https://github.com/lgonzalezesp/lgonzalez_blog/pull/5)) |
-| 006 | [SEO, feeds y analítica](./006-seo-analytics/spec.md) | Aprobada | [Borrador](./006-seo-analytics/plan.md) | [0/13](./006-seo-analytics/tasks.md)  | En curso                                                               |
+| 006 | [SEO, feeds y analítica](./006-seo-analytics/spec.md) | Aprobada | [Aprobado](./006-seo-analytics/plan.md) | [14/14](./006-seo-analytics/tasks.md) | En curso                                                               |
 | 007 | [Compartir en LinkedIn](./007-linkedin-share/spec.md) | Borrador | —                                       | —                                     | Pendiente                                                              |
 | 008 | [Despliegue en Vercel](./008-deploy/spec.md)          | Borrador | —                                       | —                                     | Pendiente                                                              |
 

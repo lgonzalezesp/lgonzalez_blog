@@ -30,7 +30,8 @@ export default defineConfig({
 		// detects an AI agent (otherwise it auto-backgrounds and exits).
 		command: `npm run build && npm run preview -- --port ${PORT} --ignore-lock`,
 		// Stable test content (pagination, drafts, translations…), independent of the real posts.
-		env: { CONTENT_DIR: './tests/fixtures/content' },
+		// ENABLE_VERCEL_ANALYTICS: include the Vercel scripts (their /_vercel/** paths are stubbed in tests).
+		env: { CONTENT_DIR: './tests/fixtures/content', ENABLE_VERCEL_ANALYTICS: '1' },
 		url: `http://localhost:${PORT}`,
 		// Always build and serve fresh, so a stale or dev server is never reused.
 		reuseExistingServer: false,

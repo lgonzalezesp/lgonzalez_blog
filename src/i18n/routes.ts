@@ -57,6 +57,13 @@ export function blogPageUrl(page: number, lang: Lang): string {
 	return page <= 1 ? SECTIONS.blog[lang] : `${SECTIONS.blog[lang]}${PAGE_SEGMENT[lang]}/${page}/`;
 }
 
+const FEEDS: Record<Lang, string> = { es: '/rss.xml', en: '/en/rss.xml' };
+
+/** RSS feed of one language. */
+export function feedUrl(lang: Lang): string {
+	return FEEDS[lang];
+}
+
 export function entryAlternates(
 	collection: RoutedCollection,
 	entry: RoutedEntry,

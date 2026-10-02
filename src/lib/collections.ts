@@ -1,5 +1,6 @@
 import { type CollectionEntry, type CollectionKey, getCollection } from 'astro:content';
 import {
+	assertCoverSize,
 	assertLangMatchesFolder,
 	type ContentEntry,
 	filterPublished,
@@ -20,6 +21,7 @@ export async function getPublished<C extends CollectionKey>(
 ): Promise<CollectionEntry<C>[]> {
 	const entries = (await getCollection(collection)) as unknown as (CollectionEntry<C> & ContentEntry)[];
 	entries.forEach(assertLangMatchesFolder);
+	entries.forEach(assertCoverSize);
 	const published = filterPublished(entries, {
 		prod: import.meta.env.PROD,
 		vercelEnv: process.env.VERCEL_ENV,
@@ -45,6 +47,7 @@ export async function entryPaths<C extends CollectionKey>(collection: C, lang: L
 export async function getPageEntry(translationKey: string, lang: Lang): Promise<CollectionEntry<'pages'>> {
 	const pages = await getCollection('pages');
 	pages.forEach(assertLangMatchesFolder);
+	pages.forEach(assertCoverSize);
 	const page = pages.find(
 		(entry) => entry.data.translationKey === translationKey && entry.data.lang === lang,
 	);
