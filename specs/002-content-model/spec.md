@@ -1,6 +1,6 @@
 # Spec 002 — Modelo de contenido
 
-- **Estado:** Borrador
+- **Estado:** Aprobada
 - **Rama:** `feature/002-content-model`
 
 ## Contexto / Por qué
