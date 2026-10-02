@@ -25,7 +25,7 @@ Las pruebas se escriben antes o junto a la implementación que cubren y deben ve
 
 ## Release 0.1.0
 
-- [ ] T13 — `release/0.1.0` desde `develop`: `version` 0.1.0 y `CHANGELOG.md`
+- [x] T13 — `release/0.1.0` desde `develop`: `version` 0.1.0 y `CHANGELOG.md`
 - [ ] T14 — PR `release/0.1.0 → main` (merge commit) con CI en verde; tag `v0.1.0`
 - [ ] T15 — PR `release/0.1.0 → develop` (merge commit)
 - [ ] T16 — Producción: humo y `domain.spec.ts` en verde; Lighthouse ≥ 95 (ES y EN)
