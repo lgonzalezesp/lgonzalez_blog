@@ -1,0 +1,32 @@
+---
+title: 'Using MDX'
+description: 'Example post: how MDX lets you use Astro components inside Markdown.'
+pubDate: 2024-06-01
+tags: ['astro', 'mdx']
+lang: en
+translationKey: using-mdx
+cover:
+  src: '../../../assets/blog-placeholder-5.jpg'
+  alt: 'Abstract gradient used as a placeholder image'
+---
+
+import HeaderLink from '../../../components/HeaderLink.astro';
+
+> Example content: it will be replaced by real posts.
+
+This blog uses the [@astrojs/mdx](https://docs.astro.build/en/guides/integrations-guide/mdx/) integration, configured in `astro.config.mjs`.
+
+## Why MDX?
+
+MDX is a flavor of Markdown that supports JSX syntax, so you can [mix UI components into your Markdown content](https://docs.astro.build/en/guides/integrations-guide/mdx/#mdx-in-astro).
+
+## Example
+
+This is an Astro component imported and used inside MDX. It renders as static HTML, with no JavaScript:
+
+<HeaderLink href="/blog/">Embedded component in MDX</HeaderLink>
+
+## More links
+
+- [MDX syntax documentation](https://mdxjs.com/docs/what-is-mdx)
+- [Markdown and MDX pages in Astro](https://docs.astro.build/en/basics/astro-pages/#markdownmdx-pages)

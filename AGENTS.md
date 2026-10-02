@@ -85,11 +85,15 @@ specs/
   NNN-nombre/             # una carpeta por feature
 src/
   consts.ts               # título y descripción del sitio
-  content.config.ts       # esquemas de las colecciones
+  content.config.ts       # colecciones blog, projects y notes (glob por idioma)
   content/
-    blog/                 # artículos (por idioma {es,en}/ en 002)
-    projects/             # fichas de proyectos (002)
-    notes/                # notas cortas (002)
+    schemas.ts            # esquemas Zod del frontmatter (probados con Vitest)
+    blog/{es,en}/         # artículos → /blog/<slug>/ y /en/blog/<slug>/
+    projects/{es,en}/     # fichas de proyectos (sin ruta hasta 004)
+    notes/{es,en}/        # notas cortas → /notas/<slug>/ y /en/notes/<slug>/
+  lib/
+    content.ts            # utilidades puras: idioma, slug, borradores, orden, traducciones
+    collections.ts        # getPublished() y entryPaths(): único acceso a las colecciones
   assets/                 # imágenes y fuentes procesadas por Astro
   components/             # componentes .astro
   layouts/                # layouts de página
@@ -100,10 +104,10 @@ public/                   # estáticos servidos tal cual (favicon, robots.txt…
 tests/
   unit/NNN-feature/       # Vitest (*.test.ts)
   e2e/NNN-feature/        # Playwright (*.spec.ts)
-  fixtures/               # contenido de prueba (002)
+  fixtures/               # contenido de prueba (p. ej. invalid-content/: mini-proyecto con frontmatter inválido)
 astro.config.mjs          # site, integraciones, Tailwind (plugin de Vite), fuentes
 vitest.config.ts          # Vitest sobre la config de Vite de Astro
-playwright.config.ts      # e2e sobre build + preview en :4321
+playwright.config.ts      # e2e sobre build + preview en :4322 (nunca el dev server)
 eslint.config.js          # ESLint (flat config)
 .prettierrc.json          # Prettier (+ plugin de Astro)
 .nvmrc                    # versión de Node (24 LTS)

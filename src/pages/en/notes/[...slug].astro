@@ -1,14 +1,14 @@
 ---
 import { type CollectionEntry, render } from 'astro:content';
-import BlogPost from '../../layouts/BlogPost.astro';
-import { entryPaths } from '../../lib/collections';
+import BlogPost from '../../../layouts/BlogPost.astro';
+import { entryPaths } from '../../../lib/collections';
 
 export function getStaticPaths() {
-	return entryPaths('blog', 'es');
+	return entryPaths('notes', 'en');
 }
 
 interface Props {
-	entry: CollectionEntry<'blog'>;
+	entry: CollectionEntry<'notes'>;
 }
 
 const { entry } = Astro.props;

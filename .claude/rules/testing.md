@@ -12,7 +12,7 @@ paths:
 - Pruebas primero: escribe la prueba, **mírala fallar** (`npm run test:unit` / `npm run test:e2e`) y después implementa.
 - Ubicación y nombres: `tests/unit/NNN-feature/*.test.ts` (Vitest) y `tests/e2e/NNN-feature/*.spec.ts` (Playwright), en kebab-case. Contenido de prueba en `tests/fixtures/`.
 - Unitarias: lógica pura, esquemas de contenido, diccionarios i18n y componentes `.astro` con `experimental_AstroContainer` de `astro/container` (`AstroContainer.create()` + `renderToString`).
-- Funcionales: se ejecutan contra el **build** (`build` + `preview` en `:4321`, lo arranca Playwright). Navega como un lector; usa selectores accesibles (`getByRole`, `getByText`) antes que CSS.
+- Funcionales: se ejecutan contra el **build** (`build` + `preview` en `:4322`, lo arranca Playwright siempre desde cero; `:4321` es de `astro dev` y nunca se reutiliza). Navega como un lector; usa selectores accesibles (`getByRole`, `getByText`) antes que CSS.
 - Accesibilidad: toda página nueva entra en un análisis de `@axe-core/playwright` (wcag2a/aa, wcag21a/aa) sin violaciones `serious` ni `critical`.
 - Todo lo que depende del idioma se prueba en ES (`/…`) y EN (`/en/…`).
 - Sin red externa: Giscus, LinkedIn o analítica se verifican por el HTML/URL generados, nunca llamándolos.

@@ -1,19 +1,19 @@
 ---
 import { Image } from 'astro:assets';
-import { getCollection } from 'astro:content';
 import BaseHead from '../../components/BaseHead.astro';
 import Footer from '../../components/Footer.astro';
 import FormattedDate from '../../components/FormattedDate.astro';
 import Header from '../../components/Header.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
+import { getPublished } from '../../lib/collections';
+import { slugFromId } from '../../lib/content';
 
-const posts = (await getCollection('blog')).sort(
-	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
-);
+// Spanish posts only: listings per language arrive with 003-i18n.
+const posts = await getPublished('blog', 'es');
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="es">
 	<head>
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
 		<style>
@@ -93,8 +93,8 @@ const posts = (await getCollection('blog')).sort(
 				<ul>
 					{posts.map((post) => (
 						<li>
-							<a href={`/blog/${post.id}/`}>
-								{post.data.heroImage && <Image width={720} height={360} src={post.data.heroImage} alt="" />}
+							<a href={`/blog/${slugFromId(post.id)}/`}>
+								{post.data.cover && <Image width={720} height={360} src={post.data.cover.src} alt="" />}
 								<h4 class="title">{post.data.title}</h4>
 								<p class="date">
 									<FormattedDate date={post.data.pubDate} />

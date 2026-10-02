@@ -7,7 +7,7 @@ test('la portada responde 200 y tiene título', async ({ page }) => {
 });
 
 test('un post MDX se publica', async ({ page }) => {
-	const response = await page.goto('/blog/using-mdx/');
+	const response = await page.goto('/blog/usando-mdx/');
 	expect(response?.status()).toBe(200);
 	await expect(page.locator('article h1')).toBeVisible();
 });
@@ -29,4 +29,10 @@ test('las utilidades de Tailwind se aplican', async ({ page }) => {
 	await page.goto('/esta-pagina-no-existe/');
 	// La página 404 usa `text-center` en su contenedor principal.
 	await expect(page.locator('main')).toHaveCSS('text-align', 'center');
+});
+
+test('las pruebas funcionales se ejecutan sobre el build, no sobre `astro dev`', async ({ page }) => {
+	// Regresión: Playwright reutilizaba el servidor de desarrollo si estaba arrancado en el mismo puerto.
+	const response = await page.goto('/');
+	expect(await response?.text()).not.toContain('/@vite/client');
 });

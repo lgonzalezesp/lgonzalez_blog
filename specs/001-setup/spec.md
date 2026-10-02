@@ -1,6 +1,6 @@
 # Spec 001 — Setup del proyecto
 
-- **Estado:** En revisión ([PR #1](https://github.com/lgonzalezesp/lgonzalez_blog/pull/1))
+- **Estado:** Hecha ([PR #1](https://github.com/lgonzalezesp/lgonzalez_blog/pull/1))
 - **Rama:** `feature/001-setup`
 
 ## Contexto / Por qué

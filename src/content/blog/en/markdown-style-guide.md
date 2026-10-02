@@ -1,8 +1,15 @@
 ---
 title: 'Markdown Style Guide'
 description: 'Here is a sample of some basic Markdown syntax that can be used when writing Markdown content in Astro.'
-pubDate: 'Jun 19 2024'
-heroImage: '../../assets/blog-placeholder-1.jpg'
+pubDate: 2024-06-19
+tags: ['markdown']
+lang: en
+translationKey: markdown-style-guide
+# Draft on purpose: visible in `npm run dev` and Vercel previews (useful for design), never in production.
+draft: true
+cover:
+  src: '../../../assets/blog-placeholder-1.jpg'
+  alt: 'Abstract blue and purple gradient used as a placeholder image'
 ---
 
 Here is a sample of some basic Markdown syntax that can be used when writing Markdown content in Astro.
@@ -39,7 +46,7 @@ Itatur? Quiatae cullecum rem ent aut odis in re eossequodi nonsequ idebis ne sap
 
 ### Output
 
-![blog placeholder](../../assets/blog-placeholder-about.jpg)
+![Placeholder image](../../../assets/blog-placeholder-about.jpg)
 
 ## Blockquotes
 
