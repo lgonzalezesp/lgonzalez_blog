@@ -8,6 +8,7 @@ Blog personal de Luis González en **lgonzalez.dev**: proyectos, ideas, comentar
 
 - Idiomas: **español (por defecto, sin prefijo)** e **inglés (bajo `/en/`)**.
 - Repositorio: https://github.com/lgonzalezesp/lgonzalez_blog (público, necesario para Giscus).
+- Ramas `main` y `develop` protegidas: solo PR con el check `CI` en verde; `develop` es la rama por defecto.
 - Hosting: Vercel (salida estática). Producción = rama `main`; `develop` = preview estable; previews en cada PR.
 - Flujo de ramas: **Gitflow**. Gestor de paquetes: **npm**.
 

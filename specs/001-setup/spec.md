@@ -1,6 +1,6 @@
 # Spec 001 — Setup del proyecto
 
-- **Estado:** En progreso
+- **Estado:** En revisión ([PR #1](https://github.com/lgonzalezesp/lgonzalez_blog/pull/1))
 - **Rama:** `feature/001-setup`
 
 ## Contexto / Por qué
@@ -14,31 +14,31 @@ Necesitamos una base de proyecto Astro limpia, tipada y con herramientas de cali
 
 ## Criterios de aceptación
 
-- [ ] El proyecto parte de la plantilla oficial Astro Blog y arranca en local con `npm run dev`.
-- [ ] Integraciones MDX, sitemap y Tailwind instaladas y funcionando.
-- [ ] TypeScript en modo estricto; `npm run check` pasa.
-- [ ] Scripts `dev`, `build`, `preview`, `check`, `lint`, `format` definidos y funcionando.
-- [ ] La URL del sitio (`site`) apunta al dominio definitivo.
-- [ ] `.gitignore` adecuado; repo conectado a `lgonzalezesp/lgonzalez_blog`.
-- [ ] La sección "Estructura" y "Comandos" de `AGENTS.md` refleja la realidad.
-- [ ] Infraestructura de pruebas lista: Vitest (con Astro Container API) para unitarias y Playwright (con axe-core) para funcionales, ejecutándose sobre el build.
-- [ ] Scripts `test:unit`, `test:e2e` y `test` definidos.
-- [ ] Gestor de paquetes npm: `package-lock.json` commiteado, Node fijado en `.nvmrc` y `engines`.
-- [ ] Gitflow configurado: rama `develop` creada; `main` y `develop` protegidas en GitHub (solo PR con CI en verde).
-- [ ] GitHub Actions ejecuta `npm ci`, `check`, `lint` y `npm test` en cada PR hacia `develop` y `main`; un fallo bloquea el merge.
+- [x] El proyecto parte de la plantilla oficial Astro Blog y arranca en local con `npm run dev`.
+- [x] Integraciones MDX, sitemap y Tailwind instaladas y funcionando.
+- [x] TypeScript en modo estricto; `npm run check` pasa.
+- [x] Scripts `dev`, `build`, `preview`, `check`, `lint`, `format` definidos y funcionando.
+- [x] La URL del sitio (`site`) apunta al dominio definitivo.
+- [x] `.gitignore` adecuado; repo conectado a `lgonzalezesp/lgonzalez_blog`.
+- [x] La sección "Estructura" y "Comandos" de `AGENTS.md` refleja la realidad.
+- [x] Infraestructura de pruebas lista: Vitest (con Astro Container API) para unitarias y Playwright (con axe-core) para funcionales, ejecutándose sobre el build.
+- [x] Scripts `test:unit`, `test:e2e` y `test` definidos.
+- [x] Gestor de paquetes npm: `package-lock.json` commiteado, Node fijado en `.nvmrc` y `engines`.
+- [x] Gitflow configurado: rama `develop` creada; `main` y `develop` protegidas en GitHub (solo PR con CI en verde).
+- [x] GitHub Actions ejecuta `npm ci`, `check`, `lint` y `npm test` en cada PR hacia `develop` y `main`; un fallo bloquea el merge.
 
 ## Pruebas
 
 ### Unitarias (Vitest)
 
-- [ ] Prueba de humo: Vitest arranca y renderiza un componente `.astro` de ejemplo con la Container API.
-- [ ] La configuración expone `site` con el dominio definitivo.
+- [x] Prueba de humo: Vitest arranca y renderiza un componente `.astro` de ejemplo con la Container API.
+- [x] La configuración expone `site` con el dominio definitivo.
 
 ### Funcionales (Playwright)
 
-- [ ] La portada del build responde 200 y tiene `<title>`.
-- [ ] Una ruta inexistente devuelve la página 404.
-- [ ] La portada no tiene violaciones de accesibilidad graves (axe-core).
+- [x] La portada del build responde 200 y tiene `<title>`.
+- [x] Una ruta inexistente devuelve la página 404.
+- [x] La portada no tiene violaciones de accesibilidad graves (axe-core).
 
 ## Fuera de alcance
 
@@ -46,4 +46,4 @@ Necesitamos una base de proyecto Astro limpia, tipada y con herramientas de cali
 
 ## Preguntas abiertas
 
-- ¿Dominio definitivo confirmado (`lgonzalez.dev`)?
+- Ninguna. Dominio asumido: `lgonzalez.dev` (pendiente de compra; ver `specs/README.md`).

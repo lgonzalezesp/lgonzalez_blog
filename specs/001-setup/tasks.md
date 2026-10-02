@@ -18,13 +18,13 @@ Las pruebas se escriben antes o junto a la implementación que cubren y deben ve
 - [x] T11 — ESLint + Prettier; scripts `lint`, `format`, `format:check` en verde
 - [x] T12 — CI en `.github/workflows/ci.yml`
 - [x] T13 — Actualizar `AGENTS.md` (estructura, comandos, notas de Astro)
-- [ ] T14 — Push, PR `feature/001-setup → develop`, CI en verde
-- [ ] T15 — GitHub: `develop` por defecto y protección de `main` y `develop` (PR + CI obligatorio)
+- [x] T14 — Push, PR `feature/001-setup → develop`, CI en verde
+- [x] T15 — GitHub: `develop` por defecto y protección de `main` y `develop` (PR + CI obligatorio). Requirió hacer público el repo (protección de ramas no disponible en repos privados del plan gratuito).
 
 ## Cierre
 
 - [x] `npm run build` y `npm run check` en verde
-- [ ] `npm test` (unitarias + funcionales) en verde, en local y en CI
+- [x] `npm test` (unitarias + funcionales) en verde, en local y en CI ([PR #1](https://github.com/lgonzalezesp/lgonzalez_blog/pull/1))
 - [x] Tabla de trazabilidad de `plan.md` completa: ningún criterio sin prueba
 - [x] Lighthouse ≥ 95 en páginas afectadas (`/`, `/blog/`, `/blog/using-mdx/`: 97–100)
-- [ ] `specs/README.md` actualizado
+- [x] `specs/README.md` actualizado
