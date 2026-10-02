@@ -1,7 +1,7 @@
 {
 	"name": "lgonzalez-blog",
 	"type": "module",
-	"version": "0.1.0",
+	"version": "0.2.0",
 	"engines": {
 		"node": "^22.12.0 || ^24.0.0 || >=26.0.0",
 		"npm": ">=10"
@@ -19,7 +19,9 @@
 		"format": "prettier --write .",
 		"format:check": "prettier --check .",
 		"test:smoke": "playwright test --config playwright.smoke.config.ts --project deploy",
-		"test:smoke:domain": "playwright test --config playwright.smoke.config.ts --project domain"
+		"test:smoke:domain": "playwright test --config playwright.smoke.config.ts --project domain",
+		"icons": "node scripts/generate-favicons.mjs",
+		"new-post": "node scripts/new-post.mjs"
 	},
 	"dependencies": {
 		"@astrojs/mdx": "^8.0.2",

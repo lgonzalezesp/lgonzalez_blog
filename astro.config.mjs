@@ -8,6 +8,8 @@ import { defineConfig, fontProviders } from 'astro/config';
 // https://astro.build/config
 export default defineConfig({
 	site: 'https://lgonzalez.dev',
+	// OUT_DIR lets tests build into a temporary folder without touching dist/ (spec 010).
+	outDir: process.env.OUT_DIR ?? './dist',
 	// Spanish at the root, English under /en/ (spec 003). Keep in sync with src/i18n/ui.ts.
 	i18n: {
 		locales: ['es', 'en'],

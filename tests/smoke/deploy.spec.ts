@@ -15,9 +15,14 @@ test('the English home page is up', async ({ page }) => {
 	await expect(page.locator('html')).toHaveAttribute('lang', 'en');
 });
 
-test('the latest post opens from the blog', async ({ page }) => {
+test('the blog lists posts and the latest one opens, or says there are none yet', async ({ page }) => {
 	expect((await page.goto('/blog/'))?.status()).toBe(200);
 	const first = page.locator('main article h2 a').first();
+	if ((await first.count()) === 0) {
+		// A blog with no posts yet is a valid state: it must say so instead of failing.
+		await expect(page.getByText('Todavía no hay artículos.')).toBeVisible();
+		return;
+	}
 	const href = await first.getAttribute('href');
 	expect(href).toMatch(/^\/blog\/.+\/$/);
 	expect((await page.goto(href!))?.status()).toBe(200);

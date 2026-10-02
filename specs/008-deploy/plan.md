@@ -30,7 +30,7 @@
 ### Pruebas de humo contra los despliegues (`tests/smoke/`)
 
 - Configuración aparte, `playwright.smoke.config.ts`: sin `webServer` ni bloqueo de red, con `baseURL = SMOKE_BASE_URL` y la cabecera `x-vercel-protection-bypass` si existe el secreto.
-- `deploy.spec.ts`: portada 200, `/en/` 200 con `lang="en"`, el primer artículo del listado 200 con `h1`, una URL inexistente → 404 propia; en previews, la página de la preview no tiene `noindex` roto (las previews las marca Vercel con `X-Robots-Tag: noindex`).
+- `deploy.spec.ts`: portada 200, `/en/` 200 con `lang="en"`, el primer artículo del listado 200 con `h1` (o, si aún no hay artículos, el aviso «Todavía no hay artículos.»), una URL inexistente → 404 propia; en previews, la página de la preview no tiene `noindex` roto (las previews las marca Vercel con `X-Robots-Tag: noindex`).
 - `domain.spec.ts` (solo contra producción): `https://lgonzalez.dev` 200; `http://lgonzalez.dev` → `https://lgonzalez.dev/` (301/308); `https://www.lgonzalez.dev` → `https://lgonzalez.dev/`; HSTS presente.
 - Script `npm run test:smoke`.
 - Workflow `.github/workflows/smoke.yml`, disparado por `deployment_status` (Vercel informa a GitHub de cada deploy): si el deploy terminó bien, ejecuta las pruebas de humo contra su URL (`target_url`); en producción, además, `domain.spec.ts`. El resultado aparece como check en el commit/PR. No es un check obligatorio para mergear (dependería de que Vercel termine).
@@ -104,7 +104,7 @@
 - Protección de previews sin secreto en GitHub → el workflow de humo fallaría con 401: el workflow comprueba el secreto y da un mensaje claro.
 - `deployment_status` también llega por deploys de ramas sin PR → se ejecutan igual (barato y útil).
 - El dominio tarda en propagar o en emitir el certificado → `domain.spec.ts` solo corre contra producción y puede relanzarse.
-- Las pruebas de humo dependen del contenido real → solo comprueban cosas que existen siempre (portada, `/en/`, primer artículo del listado, 404), sin slugs fijos.
+- Las pruebas de humo dependen del contenido real → solo comprueban cosas que existen siempre (portada, `/en/`, primer artículo del listado o el aviso de blog vacío, 404), sin slugs fijos.
 
 ## Estrategia de pruebas
 
