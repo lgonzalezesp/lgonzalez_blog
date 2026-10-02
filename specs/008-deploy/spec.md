@@ -16,25 +16,25 @@ Siguiendo Gitflow, publicar debe ser tan simple como mergear una `release/*` a `
 
 ## Criterios de aceptación
 
-- [ ] `lgonzalezesp/lgonzalez_blog` importado en Vercel como proyecto Astro estático.
-- [ ] Deploy de producción automático desde `main` (tras merge de `release/*` o `hotfix/*`, con tag `vX.Y.Z`).
+- [x] `lgonzalezesp/lgonzalez_blog` importado en Vercel como proyecto Astro estático.
+- [x] Deploy de producción automático desde `main` (tras merge de `release/*` o `hotfix/*`, con tag `vX.Y.Z`).
 - [ ] `develop` se despliega automáticamente en una URL de preview estable.
-- [ ] Vercel instala con `npm ci`.
+- [x] Vercel instala con `npm ci`.
 - [ ] Preview automática en cada PR (los `draft` visibles solo en previews).
-- [ ] Dominio `lgonzalez.dev` conectado con HTTPS; `www` redirige al dominio raíz.
+- [x] Dominio `lgonzalez.dev` conectado con HTTPS; `www` redirige al dominio raíz.
 - [ ] Un build fallido no reemplaza la versión publicada.
-- [ ] No se despliega a producción si las pruebas de CI fallan.
+- [x] No se despliega a producción si las pruebas de CI fallan.
 
 ## Pruebas
 
 ### Unitarias (Vitest)
 
-- [ ] La lógica de borradores muestra `draft` en entorno preview y los oculta en producción según la variable de entorno de Vercel.
+- [x] La lógica de borradores muestra `draft` en entorno preview y los oculta en producción según la variable de entorno de Vercel.
 
 ### Funcionales (Playwright)
 
-- [ ] Pruebas de humo contra la URL de la preview de cada PR (portada, un post, `/en/`, 404) ejecutadas desde CI.
-- [ ] Contra producción, tras el deploy: `https://lgonzalez.dev` responde 200, `http://` y `www` redirigen a `https://lgonzalez.dev`.
+- [x] Pruebas de humo contra la URL de la preview de cada PR (portada, un post, `/en/`, 404) ejecutadas desde CI.
+- [x] Contra producción, tras el deploy: `https://lgonzalez.dev` responde 200, `http://` y `www` redirigen a `https://lgonzalez.dev`.
 
 ## Fuera de alcance
 
