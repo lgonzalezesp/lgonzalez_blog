@@ -19,7 +19,7 @@ Las pruebas se escriben antes o junto a la implementación que cubren y deben ve
 - [x] T7 — (Autor) Comprar `lgonzalez.dev` (renovación automática, privacidad WHOIS, bloqueo de transferencia): comprado en Vercel el 2026-10-02 (registrador Name.com, DNS de Vercel, bloqueo de transferencia activo; vence el 2027-10-02)
 - [ ] T8 — (Autor) Importar el repo en Vercel: producción = `main`, Node 24. Importado y producción = `main` verificados (las releases 0.1.0 y 0.2.0 se publicaron desde `main`); falta confirmar Node 24.x en Settings → Build and Deployment
 - [x] T9 — (Autor) Dominio `lgonzalez.dev` + `www` con redirección 308 al raíz: `lgonzalez.dev` es el dominio principal y `www` redirige con 308; `test:smoke:domain` pasa 5/5 contra producción (2026-10-02)
-- [ ] T10 — (Autor) Activar Web Analytics y Speed Insights. Speed Insights activo (`/_vercel/speed-insights/script.js` responde 200); Web Analytics no (`/_vercel/insights/script.js` responde 404): activarlo en el proyecto → Analytics
+- [x] T10 — (Autor) Activar Web Analytics y Speed Insights: ambos activos; `/_vercel/insights/script.js` y `/_vercel/speed-insights/script.js` responden 200 en `https://lgonzalez.dev` y se cargan en el navegador sin cookies (2026-10-02, tras redesplegar producción con la caché limpia)
 - [x] T11 — (Autor) Crear el secreto «Protection Bypass for Automation» y guardarlo en GitHub (`VERCEL_AUTOMATION_BYPASS_SECRET`): el workflow `Smoke` pasa contra la preview protegida de la PR #8; sin el secreto, la preview redirige al login de Vercel
 - [ ] T12 — Comprobar: preview del PR y de `develop` desplegadas; workflow de humo en verde; borrador visible en la preview
 
@@ -33,7 +33,7 @@ Las pruebas se escriben antes o junto a la implementación que cubren y deben ve
 ## Verificaciones pendientes de otras specs (tras el deploy)
 
 - [ ] T17 — 005: comentario de prueba visible en Discussions → Comments
-- [ ] T18 — 006: Web Analytics y Speed Insights con datos; sin cookies en producción
+- [ ] T18 — 006: Web Analytics y Speed Insights con datos; sin cookies en producción. Scripts activos y sin cookies verificados; falta ver datos en el panel de Vercel (Analytics y Speed Insights)
 - [ ] T19 — 007: LinkedIn Post Inspector con un artículo en ES y otro en EN
 - [ ] T20 — Comprobar una vez que un build roto en una preview no afecta a producción
 
