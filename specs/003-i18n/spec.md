@@ -1,7 +1,7 @@
 # Spec 003 — Internacionalización ES/EN
 
 - **Estado:** Borrador
-- **Rama:** `feat/003-i18n`
+- **Rama:** `feature/003-i18n`
 
 ## Contexto / Por qué
 

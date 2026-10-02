@@ -8,7 +8,8 @@ Blog personal de Luis González en **lgonzalez.dev**: proyectos, ideas, comentar
 
 - Idiomas: **español (por defecto, sin prefijo)** e **inglés (bajo `/en/`)**.
 - Repositorio: https://github.com/lgonzalezesp/lgonzalez_blog (público, necesario para Giscus).
-- Hosting: Vercel (salida estática). Producción = rama `main`; previews en cada PR.
+- Hosting: Vercel (salida estática). Producción = rama `main`; `develop` = preview estable; previews en cada PR.
+- Flujo de ramas: **Gitflow**. Gestor de paquetes: **npm**.
 
 ## Stack
 
@@ -97,10 +98,37 @@ tests/
 
 > La carpeta `src/` se crea en la feature `001-setup`. Mantén esta sección actualizada si la estructura cambia.
 
+## Gestor de paquetes: npm
+
+- Usa **solo npm**. No uses pnpm, yarn ni bun, ni generes sus lockfiles.
+- `package-lock.json` siempre se commitea y nunca se edita a mano.
+- Instalación limpia (CI y verificación): `npm ci`. Añadir dependencias: `npm install <paquete>` (`-D` si es de desarrollo), justificándolo en el `plan.md` de la spec.
+- Versión de Node fijada en `.nvmrc` y en `engines` de `package.json`.
+
+## Flujo de ramas: Gitflow
+
+| Rama | Sale de | Se mergea a | Uso |
+| --- | --- | --- | --- |
+| `main` | — | — | Producción. Solo recibe merges de `release/*` y `hotfix/*`. Cada merge lleva tag `vX.Y.Z`. |
+| `develop` | `main` | — | Integración. Base de todo el trabajo nuevo. |
+| `feature/NNN-nombre` | `develop` | `develop` | Una por spec (p. ej. `feature/003-i18n`). |
+| `release/X.Y.Z` | `develop` | `main` y `develop` | Preparar una versión: solo ajustes, changelog y versión. |
+| `hotfix/X.Y.Z` | `main` | `main` y `develop` | Correcciones urgentes en producción. |
+
+Reglas:
+
+- **Nunca** se hace commit directo en `main` ni en `develop`; todo entra por Pull Request con CI en verde.
+- Las `feature/*` se mergean a `develop` con squash; `release/*` y `hotfix/*` con merge commit para conservar el historial.
+- Antes de abrir la PR, actualiza tu rama con `develop` (rebase) y ejecuta `npm test`.
+- Versionado semántico: `MAJOR.MINOR.PATCH`. Una spec terminada suele ser `MINOR`; un hotfix, `PATCH`.
+- Borra la rama tras el merge.
+- Mensajes de commit con Conventional Commits (ver Convenciones).
+
 ## Comandos
 
 | Acción | Comando |
 | --- | --- |
+| Instalar dependencias | `npm ci` |
 | Servidor de desarrollo | `npm run dev` |
 | Build de producción | `npm run build` |
 | Previsualizar build | `npm run preview` |
@@ -122,7 +150,7 @@ tests/
 - Imágenes con el componente de imágenes de Astro y **`alt` obligatorio**.
 - **Cero JS en cliente por defecto**; usa islas solo si aportan valor y justifícalo en `plan.md`.
 - Commits con **Conventional Commits** (`feat:`, `fix:`, `docs:`, `chore:`…), referenciando la spec cuando aplique (p. ej. `feat(003-i18n): selector de idioma`).
-- **Una rama por spec**: `feat/NNN-nombre`, mergeada a `main` vía PR.
+- **Una rama por spec**: `feature/NNN-nombre` desde `develop`, mergeada a `develop` vía PR (ver Gitflow).
 
 ## Definición de "hecho"
 
@@ -142,5 +170,7 @@ Una feature está terminada solo si:
 - Añadir scripts de terceros o cookies de seguimiento (los comentarios de Giscus son la excepción aprobada).
 - Romper URLs ya publicadas (si una ruta cambia, añade redirección).
 - Publicar contenido con `draft: true` en producción.
-- Hacer `push` a `main` o desplegar sin que el usuario lo pida.
+- Hacer `push` a `main` o `develop`, crear tags o desplegar sin que el usuario lo pida.
+- Commitear directamente en `main` o `develop`.
+- Usar otro gestor de paquetes que no sea npm.
 - Dar una feature por terminada sin pruebas, o saltarse/desactivar pruebas que fallan.

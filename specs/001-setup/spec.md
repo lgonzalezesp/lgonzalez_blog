@@ -1,7 +1,7 @@
 # Spec 001 — Setup del proyecto
 
 - **Estado:** Borrador
-- **Rama:** `feat/001-setup`
+- **Rama:** `feature/001-setup`
 
 ## Contexto / Por qué
 
@@ -23,7 +23,9 @@ Necesitamos una base de proyecto Astro limpia, tipada y con herramientas de cali
 - [ ] La sección "Estructura" y "Comandos" de `AGENTS.md` refleja la realidad.
 - [ ] Infraestructura de pruebas lista: Vitest (con Astro Container API) para unitarias y Playwright (con axe-core) para funcionales, ejecutándose sobre el build.
 - [ ] Scripts `test:unit`, `test:e2e` y `test` definidos.
-- [ ] GitHub Actions ejecuta `check`, `lint` y `npm test` en cada PR y en `main`; un fallo bloquea el merge.
+- [ ] Gestor de paquetes npm: `package-lock.json` commiteado, Node fijado en `.nvmrc` y `engines`.
+- [ ] Gitflow configurado: rama `develop` creada; `main` y `develop` protegidas en GitHub (solo PR con CI en verde).
+- [ ] GitHub Actions ejecuta `npm ci`, `check`, `lint` y `npm test` en cada PR hacia `develop` y `main`; un fallo bloquea el merge.
 
 ## Pruebas
 
@@ -45,4 +47,3 @@ Necesitamos una base de proyecto Astro limpia, tipada y con herramientas de cali
 ## Preguntas abiertas
 
 - ¿Dominio definitivo confirmado (`lgonzalez.dev`)?
-- ¿Gestor de paquetes: npm o pnpm?

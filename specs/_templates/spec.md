@@ -1,7 +1,7 @@
 # Spec NNN — <Nombre de la feature>
 
 - **Estado:** Borrador | Aprobada | En progreso | Hecha
-- **Rama:** `feat/NNN-nombre`
+- **Rama:** `feature/NNN-nombre`
 
 ## Contexto / Por qué
 

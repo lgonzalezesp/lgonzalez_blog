@@ -1,7 +1,7 @@
 # Spec 006 — SEO, feeds y analítica
 
 - **Estado:** Borrador
-- **Rama:** `feat/006-seo-analytics`
+- **Rama:** `feature/006-seo-analytics`
 
 ## Contexto / Por qué
 

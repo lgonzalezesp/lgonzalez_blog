@@ -1,22 +1,25 @@
 # Spec 008 — Despliegue en Vercel
 
 - **Estado:** Borrador
-- **Rama:** `feat/008-deploy`
+- **Rama:** `feature/008-deploy`
 
 ## Contexto / Por qué
 
-Publicar debe ser tan simple como hacer merge a `main`, y cada cambio debe poder revisarse antes en una preview.
+Siguiendo Gitflow, publicar debe ser tan simple como mergear una `release/*` a `main`, y cada cambio debe poder revisarse antes en una preview.
 
 ## Historias de usuario
 
-- Como **autor**, quiero que al hacer merge a `main` el blog se publique solo.
+- Como **autor**, quiero que al mergear una release a `main` el blog se publique solo.
+- Como **autor**, quiero ver el estado integrado de `develop` en una URL de preview estable.
 - Como **autor**, quiero una URL de preview por cada Pull Request para revisar antes de publicar.
 - Como **lector**, quiero acceder por `https://lgonzalez.dev`.
 
 ## Criterios de aceptación
 
 - [ ] `lgonzalezesp/lgonzalez_blog` importado en Vercel como proyecto Astro estático.
-- [ ] Deploy de producción automático desde `main`.
+- [ ] Deploy de producción automático desde `main` (tras merge de `release/*` o `hotfix/*`, con tag `vX.Y.Z`).
+- [ ] `develop` se despliega automáticamente en una URL de preview estable.
+- [ ] Vercel instala con `npm ci`.
 - [ ] Preview automática en cada PR (los `draft` visibles solo en previews).
 - [ ] Dominio `lgonzalez.dev` conectado con HTTPS; `www` redirige al dominio raíz.
 - [ ] Un build fallido no reemplaza la versión publicada.
