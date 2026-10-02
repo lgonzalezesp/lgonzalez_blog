@@ -7,7 +7,7 @@ lang: en
 translationKey: gcp-pca-experience
 cover:
   src: '../../../assets/post-pca-gcp/cover.jpg'
-  alt: 'Google Cloud Certified Professional Cloud Architect certificate in the name of Luis Gonzalez, on a blue background'
+  alt: 'Cartoon-style illustration of an architect sitting at a computer designing a house, which appears on top of a cloud'
 ---
 
 In this post I will tell you how I passed the GCP Professional Cloud Architect certification, from my experience, and how I can help you on your path.
