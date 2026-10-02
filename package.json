@@ -17,7 +17,9 @@
 		"check": "astro check",
 		"lint": "eslint .",
 		"format": "prettier --write .",
-		"format:check": "prettier --check ."
+		"format:check": "prettier --check .",
+		"test:smoke": "playwright test --config playwright.smoke.config.ts --project deploy",
+		"test:smoke:domain": "playwright test --config playwright.smoke.config.ts --project domain"
 	},
 	"dependencies": {
 		"@astrojs/mdx": "^8.0.2",

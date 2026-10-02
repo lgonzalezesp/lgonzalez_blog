@@ -48,6 +48,14 @@ export function assertLangMatchesFolder(
 	}
 }
 
+/** Build environment as seen by draft filtering. On Vercel, VERCEL_ENV is `preview` or `production`. */
+export function currentBuildEnv(
+	env: Record<string, string | undefined> = process.env,
+	prod: boolean = import.meta.env.PROD,
+): BuildEnv {
+	return { prod, vercelEnv: env.VERCEL_ENV };
+}
+
 /** Drafts are visible in `astro dev` and in Vercel previews, never in production builds. */
 export function isDraftVisible({ prod, vercelEnv }: BuildEnv): boolean {
 	return !prod || vercelEnv === 'preview';

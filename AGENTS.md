@@ -118,16 +118,21 @@ public/                   # estáticos servidos tal cual (favicon, robots.txt…
 tests/
   unit/NNN-feature/       # Vitest (*.test.ts)
   e2e/NNN-feature/        # Playwright (*.spec.ts)
+  smoke/                  # humo contra despliegues reales (008)
   fixtures/
     content/              # contenido con el que se construye el sitio en las e2e (CONTENT_DIR)
     invalid-content/      # mini-proyecto con frontmatter inválido (002)
 astro.config.mjs          # site, integraciones, Tailwind (plugin de Vite), fuentes
 vitest.config.ts          # Vitest sobre la config de Vite de Astro
 playwright.config.ts      # e2e sobre build + preview en :4322 (nunca el dev server)
+playwright.smoke.config.ts  # humo contra un despliegue real (SMOKE_BASE_URL)
+vercel.json               # build de Vercel (npm ci, dist, trailingSlash)
+CHANGELOG.md              # cambios por versión (en cada release)
 eslint.config.js          # ESLint (flat config)
 .prettierrc.json          # Prettier (+ plugin de Astro)
 .nvmrc                    # versión de Node (24 LTS)
 .github/workflows/ci.yml  # CI: check + lint + formato + pruebas
+.github/workflows/smoke.yml  # humo tras cada deploy de Vercel
 ```
 
 ## Notas de Astro
@@ -163,21 +168,34 @@ Reglas:
 - Borra la rama tras el merge.
 - Mensajes de commit con Conventional Commits (ver Convenciones).
 
+## Despliegue (Vercel)
+
+- Vercel despliega desde GitHub (`vercel.json`: `npm ci`, `npm run build`, `dist`, `trailingSlash`). **Producción = `main`** en `https://lgonzalez.dev` (`www` redirige al raíz); `develop` y cada PR tienen su **preview** (protegida por Vercel; los borradores solo se ven ahí, por `VERCEL_ENV=preview`).
+- Tras cada deploy correcto, el workflow `Smoke` (`.github/workflows/smoke.yml`) ejecuta `tests/smoke/` contra su URL; en producción, también el dominio y las redirecciones. Necesita el secreto `VERCEL_AUTOMATION_BYPASS_SECRET` para las previews.
+- **Release** (solo si el usuario la pide):
+  1. `release/X.Y.Z` desde `develop`: `version` en `package.json` y entrada en `CHANGELOG.md`.
+  2. PR `release/X.Y.Z → main` (merge commit) con CI en verde → tag `vX.Y.Z` en el merge → Vercel publica.
+  3. PR `release/X.Y.Z → develop` (merge commit) y borrar la rama.
+  4. Comprobar el workflow `Smoke` de producción.
+- **Hotfix:** igual, desde `main` en `hotfix/X.Y.Z` (versión PATCH), con PR a `main` y a `develop`.
+
 ## Comandos
 
-| Acción                               | Comando                |
-| ------------------------------------ | ---------------------- |
-| Instalar dependencias                | `npm ci`               |
-| Servidor de desarrollo               | `npm run dev`          |
-| Build de producción                  | `npm run build`        |
-| Previsualizar build                  | `npm run preview`      |
-| Tipos + esquemas de contenido        | `npm run check`        |
-| Lint                                 | `npm run lint`         |
-| Formato                              | `npm run format`       |
-| Comprobar formato (CI)               | `npm run format:check` |
-| Pruebas unitarias                    | `npm run test:unit`    |
-| Pruebas funcionales (sobre el build) | `npm run test:e2e`     |
-| Todas las pruebas                    | `npm test`             |
+| Acción                               | Comando                                                          |
+| ------------------------------------ | ---------------------------------------------------------------- |
+| Instalar dependencias                | `npm ci`                                                         |
+| Servidor de desarrollo               | `npm run dev`                                                    |
+| Build de producción                  | `npm run build`                                                  |
+| Previsualizar build                  | `npm run preview`                                                |
+| Tipos + esquemas de contenido        | `npm run check`                                                  |
+| Lint                                 | `npm run lint`                                                   |
+| Formato                              | `npm run format`                                                 |
+| Comprobar formato (CI)               | `npm run format:check`                                           |
+| Pruebas unitarias                    | `npm run test:unit`                                              |
+| Pruebas funcionales (sobre el build) | `npm run test:e2e`                                               |
+| Todas las pruebas                    | `npm test`                                                       |
+| Humo contra un despliegue            | `SMOKE_BASE_URL=<url> npm run test:smoke`                        |
+| Dominio y redirecciones (producción) | `SMOKE_BASE_URL=https://lgonzalez.dev npm run test:smoke:domain` |
 
 > Si cambian los scripts de `package.json`, actualiza esta tabla.
 
