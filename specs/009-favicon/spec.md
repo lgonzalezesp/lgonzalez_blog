@@ -1,6 +1,6 @@
 # Spec 009 — Favicon
 
-- **Estado:** En revisión
+- **Estado:** Hecha ([PR #13](https://github.com/lgonzalezesp/lgonzalez_blog/pull/13))
 - **Rama:** `feature/009-favicon`
 
 ## Contexto / Por qué
