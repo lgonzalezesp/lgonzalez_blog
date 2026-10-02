@@ -1,7 +1,7 @@
 # Plan 010 — Crear posts
 
 - **Spec:** [spec.md](./spec.md)
-- **Estado:** Borrador
+- **Estado:** Aprobado
 
 ## Enfoque técnico
 
