@@ -16,6 +16,6 @@ paths:
 - Funcionales: se ejecutan contra el **build** (`build` + `preview` en `:4322`, lo arranca Playwright siempre desde cero; `:4321` es de `astro dev` y nunca se reutiliza). Navega como un lector; usa selectores accesibles (`getByRole`, `getByText`) antes que CSS.
 - Accesibilidad: toda página nueva entra en un análisis de `@axe-core/playwright` (wcag2a/aa, wcag21a/aa) sin violaciones `serious` ni `critical`.
 - Todo lo que depende del idioma se prueba en ES (`/…`) y EN (`/en/…`).
-- Sin red externa: Giscus, LinkedIn o analítica se verifican por el HTML/URL generados, nunca llamándolos.
+- Sin red externa: Chromium no resuelve ningún host salvo `localhost` (`--host-resolver-rules` en `playwright.config.ts`). Los terceros se simulan con `page.route` (Giscus: `tests/e2e/005-comments/giscus-stub.ts`) o se verifican por el HTML/URL generados.
 - Prohibido `test.skip`, `test.only`, `it.todo` o comentar pruebas para pasar CI. Si una prueba está mal, corrígela y explica por qué en el commit.
 - Un bug se corrige con una prueba que lo reproduce primero.

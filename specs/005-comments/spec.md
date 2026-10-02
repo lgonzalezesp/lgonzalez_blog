@@ -14,7 +14,7 @@ Los lectores deben poder comentar los artículos sin que el blog necesite base d
 
 ## Criterios de aceptación
 
-- [ ] Sección de comentarios al final de cada post (y de cada proyecto, si se decide).
+- [ ] Sección de comentarios al final de cada post y de cada proyecto.
 - [ ] Cada post tiene su propio hilo, mapeado por ruta; las traducciones tienen hilos separados.
 - [ ] Idioma de la interfaz de Giscus = idioma de la página.
 - [ ] Tema de Giscus sincronizado con el modo claro/oscuro del sitio, también al cambiarlo.
@@ -48,7 +48,7 @@ Sin llamar a GitHub: la red de Giscus se intercepta.
 
 ## Preguntas abiertas
 
-- ¿Comentarios también en proyectos y notas, o solo en artículos?
+- Ninguna. ~~¿Comentarios también en proyectos y notas?~~ Resuelta (plan, P1): en artículos y proyectos; no en notas.
 
 ## Requisitos previos (manuales)
 

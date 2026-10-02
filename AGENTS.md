@@ -84,7 +84,7 @@ specs/
   _templates/             # plantillas spec/plan/tasks
   NNN-nombre/             # una carpeta por feature
 src/
-  consts.ts               # título, descripción y BLOG_PAGE_SIZE
+  consts.ts               # título, descripción, BLOG_PAGE_SIZE y GISCUS (ids públicos de Discussions)
   content.config.ts       # colecciones blog, projects, notes y pages (glob por idioma desde CONTENT_DIR)
   content/
     schemas.ts            # esquemas Zod del frontmatter (probados con Vitest)
@@ -96,6 +96,7 @@ src/
     content.ts            # utilidades puras: idioma, slug, borradores, orden, traducciones
     collections.ts        # getPublished(), entryPaths(), getPageEntry(), getTagGroups(): único acceso a las colecciones
     reading-time.ts, toc.ts, pagination.ts, tags.ts  # lógica pura de 004
+    giscus.ts, giscus-theme.ts  # configuración de Giscus y mensaje de tema (005)
   assets/                 # imágenes y fuentes procesadas por Astro
   components/             # componentes .astro (Header, Footer, PostCard, ProjectCard, ThemeToggle…)
   layouts/
@@ -184,7 +185,7 @@ Reglas:
 - **Ningún texto de UI hardcodeado**: todo pasa por el diccionario de `src/i18n/ui.ts` (`t('clave')`), en ES y EN. Las URLs se construyen con `src/i18n/routes.ts`, nunca a mano.
 - URLs por idioma: `/` · `/en/`, `/blog/` · `/en/blog/` (páginas `/blog/pagina/N/` · `/en/blog/page/N/`), `/blog/<slug>/` · `/en/blog/<slug>/`, `/proyectos/` · `/en/projects/` (y `<slug>/`), `/notas/` · `/en/notes/` (y `<slug>/`), `/etiquetas/` · `/en/tags/` (y `<tag>/`), `/sobre-mi/` · `/en/about/`.
 - Imágenes con el componente de imágenes de Astro y **`alt` obligatorio**.
-- **Cero JS en cliente por defecto**; usa islas solo si aportan valor y justifícalo en `plan.md`. Única excepción hoy: el modo oscuro (`ThemeToggle.astro` y el script inline de `Base.astro`, spec 004).
+- **Cero JS en cliente por defecto**; usa islas solo si aportan valor y justifícalo en `plan.md`. Excepciones aprobadas: el modo oscuro (`ThemeToggle.astro` y el script inline de `Base.astro`, spec 004) y la carga bajo demanda de Giscus (`Comments.astro`, spec 005).
 - Commits con **Conventional Commits** (`feat:`, `fix:`, `docs:`, `chore:`…), referenciando la spec cuando aplique (p. ej. `feat(003-i18n): selector de idioma`).
 - **Una rama por spec**: `feature/NNN-nombre` desde `develop`, mergeada a `develop` vía PR (ver Gitflow).
 

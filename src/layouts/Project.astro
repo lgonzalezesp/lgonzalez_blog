@@ -1,6 +1,7 @@
 ---
 import type { ImageMetadata } from 'astro';
 import { Image } from 'astro:assets';
+import Comments from '../components/Comments.astro';
 import ProjectStatus from '../components/ProjectStatus.astro';
 import TagList from '../components/TagList.astro';
 import type { Alternates } from '../i18n/routes';
@@ -60,4 +61,5 @@ const t = useTranslations(lang);
 			<slot />
 		</div>
 	</article>
+	<Comments lang={lang} />
 </Base>

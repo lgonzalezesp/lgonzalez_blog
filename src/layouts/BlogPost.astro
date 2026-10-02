@@ -2,6 +2,7 @@
 // Posts and notes. Reading time and table of contents only for posts.
 import type { ImageMetadata } from 'astro';
 import { Image } from 'astro:assets';
+import Comments from '../components/Comments.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 import ReadingTime from '../components/ReadingTime.astro';
 import TableOfContents from '../components/TableOfContents.astro';
@@ -23,6 +24,8 @@ interface Props {
 	alternates: Alternates;
 	readingMinutes?: number;
 	toc?: TocItem[];
+	/** Giscus comments at the end (posts only, not notes). */
+	comments?: boolean;
 }
 
 const {
@@ -36,6 +39,7 @@ const {
 	alternates,
 	readingMinutes,
 	toc = [],
+	comments = false,
 } = Astro.props;
 const t = useTranslations(lang);
 ---
@@ -73,4 +77,5 @@ const t = useTranslations(lang);
 			<slot />
 		</div>
 	</article>
+	{comments && <Comments lang={lang} />}
 </Base>

@@ -13,7 +13,17 @@ export default defineConfig({
 		baseURL: `http://localhost:${PORT}`,
 		trace: 'retain-on-failure',
 	},
-	projects: [{ name: 'chromium', use: { ...devices['Desktop Chrome'] } }],
+	projects: [
+		{
+			name: 'chromium',
+			use: {
+				...devices['Desktop Chrome'],
+				// No external network in tests: any host other than localhost fails to resolve.
+				// Third parties (e.g. giscus.app) are stubbed with page.route.
+				launchOptions: { args: ['--host-resolver-rules=MAP * ~NOTFOUND, EXCLUDE localhost'] },
+			},
+		},
+	],
 	webServer: {
 		// Functional tests always run against the production build.
 		// `--ignore-lock` keeps `astro preview` in the foreground even when it

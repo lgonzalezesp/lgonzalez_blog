@@ -1,0 +1,74 @@
+---
+// Giscus comments (spec 005). The Giscus script is only requested when the reader gets close to
+// this section, with the page language and the site's current theme, and follows theme changes.
+import type { Lang } from '../i18n/ui';
+import { useTranslations } from '../i18n/utils';
+import { giscusAttributes } from '../lib/giscus';
+
+interface Props {
+	lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+// The theme depends on the reader, so it is added in the browser.
+const config = giscusAttributes({ lang, theme: 'light' });
+delete config['data-theme'];
+---
+
+<section
+	id="comments"
+	aria-labelledby="comments-title"
+	class="mt-16 border-t border-border pt-8"
+	data-giscus={JSON.stringify(config)}
+>
+	<h2 id="comments-title" class="mb-6 text-2xl font-bold">
+		{t('comments.title')}
+	</h2>
+	<noscript>{t('comments.noscript')}</noscript>
+	<div class="giscus"></div>
+</section>
+
+<script>
+	import { GISCUS_ORIGIN, GISCUS_SCRIPT, giscusThemeMessage, type Theme } from '../lib/giscus-theme';
+
+	const section = document.getElementById('comments');
+	const systemDark = window.matchMedia('(prefers-color-scheme: dark)');
+
+	function currentTheme(): Theme {
+		const theme = document.documentElement.dataset.theme;
+		if (theme === 'light' || theme === 'dark') return theme;
+		return systemDark.matches ? 'dark' : 'light';
+	}
+
+	function loadGiscus(target: HTMLElement) {
+		const config: Record<string, string> = JSON.parse(target.dataset.giscus ?? '{}');
+		const script = document.createElement('script');
+		script.src = GISCUS_SCRIPT;
+		script.async = true;
+		script.crossOrigin = 'anonymous';
+		for (const [name, value] of Object.entries(config)) script.setAttribute(name, value);
+		script.setAttribute('data-theme', currentTheme());
+		target.append(script);
+	}
+
+	function syncTheme() {
+		const frame = section?.querySelector<HTMLIFrameElement>('iframe.giscus-frame');
+		frame?.contentWindow?.postMessage(giscusThemeMessage(currentTheme()), GISCUS_ORIGIN);
+	}
+
+	if (section) {
+		const observer = new IntersectionObserver(
+			(entries) => {
+				if (entries.some((entry) => entry.isIntersecting)) {
+					observer.disconnect();
+					loadGiscus(section);
+				}
+			},
+			{ rootMargin: '200px' },
+		);
+		observer.observe(section);
+		document.addEventListener('themechange', syncTheme);
+		systemDark.addEventListener('change', syncTheme);
+	}
+</script>

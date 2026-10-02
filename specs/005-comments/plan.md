@@ -1,7 +1,7 @@
 # Plan 005 — Comentarios (Giscus)
 
 - **Spec:** [spec.md](./spec.md)
-- **Estado:** Borrador
+- **Estado:** Aprobado
 
 ## Requisitos previos (manuales, antes de implementar)
 
@@ -77,12 +77,18 @@ Al final de cada **artículo** y de cada **proyecto** (respuesta a la pregunta a
 | 8. URLs estables       | ✅       | El hilo depende de la URL: cambiar una URL publicada exige redirección (ya regla)  |
 | 9. Todo se prueba      | ✅       | Ver trazabilidad; la red de giscus.app se intercepta                               |
 
-## Decisiones que necesitan tu visto bueno
+## Decisiones (aprobadas con el plan)
 
 - **P1 — Dónde hay comentarios:** artículos y proyectos; no en notas.
 - **P2 — Categoría «Comments» de tipo Announcement:** los lectores no pueden abrir hilos sueltos desde GitHub; solo comentar en los que crea Giscus.
 - **P3 — Mapeo estricto por URL** (`pathname` + `strict`): consecuencia, si una URL publicada cambia, su hilo queda huérfano salvo que se renombre la discusión (refuerza el principio 8).
 - **P4 — ¿Activo yo Discussions** con `gh repo edit --enable-discussions`? La categoría y la app de Giscus tienes que crearlas/instalarlas tú desde la web de GitHub.
+
+## Ajustes durante la implementación
+
+- `src/lib/giscus-theme.ts` separa lo que usa el navegador (origen, URL del script y mensaje de tema) de `giscus.ts`, para que el script del cliente no incluya `consts.ts` ni el diccionario.
+- Todas las e2e bloquean la red externa (`--host-resolver-rules` en `playwright.config.ts`): un artículo corto ya muestra los comentarios al cargar y, sin el bloqueo, las pruebas de 001–004 habrían llamado a giscus.app.
+- La prueba de accesibilidad excluye el iframe simulado (es contenido de un tercero).
 
 ## Riesgos
 
