@@ -19,6 +19,7 @@ Cada apartado corresponde a una especificación de [`specs/`](./specs/README.md)
 | 007 | **Compartir en LinkedIn**  | Botón de compartir (un enlace, sin scripts de LinkedIn), «Copiar enlace», imagen social de 1200×627 generada en el build para el contenido sin portada y enlace al perfil del autor.                                            |
 | 008 | **Despliegue**             | Vercel con producción en `main` y previews protegidas en `develop` y en cada PR. Pruebas de humo tras cada despliegue. Proceso de release y hotfix.                                                                             |
 | 009 | **Favicon**                | Iniciales LG con una pata de perro, con modo oscuro. Generado desde un SVG fuente (`npm run icons`): `.ico`, icono de Apple e iconos de 192/512 con `manifest.webmanifest`.                                                     |
+| 010 | **Crear posts**            | `npm run new-post` crea un artículo o una nota en borrador, en español, inglés o ambos enlazados, con el frontmatter válido; la skill `/nuevo-post` de Claude Code guía el flujo hasta la PR.                                   |
 
 ## Principios
 
@@ -62,10 +63,23 @@ Los borradores (`draft: true`) se ven en `npm run dev` y en las previews de Verc
 | Pruebas funcionales (sobre el build) | `npm run test:e2e`                                               |
 | Todas las pruebas                    | `npm test`                                                       |
 | Regenerar favicon e iconos           | `npm run icons`                                                  |
+| Crear un post o una nota             | `npm run new-post -- "Título"`                                   |
 | Humo contra un despliegue            | `SMOKE_BASE_URL=<url> npm run test:smoke`                        |
 | Dominio y redirecciones (producción) | `SMOKE_BASE_URL=https://lgonzalez.dev npm run test:smoke:domain` |
 
 ## Escribir un artículo
+
+Lo más rápido es dejar que un comando cree el archivo, con el frontmatter correcto, la fecha de hoy y `draft: true`:
+
+```bash
+npm run new-post -- "Mi primer post"                                  # español
+npm run new-post -- "Mi primer post" --lang both --title-en "My first post"   # español e inglés enlazados
+npm run new-post -- "Una idea" --type note --tags gcp,ideas            # nota
+```
+
+Nunca sobrescribe un archivo existente. En Claude Code, `/nuevo-post` hace lo mismo y te guía hasta la PR.
+
+También puedes crearlo a mano:
 
 1. Crea el archivo en la carpeta de su idioma. El nombre es la URL:
    - `src/content/blog/es/mi-post.md` → `/blog/mi-post/`

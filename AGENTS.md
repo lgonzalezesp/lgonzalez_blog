@@ -78,6 +78,7 @@ Las rutas marcadas con _(NNN)_ aún no existen; se crean en esa spec.
 AGENTS.md                 # este archivo (canónico)
 CLAUDE.md                 # importa AGENTS.md para Claude Code
 .claude/rules/            # reglas de Claude Code por tema/ruta (detallan AGENTS.md, no lo sustituyen)
+.claude/skills/nuevo-post/  # skill /nuevo-post: crea un post o una nota y guía el flujo hasta la PR (010)
 specs/
   constitution.md         # principios no negociables
   README.md               # índice de features y estado
@@ -127,6 +128,7 @@ vitest.config.ts          # Vitest sobre la config de Vite de Astro
 playwright.config.ts      # e2e sobre build + preview en :4322 (nunca el dev server)
 playwright.smoke.config.ts  # humo contra un despliegue real (SMOKE_BASE_URL)
 scripts/generate-favicons.mjs  # genera los iconos de public/ desde el SVG fuente (`npm run icons`)
+scripts/new-post.mjs      # crea un post o una nota en borrador (`npm run new-post`, 010)
 vercel.json               # build de Vercel (npm ci, dist, trailingSlash)
 CHANGELOG.md              # cambios por versión (en cada release)
 eslint.config.js          # ESLint (flat config)
@@ -182,22 +184,23 @@ Reglas:
 
 ## Comandos
 
-| Acción                               | Comando                                                          |
-| ------------------------------------ | ---------------------------------------------------------------- |
-| Instalar dependencias                | `npm ci`                                                         |
-| Servidor de desarrollo               | `npm run dev`                                                    |
-| Build de producción                  | `npm run build`                                                  |
-| Previsualizar build                  | `npm run preview`                                                |
-| Tipos + esquemas de contenido        | `npm run check`                                                  |
-| Lint                                 | `npm run lint`                                                   |
-| Formato                              | `npm run format`                                                 |
-| Comprobar formato (CI)               | `npm run format:check`                                           |
-| Pruebas unitarias                    | `npm run test:unit`                                              |
-| Pruebas funcionales (sobre el build) | `npm run test:e2e`                                               |
-| Todas las pruebas                    | `npm test`                                                       |
-| Humo contra un despliegue            | `SMOKE_BASE_URL=<url> npm run test:smoke`                        |
-| Dominio y redirecciones (producción) | `SMOKE_BASE_URL=https://lgonzalez.dev npm run test:smoke:domain` |
-| Regenerar favicon e iconos           | `npm run icons`                                                  |
+| Acción                               | Comando                                                                                                    |
+| ------------------------------------ | ---------------------------------------------------------------------------------------------------------- |
+| Instalar dependencias                | `npm ci`                                                                                                   |
+| Servidor de desarrollo               | `npm run dev`                                                                                              |
+| Build de producción                  | `npm run build`                                                                                            |
+| Previsualizar build                  | `npm run preview`                                                                                          |
+| Tipos + esquemas de contenido        | `npm run check`                                                                                            |
+| Lint                                 | `npm run lint`                                                                                             |
+| Formato                              | `npm run format`                                                                                           |
+| Comprobar formato (CI)               | `npm run format:check`                                                                                     |
+| Pruebas unitarias                    | `npm run test:unit`                                                                                        |
+| Pruebas funcionales (sobre el build) | `npm run test:e2e`                                                                                         |
+| Todas las pruebas                    | `npm test`                                                                                                 |
+| Humo contra un despliegue            | `SMOKE_BASE_URL=<url> npm run test:smoke`                                                                  |
+| Dominio y redirecciones (producción) | `SMOKE_BASE_URL=https://lgonzalez.dev npm run test:smoke:domain`                                           |
+| Regenerar favicon e iconos           | `npm run icons`                                                                                            |
+| Crear un post o una nota (borrador)  | `npm run new-post -- "Título" [--lang es\|en\|both] [--title-en "Title"] [--type post\|note] [--tags a,b]` |
 
 > Si cambian los scripts de `package.json`, actualiza esta tabla.
 
@@ -206,6 +209,7 @@ Reglas:
 - Rutas, contenido, utilidades y pruebas en **kebab-case**; componentes y layouts `.astro` en **PascalCase** (convención de Astro).
 - Todo contenido lleva **frontmatter validado por esquema**; nunca desactives la validación.
 - Las traducciones de un mismo post comparten el campo `translationKey`.
+- Para empezar un post o una nota usa **`npm run new-post`** (o la skill `/nuevo-post`): crea el archivo con el frontmatter válido, la fecha de hoy y `draft: true`, y nunca sobrescribe. El texto lo aporta el autor: no inventes su contenido.
 - **Ningún texto de UI hardcodeado**: todo pasa por el diccionario de `src/i18n/ui.ts` (`t('clave')`), en ES y EN. Las URLs se construyen con `src/i18n/routes.ts`, nunca a mano.
 - URLs por idioma: `/` · `/en/`, `/blog/` · `/en/blog/` (páginas `/blog/pagina/N/` · `/en/blog/page/N/`), `/blog/<slug>/` · `/en/blog/<slug>/`, `/proyectos/` · `/en/projects/` (y `<slug>/`), `/notas/` · `/en/notes/` (y `<slug>/`), `/etiquetas/` · `/en/tags/` (y `<tag>/`), `/sobre-mi/` · `/en/about/`.
 - Imágenes con el componente de imágenes de Astro y **`alt` obligatorio**. Las portadas miden al menos **1200×627** (son también la imagen al compartir; si no, el build falla).

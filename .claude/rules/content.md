@@ -16,6 +16,7 @@ paths:
   - `projects`: además `stack` (≥ 1), `status` (`active` | `completed` | `archived`), `repoUrl`/`demoUrl` (URL) y `featured`.
   - `notes`: `tags` obligatorio con al menos una etiqueta; `description` opcional.
   - `pages` (p. ej. `about.md`): solo `title`, `description`, `lang`, `translationKey`, `updatedDate` y `cover` opcionales; se leen con `getPageEntry()`.
+- Para crear un post o una nota usa `npm run new-post -- "Título" [--lang es|en|both] [--title-en "Title"] [--type post|note] [--tags a,b]` (o `/nuevo-post`): genera el frontmatter válido en borrador y no sobrescribe archivos. Detalle en `specs/010-new-post/spec.md`.
 - `translationKey` lo comparten las traducciones de una misma pieza; se pone aunque no haya traducción.
 - `draft: true` nunca se publica en producción (sí en `npm run dev` y previews de Vercel). Las páginas, listados y RSS obtienen el contenido solo con `getPublished()`/`entryPaths()` de `src/lib/collections.ts`, nunca con `getCollection` directo.
 - No renombres ni muevas contenido ya publicado sin añadir redirección (URLs estables, principio 8 de la constitución).

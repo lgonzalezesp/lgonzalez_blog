@@ -1,6 +1,6 @@
 # Spec 010 — Crear posts
 
-- **Estado:** Aprobada
+- **Estado:** En revisión
 - **Rama:** `feature/010-new-post`
 
 ## Contexto / Por qué
@@ -18,31 +18,31 @@ El objetivo es que empezar un post sea **un comando** (o una petición a Claude 
 
 ## Criterios de aceptación
 
-- [ ] `npm run new-post -- "<título>"` crea `src/content/blog/es/<slug>.md` con frontmatter válido: `title`, `description` provisional, `pubDate` de hoy, `tags: []`, `lang`, `translationKey` y `draft: true`, más un esqueleto de texto.
-- [ ] El `slug` se deriva del título: minúsculas, sin acentos ni signos, con guiones.
-- [ ] Con `--lang en` crea solo la versión en inglés, y con `--lang both` crea las dos con el **mismo** `translationKey`; cada una con su slug (el inglés con `--title-en "<title>"`).
-- [ ] Con `--type note` crea una nota (`src/content/notes/<lang>/`) con título, fecha y al menos una etiqueta (`--tags a,b`), como exige su esquema.
-- [ ] Nunca sobrescribe un archivo existente: falla con un mensaje claro que nombra el archivo.
-- [ ] Un título vacío, un idioma no válido o un slug vacío fallan con un mensaje claro y sin crear nada.
-- [ ] Todo archivo creado pasa `npm run check` sin errores.
-- [ ] Un post creado y luego publicado (quitando `draft`) se construye y aparece en ES y EN, con el selector de idioma enlazando las dos versiones.
-- [ ] Skill de Claude Code `/nuevo-post`: pregunta el tema y el idioma, ejecuta el script, ayuda a redactar y recuerda el flujo (rama `post/<slug>`, vista previa, PR a `develop`). No publica ni mergea por sí sola.
-- [ ] Documentado en `AGENTS.md`, `README.md` y `.claude/rules/content.md`.
-- [ ] Sin dependencias nuevas.
+- [x] `npm run new-post -- "<título>"` crea `src/content/blog/es/<slug>.md` con frontmatter válido: `title`, `description` provisional, `pubDate` de hoy, `tags: []`, `lang`, `translationKey` y `draft: true`, más un esqueleto de texto.
+- [x] El `slug` se deriva del título: minúsculas, sin acentos ni signos, con guiones.
+- [x] Con `--lang en` crea solo la versión en inglés, y con `--lang both` crea las dos con el **mismo** `translationKey`; cada una con su slug (el inglés con `--title-en "<title>"`).
+- [x] Con `--type note` crea una nota (`src/content/notes/<lang>/`) con título, fecha y al menos una etiqueta (`--tags a,b`), como exige su esquema.
+- [x] Nunca sobrescribe un archivo existente: falla con un mensaje claro que nombra el archivo.
+- [x] Un título vacío, un idioma no válido o un slug vacío fallan con un mensaje claro y sin crear nada.
+- [x] Todo archivo creado pasa `npm run check` sin errores.
+- [x] Un post creado y luego publicado (quitando `draft`) se construye y aparece en ES y EN, con el selector de idioma enlazando las dos versiones.
+- [x] Skill de Claude Code `/nuevo-post`: pregunta el tema y el idioma, ejecuta el script, ayuda a redactar y recuerda el flujo (rama `post/<slug>`, vista previa, PR a `develop`). No publica ni mergea por sí sola.
+- [x] Documentado en `AGENTS.md`, `README.md` y `.claude/rules/content.md`.
+- [x] Sin dependencias nuevas.
 
 ## Pruebas
 
 ### Unitarias (Vitest)
 
-- [ ] `slugify`: acentos, `ñ`, signos, espacios múltiples, mayúsculas, títulos que quedan vacíos.
-- [ ] El constructor del frontmatter genera un documento que valida con `blogSchema` y `noteSchema` (ES y EN), con la fecha de hoy y `draft: true`.
-- [ ] `createPost` en un directorio temporal: crea los archivos esperados (`es`, `en`, `both`, `note`), usa el mismo `translationKey` en `both` y **no sobrescribe** (error que nombra el archivo).
-- [ ] Validaciones: título vacío, `--lang` inválido, nota sin etiquetas, slug vacío.
+- [x] `slugify`: acentos, `ñ`, signos, espacios múltiples, mayúsculas, títulos que quedan vacíos.
+- [x] El constructor del frontmatter genera un documento que valida con `blogSchema` y `noteSchema` (ES y EN), con la fecha de hoy y `draft: true`.
+- [x] `createPost` en un directorio temporal: crea los archivos esperados (`es`, `en`, `both`, `note`), usa el mismo `translationKey` en `both` y **no sobrescribe** (error que nombra el archivo).
+- [x] Validaciones: título vacío, `--lang` inválido, nota sin etiquetas, slug vacío.
 
 ### Funcionales (Playwright)
 
-- [ ] Se ejecuta el comando contra una copia del contenido de pruebas, se publica el post (se quita `draft`) y se construye en un directorio temporal: existen las páginas ES y EN y el selector de idioma lleva de una a otra.
-- [ ] Mientras sea borrador, el post **no** está en el build de producción (ni en listados, ni RSS, ni sitemap).
+- [x] Se ejecuta el comando contra una copia del contenido de pruebas, se publica el post (se quita `draft`) y se construye en un directorio temporal: existen las páginas ES y EN y el selector de idioma lleva de una a otra.
+- [x] Mientras sea borrador, el post **no** está en el build de producción (ni en listados, ni RSS, ni sitemap).
 
 ## Fuera de alcance
 

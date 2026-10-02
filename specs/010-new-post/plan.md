@@ -125,3 +125,10 @@
 - `npm run check && npm run lint && npm run format:check && npm test` en local y en CI.
 - Manual: ejecutar `npm run new-post -- "Prueba" --lang both --title-en "Test"`, ver ambas páginas en `npm run dev` y borrar los archivos de prueba.
 - Manual: invocar `/nuevo-post` en Claude Code y comprobar que sigue el flujo sin publicar nada.
+
+## Ajustes durante la implementación
+
+- `scripts/` no existía en `develop` (lo crea la spec 009, aún en revisión): esta rama crea la carpeta con `new-post.mjs`. Al mergear ambas, `AGENTS.md`, `README.md` y `specs/README.md` pueden tener conflictos triviales (filas y líneas contiguas).
+- `buildPlan` devuelve también `url` (la ruta local de cada archivo) para que la CLI la imprima y una prueba la compare con `src/i18n/routes.ts`.
+- El título posicional admite varias palabras sin comillas (`npm run new-post -- Mi post`): se unen con espacios.
+- La prueba funcional usa `npm run build` con `CONTENT_DIR` y `OUT_DIR` temporales; con `OUT_DIR` ya no toca `dist/`. Tarda unos 7 s en local.

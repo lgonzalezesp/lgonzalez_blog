@@ -15,6 +15,7 @@ Cada spec debe entregar **pruebas unitarias** (Vitest) y **pruebas funcionales**
 | 007 | [Compartir en LinkedIn](./007-linkedin-share/spec.md) | Aprobada | [Aprobado](./007-linkedin-share/plan.md) | [16/16](./007-linkedin-share/tasks.md) | Hecha ([PR #7](https://github.com/lgonzalezesp/lgonzalez_blog/pull/7)) |
 | 008 | [Despliegue en Vercel](./008-deploy/spec.md)          | Aprobada | [Aprobado](./008-deploy/plan.md)         | [8/20](./008-deploy/tasks.md)          | En curso                                                               |
 | 009 | [Favicon](./009-favicon/spec.md)                      | Aprobada | [Aprobado](./009-favicon/plan.md)        | [10/10](./009-favicon/tasks.md)        | En revisión                                                            |
+| 010 | [Crear posts](./010-new-post/spec.md)                 | Aprobada | [Aprobado](./010-new-post/plan.md)       | [12/12](./010-new-post/tasks.md)       | En revisión                                                            |
 
 ## Tareas manuales (fuera del código)
 
