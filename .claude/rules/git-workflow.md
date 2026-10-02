@@ -11,3 +11,4 @@ Se aplica siempre.
 - PRs hacia `develop` con título en Conventional Commits; el cuerpo enlaza la spec y resume criterios y pruebas.
 - Nunca uses `--no-verify`, `--force` sobre ramas compartidas ni reescribas historia publicada.
 - Nunca commitees `.env*` (salvo `.env.example`), `.vercel/`, `.claude/settings.local.json` ni `CLAUDE.local.md`.
+- Release y hotfix: sigue la sección «Despliegue» de `AGENTS.md` (versión, `CHANGELOG.md`, PR a `main` y a `develop` con merge commit, tag `vX.Y.Z`). Nunca sin que el usuario lo pida: publicar en `main` es publicar en `lgonzalez.dev`.

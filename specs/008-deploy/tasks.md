@@ -7,12 +7,12 @@ Las pruebas se escriben antes o junto a la implementación que cubren y deben ve
 
 ## Repo
 
-- [ ] T1 — Prueba unitaria: `build-env.test.ts` y `vercel-config.test.ts` → ver fallar
-- [ ] T2 — Implementación: `currentBuildEnv` (usado por `getPublished` y el RSS) y `vercel.json` → ver pasar
-- [ ] T3 — Pruebas de humo: `playwright.smoke.config.ts`, `tests/smoke/deploy.spec.ts`, `tests/smoke/domain.spec.ts` y script `test:smoke`; verlas pasar contra un `preview` local (`SMOKE_BASE_URL=http://localhost:4323`) y fallar contra una URL rota
-- [ ] T4 — Workflow `.github/workflows/smoke.yml` (`deployment_status`, bypass de protección, `domain.spec.ts` solo en producción)
-- [ ] T5 — Documentación: `AGENTS.md` (despliegue, release, hotfix, humo) y `.claude/rules/` (git-workflow, tooling)
-- [ ] T6 — PR `feature/008-deploy → develop` con CI en verde
+- [x] T1 — Prueba unitaria: `build-env.test.ts` y `vercel-config.test.ts` → ver fallar
+- [x] T2 — Implementación: `currentBuildEnv` (usado por `getPublished` y el RSS) y `vercel.json` → ver pasar
+- [x] T3 — Pruebas de humo: `playwright.smoke.config.ts`, `tests/smoke/deploy.spec.ts`, `tests/smoke/domain.spec.ts` y scripts `test:smoke` / `test:smoke:domain`. Pasan contra el `preview` local y contra `https://lgonzalez-blog.vercel.app`; fallan contra una URL rota; `domain.spec.ts` falla hasta conectar el dominio
+- [x] T4 — Workflow `.github/workflows/smoke.yml` (`deployment_status`, bypass de protección, `domain.spec.ts` solo en producción)
+- [x] T5 — Documentación: `AGENTS.md` (despliegue, release, hotfix, humo) y `.claude/rules/` (git-workflow, tooling)
+- [x] T6 — PR `feature/008-deploy → develop` con CI en verde
 
 ## Vercel y dominio (manuales del autor)
 

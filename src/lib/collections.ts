@@ -3,6 +3,7 @@ import {
 	assertCoverSize,
 	assertLangMatchesFolder,
 	type ContentEntry,
+	currentBuildEnv,
 	filterPublished,
 	type Lang,
 	slugFromId,
@@ -22,10 +23,7 @@ export async function getPublished<C extends CollectionKey>(
 	const entries = (await getCollection(collection)) as unknown as (CollectionEntry<C> & ContentEntry)[];
 	entries.forEach(assertLangMatchesFolder);
 	entries.forEach(assertCoverSize);
-	const published = filterPublished(entries, {
-		prod: import.meta.env.PROD,
-		vercelEnv: process.env.VERCEL_ENV,
-	});
+	const published = filterPublished(entries, currentBuildEnv());
 	return sortByDateDesc(lang ? published.filter((entry) => entry.data.lang === lang) : published);
 }
 

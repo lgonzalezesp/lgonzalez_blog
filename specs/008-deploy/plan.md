@@ -1,7 +1,7 @@
 # Plan 008 — Despliegue en Vercel
 
 - **Spec:** [spec.md](./spec.md)
-- **Estado:** Borrador
+- **Estado:** Aprobado
 
 ## Situación (2026-10-02)
 
@@ -85,13 +85,18 @@
 | 8. URLs estables       | ✅       | `trailingSlash` coherente con las canónicas; `www` redirige al raíz |
 | 9. Todo se prueba      | ✅       | Unitarias del entorno; humo contra cada preview y producción        |
 
-## Decisiones que necesitan tu visto bueno
+## Decisiones (aprobadas con el plan)
 
 - **P1 — Dónde comprar el dominio** (pregunta abierta): **Vercel Domains** (DNS y HTTPS sin configurar nada). Alternativas: Cloudflare Registrar o Porkbun (más baratos en renovación; hay que crear los registros A/CNAME).
 - **P2 — Previews protegidas** con la autenticación de Vercel + secreto de bypass para CI (alternativa: previews públicas, sin secreto, pero con los borradores visibles para cualquiera que tenga la URL).
 - **P3 — «No desplegar si CI falla»** se garantiza con la protección de `main` (solo entra lo que pasó CI) y el comportamiento de Vercel ante builds fallidos; no se añade un despliegue manual desde GitHub Actions (más complejo, exigiría token de Vercel en GitHub).
 - **P4 — `develop` usa la URL estable automática de Vercel** (no un subdominio como `develop.lgonzalez.dev`; se puede añadir después).
 - **P5 — Release `0.1.0`** con todo lo de 001–008 como primera publicación.
+
+## Ajustes durante la implementación
+
+- Dos proyectos en `playwright.smoke.config.ts` (`deploy` y `domain`) y dos scripts (`test:smoke`, `test:smoke:domain`), en lugar de saltar pruebas según el entorno.
+- `vercel.json` no fija la rama de producción (se configura en Vercel): el autor la cambió de `develop` (rama por defecto del repo) a `main`.
 
 ## Riesgos
 
