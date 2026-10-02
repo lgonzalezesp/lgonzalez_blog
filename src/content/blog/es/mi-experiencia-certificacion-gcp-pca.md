@@ -5,6 +5,9 @@ pubDate: 2026-10-02
 tags: ['gcp', 'certificación', 'pca', 'google-cloud', 'cloud']
 lang: es
 translationKey: gcp-pca-experience
+cover:
+  src: '../../../assets/post-pca-gcp/cover.jpg'
+  alt: 'Certificado Google Cloud Certified Professional Cloud Architect a nombre de Luis Gonzalez, sobre un fondo azul'
 ---
 
 En este post te contaré cómo aprobé la certificación Professional Cloud Architect de GCP, desde mi experiencia, y cómo te puedo aportar en tu camino.
