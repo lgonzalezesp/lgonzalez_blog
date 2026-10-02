@@ -5,7 +5,7 @@
 
 ## Situación (2026-10-02)
 
-- `lgonzalez.dev` **sigue libre** (el RDAP del registro `.dev` responde «not found»).
+- `lgonzalez.dev` **comprado** por el autor en Vercel Domains el 2026-10-02 (registrador Name.com, DNS `ns1/ns2.vercel-dns.com`, bloqueo de transferencia activo).
 - El repo aún no está conectado a Vercel; no hay CLI de Vercel instalada (no hace falta: Vercel despliega desde GitHub).
 - `main` no tiene nada de 001–007: todo está en `develop`. La primera publicación será la release `0.1.0`.
 

@@ -16,7 +16,7 @@ Las pruebas se escriben antes o junto a la implementación que cubren y deben ve
 
 ## Vercel y dominio (manuales del autor)
 
-- [ ] T7 — (Autor) Comprar `lgonzalez.dev` (renovación automática, privacidad WHOIS, bloqueo de transferencia)
+- [x] T7 — (Autor) Comprar `lgonzalez.dev` (renovación automática, privacidad WHOIS, bloqueo de transferencia): comprado en Vercel el 2026-10-02 (registrador Name.com, DNS de Vercel, bloqueo de transferencia activo; vence el 2027-10-02)
 - [ ] T8 — (Autor) Importar el repo en Vercel: producción = `main`, Node 24
 - [ ] T9 — (Autor) Dominio `lgonzalez.dev` + `www` con redirección 308 al raíz
 - [ ] T10 — (Autor) Activar Web Analytics y Speed Insights
