@@ -8,6 +8,12 @@ import { defineConfig, fontProviders } from 'astro/config';
 // https://astro.build/config
 export default defineConfig({
 	site: 'https://lgonzalez.dev',
+	// Spanish at the root, English under /en/ (spec 003). Keep in sync with src/i18n/ui.ts.
+	i18n: {
+		locales: ['es', 'en'],
+		defaultLocale: 'es',
+		routing: { prefixDefaultLocale: false },
+	},
 	integrations: [mdx(), sitemap()],
 	vite: {
 		plugins: [tailwindcss()],

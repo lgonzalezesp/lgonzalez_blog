@@ -1,7 +1,7 @@
 # Plan 003 — Internacionalización ES/EN
 
 - **Spec:** [spec.md](./spec.md)
-- **Estado:** Borrador
+- **Estado:** Aprobado
 
 ## Enfoque técnico
 
@@ -93,7 +93,7 @@ Cada ruta existe en los dos idiomas. Para no duplicar marcado, el cuerpo de las 
 | 8. URLs estables       | ✅       | Nada publicado aún; las URLs elegidas son las definitivas (P1)             |
 | 9. Todo se prueba      | ✅       | Ver trazabilidad                                                           |
 
-## Decisiones que necesitan tu visto bueno
+## Decisiones (aprobadas con el plan)
 
 - **P1 — URLs de «Sobre mí»:** `/sobre-mi/` y `/en/about/` (segmento traducido, igual que las notas). Sustituye a `/about/`.
 - **P2 — Selector de idioma:** enlace con el nombre del idioma de destino en su propio idioma («English» / «Español»).
@@ -106,6 +106,7 @@ Cada ruta existe en los dos idiomas. Para no duplicar marcado, el cuerpo de las 
 - Se cuela texto de UI sin traducir → tipo de claves derivado de `es`, prueba de claves iguales y prueba funcional que busca textos del diccionario ES en las páginas `/en/`.
 - `hreflang` mal emparejado con slugs traducidos (`usando-mdx` ↔ `using-mdx`) → las alternativas salen de `translationKey`, nunca de reescribir la ruta; prueba en ambos sentidos.
 - El bloque `i18n` de Astro cambia el comportamiento del 404 o de las rutas → pruebas de 001 (404) y 002 (rutas) siguen ejecutándose y deben pasar.
+- **Ajustes al implementar:** `HeaderLink` marca la sección activa por prefijo (con `exact` para la portada) y añade `aria-current="page"`; la 404 no anuncia `hreflang` (sus alternativas van vacías, el selector lleva a `/en/`); el listado del blog gana un `h1` (oculto visualmente) y títulos `h2` en lugar de `h4`.
 - Refactor a `Base.astro` toca todas las páginas → las pruebas de a11y de 001 y 002 actúan de red de seguridad.
 
 ## Estrategia de pruebas
