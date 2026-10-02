@@ -20,7 +20,7 @@ Las pruebas se escriben antes o junto a la implementación que cubren y deben ve
 - [ ] T8 — (Autor) Importar el repo en Vercel: producción = `main`, Node 24
 - [ ] T9 — (Autor) Dominio `lgonzalez.dev` + `www` con redirección 308 al raíz
 - [ ] T10 — (Autor) Activar Web Analytics y Speed Insights
-- [ ] T11 — (Autor) Crear el secreto «Protection Bypass for Automation» y guardarlo en GitHub (`VERCEL_AUTOMATION_BYPASS_SECRET`)
+- [x] T11 — (Autor) Crear el secreto «Protection Bypass for Automation» y guardarlo en GitHub (`VERCEL_AUTOMATION_BYPASS_SECRET`): el workflow `Smoke` pasa contra la preview protegida de la PR #8; sin el secreto, la preview redirige al login de Vercel
 - [ ] T12 — Comprobar: preview del PR y de `develop` desplegadas; workflow de humo en verde; borrador visible en la preview
 
 ## Release 0.1.0
