@@ -84,22 +84,25 @@ specs/
   _templates/             # plantillas spec/plan/tasks
   NNN-nombre/             # una carpeta por feature
 src/
-  consts.ts               # título y descripción del sitio
-  content.config.ts       # colecciones blog, projects y notes (glob por idioma)
+  consts.ts               # título, descripción y BLOG_PAGE_SIZE
+  content.config.ts       # colecciones blog, projects, notes y pages (glob por idioma desde CONTENT_DIR)
   content/
     schemas.ts            # esquemas Zod del frontmatter (probados con Vitest)
     blog/{es,en}/         # artículos → /blog/<slug>/ y /en/blog/<slug>/
-    projects/{es,en}/     # fichas de proyectos (sin ruta hasta 004)
+    projects/{es,en}/     # proyectos → /proyectos/<slug>/ y /en/projects/<slug>/
     notes/{es,en}/        # notas cortas → /notas/<slug>/ y /en/notes/<slug>/
+    pages/{es,en}/        # páginas en Markdown (about.md → /sobre-mi/ y /en/about/)
   lib/
     content.ts            # utilidades puras: idioma, slug, borradores, orden, traducciones
-    collections.ts        # getPublished() y entryPaths(): único acceso a las colecciones
+    collections.ts        # getPublished(), entryPaths(), getPageEntry(), getTagGroups(): único acceso a las colecciones
+    reading-time.ts, toc.ts, pagination.ts, tags.ts  # lógica pura de 004
   assets/                 # imágenes y fuentes procesadas por Astro
-  components/             # componentes .astro (LanguagePicker, Header, Footer…)
+  components/             # componentes .astro (Header, Footer, PostCard, ProjectCard, ThemeToggle…)
   layouts/
-    Base.astro            # html lang, head con hreflang, cabecera, main y pie: toda página lo usa
-    BlogPost.astro        # artículos y notas, sobre Base.astro
-  views/                  # cuerpo de las páginas de sección, con prop `lang` (Home, BlogIndex, About)
+    Base.astro            # html lang, hreflang, tema, skip link, cabecera, main y pie: toda página lo usa
+    BlogPost.astro        # artículos y notas (tiempo de lectura y tabla de contenidos en artículos)
+    Project.astro         # detalle de proyecto
+  views/                  # cuerpo de cada página, con prop `lang` (Home, BlogIndex, Projects, Notes, Tags, Tag, About)
   pages/                  # rutas: es en la raíz, en bajo /en/; envoltorios finos de views/
   i18n/
     ui.ts                 # diccionario de UI ES/EN (las claves de ES definen el tipo)
@@ -110,7 +113,9 @@ public/                   # estáticos servidos tal cual (favicon, robots.txt…
 tests/
   unit/NNN-feature/       # Vitest (*.test.ts)
   e2e/NNN-feature/        # Playwright (*.spec.ts)
-  fixtures/               # contenido de prueba (p. ej. invalid-content/: mini-proyecto con frontmatter inválido)
+  fixtures/
+    content/              # contenido con el que se construye el sitio en las e2e (CONTENT_DIR)
+    invalid-content/      # mini-proyecto con frontmatter inválido (002)
 astro.config.mjs          # site, integraciones, Tailwind (plugin de Vite), fuentes
 vitest.config.ts          # Vitest sobre la config de Vite de Astro
 playwright.config.ts      # e2e sobre build + preview en :4322 (nunca el dev server)
@@ -177,9 +182,9 @@ Reglas:
 - Todo contenido lleva **frontmatter validado por esquema**; nunca desactives la validación.
 - Las traducciones de un mismo post comparten el campo `translationKey`.
 - **Ningún texto de UI hardcodeado**: todo pasa por el diccionario de `src/i18n/ui.ts` (`t('clave')`), en ES y EN. Las URLs se construyen con `src/i18n/routes.ts`, nunca a mano.
-- URLs por idioma: `/` · `/en/`, `/blog/` · `/en/blog/`, `/sobre-mi/` · `/en/about/`, `/blog/<slug>/` · `/en/blog/<slug>/`, `/notas/<slug>/` · `/en/notes/<slug>/`.
+- URLs por idioma: `/` · `/en/`, `/blog/` · `/en/blog/` (páginas `/blog/pagina/N/` · `/en/blog/page/N/`), `/blog/<slug>/` · `/en/blog/<slug>/`, `/proyectos/` · `/en/projects/` (y `<slug>/`), `/notas/` · `/en/notes/` (y `<slug>/`), `/etiquetas/` · `/en/tags/` (y `<tag>/`), `/sobre-mi/` · `/en/about/`.
 - Imágenes con el componente de imágenes de Astro y **`alt` obligatorio**.
-- **Cero JS en cliente por defecto**; usa islas solo si aportan valor y justifícalo en `plan.md`.
+- **Cero JS en cliente por defecto**; usa islas solo si aportan valor y justifícalo en `plan.md`. Única excepción hoy: el modo oscuro (`ThemeToggle.astro` y el script inline de `Base.astro`, spec 004).
 - Commits con **Conventional Commits** (`feat:`, `fix:`, `docs:`, `chore:`…), referenciando la spec cuando aplique (p. ej. `feat(003-i18n): selector de idioma`).
 - **Una rama por spec**: `feature/NNN-nombre` desde `develop`, mergeada a `develop` vía PR (ver Gitflow).
 

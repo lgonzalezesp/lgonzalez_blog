@@ -37,16 +37,19 @@ test('a draft is not published in the production build', async ({ page, request 
 	const response = await page.goto(DRAFT_URL);
 	expect(response?.status()).toBe(404);
 
-	await page.goto('/blog/');
-	await expect(page.locator(`a[href="${DRAFT_URL}"]`)).toHaveCount(0);
-	await expect(page.getByText('Markdown Style Guide')).toHaveCount(0);
+	for (const listing of ['/en/blog/', '/blog/', '/blog/pagina/2/']) {
+		await page.goto(listing);
+		await expect(page.locator(`a[href="${DRAFT_URL}"]`)).toHaveCount(0);
+		await expect(page.getByText('Markdown Style Guide')).toHaveCount(0);
+	}
 
 	const rss = await (await request.get('/rss.xml')).text();
 	expect(rss).not.toContain('markdown-style-guide');
 });
 
 test('the blog listing links to published posts', async ({ page }) => {
-	await page.goto('/blog/');
+	// Since 004 the listing is paginated: usando-mdx (2024) is on page 2 of the fixtures.
+	await page.goto('/blog/pagina/2/');
 	await expect(page.locator('a[href="/blog/usando-mdx/"]').first()).toBeVisible();
 });
 

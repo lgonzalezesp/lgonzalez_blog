@@ -1,10 +1,15 @@
 ---
+// Posts and notes. Reading time and table of contents only for posts.
 import type { ImageMetadata } from 'astro';
 import { Image } from 'astro:assets';
 import FormattedDate from '../components/FormattedDate.astro';
+import ReadingTime from '../components/ReadingTime.astro';
+import TableOfContents from '../components/TableOfContents.astro';
+import TagList from '../components/TagList.astro';
 import type { Alternates } from '../i18n/routes';
 import type { Lang } from '../i18n/ui';
 import { useTranslations } from '../i18n/utils';
+import type { TocItem } from '../lib/toc';
 import Base from './Base.astro';
 
 interface Props {
@@ -16,87 +21,56 @@ interface Props {
 	tags?: string[];
 	lang: Lang;
 	alternates: Alternates;
+	readingMinutes?: number;
+	toc?: TocItem[];
 }
 
-const { title, description = title, pubDate, updatedDate, cover, tags = [], lang, alternates } = Astro.props;
+const {
+	title,
+	description = title,
+	pubDate,
+	updatedDate,
+	cover,
+	tags = [],
+	lang,
+	alternates,
+	readingMinutes,
+	toc = [],
+} = Astro.props;
 const t = useTranslations(lang);
 ---
 
 <Base title={title} description={description} image={cover?.src} lang={lang} alternates={alternates}>
 	<article>
-		<div class="hero-image">
-			{cover && <Image width={1020} height={510} src={cover.src} alt={cover.alt} />}
+		<header class="mb-8 flex flex-col gap-3">
+			{cover && (
+				<Image
+					src={cover.src}
+					alt={cover.alt}
+					width={1020}
+					height={510}
+					class="mb-4 aspect-[2/1] w-full rounded-lg object-cover"
+					loading="eager"
+				/>
+			)}
+			<h1 class="text-3xl leading-tight font-bold sm:text-4xl">{title}</h1>
+			<p class="flex flex-wrap gap-x-3 text-sm text-muted">
+				<FormattedDate date={pubDate} lang={lang} />
+				{readingMinutes && <span aria-hidden="true">·</span>}
+				{readingMinutes && <ReadingTime minutes={readingMinutes} lang={lang} />}
+			</p>
+			{updatedDate && (
+				<p class="text-sm text-muted italic">
+					{t('post.updatedOn')} <FormattedDate date={updatedDate} lang={lang} />
+				</p>
+			)}
+			<TagList tags={tags} lang={lang} />
+		</header>
+		<div class="mb-8">
+			<TableOfContents items={toc} lang={lang} />
 		</div>
 		<div class="prose">
-			<div class="title">
-				<div class="date">
-					<FormattedDate date={pubDate} lang={lang} />
-					{updatedDate && (
-						<div class="last-updated-on">
-							{t('post.updatedOn')} <FormattedDate date={updatedDate} lang={lang} />
-						</div>
-					)}
-				</div>
-				<h1>{title}</h1>
-				{tags.length > 0 && (
-					<ul class="tags" aria-label={t('post.tags')}>
-						{tags.map((tag) => (
-							<li>#{tag}</li>
-						))}
-					</ul>
-				)}
-				<hr />
-			</div>
 			<slot />
 		</div>
 	</article>
 </Base>
-<style>
-	:global(main) {
-		width: calc(100% - 2em);
-		max-width: 100%;
-		margin: 0;
-	}
-	.hero-image {
-		width: 100%;
-	}
-	.hero-image img {
-		display: block;
-		margin: 0 auto;
-		border-radius: 12px;
-		box-shadow: var(--box-shadow);
-	}
-	.prose {
-		width: 720px;
-		max-width: calc(100% - 2em);
-		margin: auto;
-		padding: 1em;
-		color: rgb(var(--gray-dark));
-	}
-	.title {
-		margin-bottom: 1em;
-		padding: 1em 0;
-		text-align: center;
-		line-height: 1;
-	}
-	.title h1 {
-		margin: 0 0 0.5em 0;
-	}
-	.date {
-		margin-bottom: 0.5em;
-		color: rgb(var(--gray));
-	}
-	.tags {
-		display: flex;
-		flex-wrap: wrap;
-		justify-content: center;
-		gap: 0.5em;
-		margin: 0 0 1em;
-		padding: 0;
-		list-style: none;
-		color: rgb(var(--gray));
-	}
-	.last-updated-on {
-		font-style: italic;
-	}
-</style>

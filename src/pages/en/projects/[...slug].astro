@@ -1,0 +1,22 @@
+---
+import { type CollectionEntry, render } from 'astro:content';
+import { entryAlternates } from '../../../i18n/routes';
+import Project from '../../../layouts/Project.astro';
+import { entryPaths } from '../../../lib/collections';
+
+export function getStaticPaths() {
+	return entryPaths('projects', 'en');
+}
+
+interface Props {
+	entry: CollectionEntry<'projects'>;
+	translation?: CollectionEntry<'projects'>;
+}
+
+const { entry, translation } = Astro.props;
+const { Content } = await render(entry);
+---
+
+<Project {...entry.data} alternates={entryAlternates('projects', entry, translation)}>
+	<Content />
+</Project>

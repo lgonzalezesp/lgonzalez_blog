@@ -1,0 +1,35 @@
+---
+import NoteCard from '../components/NoteCard.astro';
+import { SITE_TITLE } from '../consts';
+import { sectionAlternates } from '../i18n/routes';
+import type { Lang } from '../i18n/ui';
+import { useTranslations } from '../i18n/utils';
+import Base from '../layouts/Base.astro';
+import { getPublished } from '../lib/collections';
+
+interface Props {
+	lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const notes = await getPublished('notes', lang);
+---
+
+<Base
+	title={`${t('notes.title')} | ${SITE_TITLE}`}
+	description={t('notes.description')}
+	lang={lang}
+	alternates={sectionAlternates('notes')}
+>
+	<header class="mb-10">
+		<h1 class="text-3xl font-bold sm:text-4xl">{t('notes.title')}</h1>
+		<p class="mt-2 text-muted">{t('notes.description')}</p>
+	</header>
+	{notes.length === 0 && <p>{t('notes.empty')}</p>}
+	<div class="flex flex-col gap-8">
+		{notes.map((note) => (
+			<NoteCard note={note} lang={lang} />
+		))}
+	</div>
+</Base>

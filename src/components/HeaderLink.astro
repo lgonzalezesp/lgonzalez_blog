@@ -15,19 +15,13 @@ const isActive = isCurrent || (!exact && pathname.startsWith(target));
 
 <a
 	href={href}
-	class:list={[className, { active: isActive }]}
+	class:list={[
+		'inline-block py-1 text-fg no-underline hover:text-accent',
+		{ 'font-bold underline decoration-accent decoration-2 underline-offset-8': isActive },
+		className,
+	]}
 	aria-current={isCurrent ? 'page' : undefined}
 	{...props}
 >
 	<slot />
 </a>
-<style>
-	a {
-		display: inline-block;
-		text-decoration: none;
-	}
-	a.active {
-		font-weight: bolder;
-		text-decoration: underline;
-	}
-</style>

@@ -1,0 +1,63 @@
+---
+import type { ImageMetadata } from 'astro';
+import { Image } from 'astro:assets';
+import { entryUrl } from '../i18n/routes';
+import type { Lang } from '../i18n/ui';
+import { useTranslations } from '../i18n/utils';
+import ProjectStatus from './ProjectStatus.astro';
+
+interface Props {
+	project: {
+		id: string;
+		data: {
+			title: string;
+			description: string;
+			lang: Lang;
+			stack: string[];
+			status: 'active' | 'completed' | 'archived';
+			repoUrl?: string;
+			demoUrl?: string;
+			cover?: { src: ImageMetadata; alt: string };
+		};
+	};
+	lang: Lang;
+	headingLevel?: 2 | 3;
+}
+
+const { project, lang, headingLevel = 2 } = Astro.props;
+const Heading = `h${headingLevel}` as 'h2' | 'h3';
+const { title, description, stack, status, repoUrl, demoUrl, cover } = project.data;
+const t = useTranslations(lang);
+---
+
+<article class="flex flex-col gap-3 rounded-lg border border-border p-4">
+	{cover && (
+		<Image
+			src={cover.src}
+			alt={cover.alt}
+			width={720}
+			height={360}
+			class="aspect-[2/1] w-full rounded object-cover"
+		/>
+	)}
+	<div class="flex flex-wrap items-center justify-between gap-2">
+		<Heading class="text-xl leading-snug font-bold">
+			<a href={entryUrl('projects', project)} class="text-fg no-underline hover:text-accent hover:underline">
+				{title}
+			</a>
+		</Heading>
+		<ProjectStatus status={status} lang={lang} />
+	</div>
+	<p>{description}</p>
+	<ul class="flex flex-wrap gap-2 text-sm" aria-label={t('project.stack')}>
+		{stack.map((tech) => (
+			<li class="rounded bg-surface px-2">{tech}</li>
+		))}
+	</ul>
+	{(repoUrl || demoUrl) && (
+		<p class="mt-auto flex gap-4 text-sm">
+			{repoUrl && <a href={repoUrl}>{t('project.repo')}</a>}
+			{demoUrl && <a href={demoUrl}>{t('project.demo')}</a>}
+		</p>
+	)}
+</article>

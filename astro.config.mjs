@@ -15,6 +15,13 @@ export default defineConfig({
 		routing: { prefixDefaultLocale: false },
 	},
 	integrations: [mdx(), sitemap()],
+	markdown: {
+		// Light and dark code themes; global.css picks one with the active site theme (no client JS).
+		shikiConfig: {
+			themes: { light: 'github-light-default', dark: 'github-dark-default' },
+			defaultColor: false,
+		},
+	},
 	vite: {
 		plugins: [tailwindcss()],
 	},

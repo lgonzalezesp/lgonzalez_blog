@@ -1,0 +1,70 @@
+---
+import NoteCard from '../components/NoteCard.astro';
+import PostCard from '../components/PostCard.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import { SITE_TITLE } from '../consts';
+import { tagUrl } from '../i18n/routes';
+import type { Lang } from '../i18n/ui';
+import { useTranslations } from '../i18n/utils';
+import Base from '../layouts/Base.astro';
+import type { getTagGroups } from '../lib/collections';
+
+interface Props {
+	lang: Lang;
+	group: Awaited<ReturnType<typeof getTagGroups>>[number];
+	/** The same tag in the other language, if it is used there. */
+	alternate?: { lang: Lang; label: string };
+}
+
+const { lang, group, alternate } = Astro.props;
+const t = useTranslations(lang);
+const posts = group.entries.filter((entry) => entry.collection === 'blog');
+const notes = group.entries.filter((entry) => entry.collection === 'notes');
+const projects = group.entries.filter((entry) => entry.collection === 'projects');
+---
+
+<Base
+	title={`${t('tag.title', { tag: group.label })} | ${SITE_TITLE}`}
+	description={t('tag.description', { tag: group.label })}
+	lang={lang}
+	alternates={{
+		[lang]: tagUrl(group.label, lang),
+		...(alternate && { [alternate.lang]: tagUrl(alternate.label, alternate.lang) }),
+	}}
+	width="wide"
+>
+	<h1 class="mb-10 text-3xl font-bold sm:text-4xl">{t('tag.title', { tag: group.label })}</h1>
+	{posts.length > 0 && (
+		<section class="mb-12">
+			<h2 class="mb-6 text-2xl font-bold">{t('nav.blog')}</h2>
+			<div class="grid gap-10 sm:grid-cols-2">
+				{posts.map(
+					(post) => post.collection === 'blog' && <PostCard post={post} lang={lang} headingLevel={3} />,
+				)}
+			</div>
+		</section>
+	)}
+	{projects.length > 0 && (
+		<section class="mb-12">
+			<h2 class="mb-6 text-2xl font-bold">{t('nav.projects')}</h2>
+			<div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+				{projects.map(
+					(project) =>
+						project.collection === 'projects' && (
+							<ProjectCard project={project} lang={lang} headingLevel={3} />
+						),
+				)}
+			</div>
+		</section>
+	)}
+	{notes.length > 0 && (
+		<section class="mb-12">
+			<h2 class="mb-6 text-2xl font-bold">{t('nav.notes')}</h2>
+			<div class="flex flex-col gap-8">
+				{notes.map(
+					(note) => note.collection === 'notes' && <NoteCard note={note} lang={lang} headingLevel={3} />,
+				)}
+			</div>
+		</section>
+	)}
+</Base>

@@ -19,6 +19,8 @@ export default defineConfig({
 		// `--ignore-lock` keeps `astro preview` in the foreground even when it
 		// detects an AI agent (otherwise it auto-backgrounds and exits).
 		command: `npm run build && npm run preview -- --port ${PORT} --ignore-lock`,
+		// Stable test content (pagination, drafts, translations…), independent of the real posts.
+		env: { CONTENT_DIR: './tests/fixtures/content' },
 		url: `http://localhost:${PORT}`,
 		// Always build and serve fresh, so a stale or dev server is never reused.
 		reuseExistingServer: false,

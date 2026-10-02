@@ -1,10 +1,13 @@
 ---
-// Minimal home: the real design and content arrive with spec 004.
+import NoteCard from '../components/NoteCard.astro';
+import PostCard from '../components/PostCard.astro';
+import ProjectCard from '../components/ProjectCard.astro';
 import { SITE_TITLE } from '../consts';
 import { sectionAlternates, sectionUrl } from '../i18n/routes';
 import type { Lang } from '../i18n/ui';
 import { useTranslations } from '../i18n/utils';
 import Base from '../layouts/Base.astro';
+import { getPublished } from '../lib/collections';
 
 interface Props {
 	lang: Lang;
@@ -12,12 +15,64 @@ interface Props {
 
 const { lang } = Astro.props;
 const t = useTranslations(lang);
+const posts = (await getPublished('blog', lang)).slice(0, 4);
+const projects = (await getPublished('projects', lang))
+	.filter((project) => project.data.featured)
+	.slice(0, 3);
+const notes = (await getPublished('notes', lang)).slice(0, 3);
 ---
 
-<Base title={SITE_TITLE} lang={lang} alternates={sectionAlternates('home')}>
-	<h1>{SITE_TITLE}</h1>
-	<p>{t('home.intro')}</p>
-	<p>
-		<a href={sectionUrl('blog', lang)}>{t('home.cta')}</a>
-	</p>
+<Base title={SITE_TITLE} lang={lang} alternates={sectionAlternates('home')} width="wide">
+	<header class="mb-14">
+		<h1 class="text-4xl font-bold sm:text-5xl">{SITE_TITLE}</h1>
+		<p class="mt-3 max-w-2xl text-lg text-muted">{t('home.intro')}</p>
+	</header>
+
+	{posts.length > 0 && (
+		<section class="mb-14" aria-labelledby="latest-posts">
+			<h2 id="latest-posts" class="mb-6 text-2xl font-bold">
+				{t('home.latestPosts')}
+			</h2>
+			<div class="grid gap-10 sm:grid-cols-2">
+				{posts.map((post) => (
+					<PostCard post={post} lang={lang} headingLevel={3} />
+				))}
+			</div>
+			<p class="mt-6">
+				<a href={sectionUrl('blog', lang)}>{t('home.allPosts')} →</a>
+			</p>
+		</section>
+	)}
+
+	{projects.length > 0 && (
+		<section class="mb-14" aria-labelledby="featured-projects">
+			<h2 id="featured-projects" class="mb-6 text-2xl font-bold">
+				{t('home.featuredProjects')}
+			</h2>
+			<div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+				{projects.map((project) => (
+					<ProjectCard project={project} lang={lang} headingLevel={3} />
+				))}
+			</div>
+			<p class="mt-6">
+				<a href={sectionUrl('projects', lang)}>{t('home.allProjects')} →</a>
+			</p>
+		</section>
+	)}
+
+	{notes.length > 0 && (
+		<section aria-labelledby="latest-notes">
+			<h2 id="latest-notes" class="mb-6 text-2xl font-bold">
+				{t('home.latestNotes')}
+			</h2>
+			<div class="flex flex-col gap-8">
+				{notes.map((note) => (
+					<NoteCard note={note} lang={lang} headingLevel={3} />
+				))}
+			</div>
+			<p class="mt-6">
+				<a href={sectionUrl('notes', lang)}>{t('home.allNotes')} →</a>
+			</p>
+		</section>
+	)}
 </Base>

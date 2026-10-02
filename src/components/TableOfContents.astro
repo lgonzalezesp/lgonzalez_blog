@@ -1,0 +1,37 @@
+---
+import type { Lang } from '../i18n/ui';
+import { useTranslations } from '../i18n/utils';
+import type { TocItem } from '../lib/toc';
+
+interface Props {
+	items: TocItem[];
+	lang: Lang;
+}
+
+const { items, lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+{items.length >= 2 && (
+	<nav aria-labelledby="toc-title" class="rounded-lg border border-border p-4 text-sm">
+		<p id="toc-title" class="mb-2 font-bold">
+			{t('toc.title')}
+		</p>
+		<ol class="flex flex-col gap-1">
+			{items.map((item) => (
+				<li>
+					<a href={`#${item.slug}`}>{item.text}</a>
+					{item.children.length > 0 && (
+						<ol class="mt-1 flex flex-col gap-1 pl-4">
+							{item.children.map((child) => (
+								<li>
+									<a href={`#${child.slug}`}>{child.text}</a>
+								</li>
+							))}
+						</ol>
+					)}
+				</li>
+			))}
+		</ol>
+	</nav>
+)}

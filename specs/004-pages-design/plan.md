@@ -1,7 +1,7 @@
 # Plan 004 — Páginas y diseño
 
 - **Spec:** [spec.md](./spec.md)
-- **Estado:** Borrador
+- **Estado:** Aprobado
 
 ## Enfoque técnico
 
@@ -29,7 +29,7 @@ El criterio «recuerda la elección del lector» no se puede cumplir sin JS. Se 
 - Sin JS el sitio sigue `prefers-color-scheme` solo con CSS.
 - Un script **inline** y diminuto en `<head>` aplica `data-theme` desde `localStorage` antes de pintar (sin parpadeo).
 - `ThemeToggle.astro`: un `<button>` con `aria-pressed` y texto del diccionario; aparece oculto (`hidden`) y el script lo muestra, así sin JS no hay un botón que no funcione.
-- Tailwind: `@custom-variant dark` ligado a `data-theme`. `localStorage` no es una cookie ni sale del navegador (principio 5).
+- Tailwind: los componentes usan solo tokens de tema (`bg-bg`, `text-fg`, `text-muted`…) que cambian con `data-theme` y con `prefers-color-scheme`; no hace falta la variante `dark:`. `localStorage` no es una cookie ni sale del navegador (principio 5).
 
 ### Resaltado de código
 
@@ -111,7 +111,7 @@ Enlace «Saltar al contenido», foco visible (`:focus-visible` con contorno del 
 | 8. URLs estables       | ✅       | Nada publicado aún; URLs nuevas definitivas                                                 |
 | 9. Todo se prueba      | ✅       | Ver trazabilidad; las e2e dejan de depender del contenido real                              |
 
-## Decisiones que necesitan tu visto bueno
+## Decisiones (aprobadas con el plan)
 
 - **P1 — Contenido de prueba separado** (`CONTENT_DIR` + `tests/fixtures/content/`), para que escribir artículos reales no rompa las pruebas.
 - **P2 — Paleta y tipografía** (pregunta abierta): Atkinson Hyperlegible + neutros y un acento azul, minimalista. Si tienes referencias visuales o colores, se cambian en las variables del tema.
@@ -119,6 +119,15 @@ Enlace «Saltar al contenido», foco visible (`:focus-visible` con contorno del 
 - **P4 — Modo oscuro con JS mínimo** (excepción al principio 6).
 - **P5 — Menú móvil sin desplegable:** los enlaces de la cabecera bajan a varias líneas en pantallas estrechas (cero JS).
 - **P6 — URLs nuevas:** `/proyectos/`, `/notas/`, `/etiquetas/`, `/blog/pagina/N/` y sus equivalentes en inglés (`/en/projects/`, `/en/notes/`, `/en/tags/`, `/en/blog/page/N/`).
+
+## Ajustes durante la implementación
+
+- Sin `@custom-variant dark`: los tokens de tema cubren claro, oscuro y «sin JS» con una sola fuente de verdad.
+- La portada muestra 4 artículos (rejilla de 2 columnas), no 3.
+- Enlaces subrayados por defecto: axe (`link-in-text-block`) lo exigía al quitar Tailwind el subrayado.
+- Componente extra `ProjectStatus.astro` (lo comparten tarjeta y detalle). La colección `pages` se lee con `getPageEntry()` (no tiene fecha ni borradores).
+- Las pruebas de listados de 002 y 003 recorren ahora todas las páginas del blog (la paginación movió `usando-mdx` a la página 2 de los fixtures).
+- `code.spec.ts` no llegó a verse fallar: la configuración de Shiki entró en T6, antes de escribirla. Las pruebas de T18 se validaron rompiendo la 404 a propósito (ancho fijo y enlace sin subrayar): fallaron las de 320 px y axe.
 
 ## Riesgos
 
