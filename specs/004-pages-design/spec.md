@@ -1,6 +1,6 @@
 # Spec 004 — Páginas y diseño
 
-- **Estado:** Borrador
+- **Estado:** Aprobada
 - **Rama:** `feature/004-pages-design`
 
 ## Contexto / Por qué

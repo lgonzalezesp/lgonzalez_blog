@@ -1,6 +1,6 @@
 # Spec 003 — Internacionalización ES/EN
 
-- **Estado:** En revisión ([PR #3](https://github.com/lgonzalezesp/lgonzalez_blog/pull/3))
+- **Estado:** Hecha ([PR #3](https://github.com/lgonzalezesp/lgonzalez_blog/pull/3))
 - **Rama:** `feature/003-i18n`
 
 ## Contexto / Por qué
