@@ -97,7 +97,9 @@ src/
     collections.ts        # getPublished(), entryPaths(), getPageEntry(), getTagGroups(): único acceso a las colecciones
     reading-time.ts, toc.ts, pagination.ts, tags.ts  # lógica pura de 004
     giscus.ts, giscus-theme.ts  # configuración de Giscus y mensaje de tema (005)
-  assets/                 # imágenes y fuentes procesadas por Astro
+    seo.ts                # buildMeta(): título, canónica, Open Graph, Twitter Card, hreflang (006)
+    feed.ts, feed-response.ts  # RSS por idioma: artículos y notas (006)
+  assets/                 # imágenes y fuentes (og-default.svg/png: imagen social por defecto, 1200×627)
   components/             # componentes .astro (Header, Footer, PostCard, ProjectCard, ThemeToggle…)
   layouts/
     Base.astro            # html lang, hreflang, tema, skip link, cabecera, main y pie: toda página lo usa
@@ -184,8 +186,9 @@ Reglas:
 - Las traducciones de un mismo post comparten el campo `translationKey`.
 - **Ningún texto de UI hardcodeado**: todo pasa por el diccionario de `src/i18n/ui.ts` (`t('clave')`), en ES y EN. Las URLs se construyen con `src/i18n/routes.ts`, nunca a mano.
 - URLs por idioma: `/` · `/en/`, `/blog/` · `/en/blog/` (páginas `/blog/pagina/N/` · `/en/blog/page/N/`), `/blog/<slug>/` · `/en/blog/<slug>/`, `/proyectos/` · `/en/projects/` (y `<slug>/`), `/notas/` · `/en/notes/` (y `<slug>/`), `/etiquetas/` · `/en/tags/` (y `<tag>/`), `/sobre-mi/` · `/en/about/`.
-- Imágenes con el componente de imágenes de Astro y **`alt` obligatorio**.
-- **Cero JS en cliente por defecto**; usa islas solo si aportan valor y justifícalo en `plan.md`. Excepciones aprobadas: el modo oscuro (`ThemeToggle.astro` y el script inline de `Base.astro`, spec 004) y la carga bajo demanda de Giscus (`Comments.astro`, spec 005).
+- Imágenes con el componente de imágenes de Astro y **`alt` obligatorio**. Las portadas miden al menos **1200×627** (son también la imagen al compartir; si no, el build falla).
+- Feeds: `/rss.xml` (ES) y `/en/rss.xml` (EN); sitemap en `/sitemap-index.xml`; `robots.txt` generado.
+- **Cero JS en cliente por defecto**; usa islas solo si aportan valor y justifícalo en `plan.md`. Excepciones aprobadas: el modo oscuro (`ThemeToggle.astro` y el script inline de `Base.astro`, spec 004), la carga bajo demanda de Giscus (`Comments.astro`, spec 005) y la analítica de Vercel, sin cookies y solo en builds de Vercel (`Analytics.astro`, spec 006).
 - Commits con **Conventional Commits** (`feat:`, `fix:`, `docs:`, `chore:`…), referenciando la spec cuando aplique (p. ej. `feat(003-i18n): selector de idioma`).
 - **Una rama por spec**: `feature/NNN-nombre` desde `develop`, mergeada a `develop` vía PR (ver Gitflow).
 

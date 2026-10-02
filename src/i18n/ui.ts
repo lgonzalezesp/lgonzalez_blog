@@ -62,6 +62,9 @@ const es = {
 	'pagination.status': 'Página {page} de {total}',
 	'toc.title': 'En este artículo',
 	'comments.title': 'Comentarios',
+	'og.defaultAlt': 'Luis González · lgonzalez.dev',
+	'feed.title': 'Luis González (español)',
+	'feed.description': 'Artículos y notas de Luis González.',
 	'comments.noscript':
 		'Activa JavaScript para ver y escribir comentarios (se publican en GitHub Discussions).',
 } as const;
@@ -125,6 +128,9 @@ const en: Record<UiKey, string> = {
 	'pagination.status': 'Page {page} of {total}',
 	'toc.title': 'On this page',
 	'comments.title': 'Comments',
+	'og.defaultAlt': 'Luis González · lgonzalez.dev',
+	'feed.title': 'Luis González (English)',
+	'feed.description': 'Posts and notes by Luis González.',
 	'comments.noscript':
 		'Enable JavaScript to read and write comments (they are published on GitHub Discussions).',
 };

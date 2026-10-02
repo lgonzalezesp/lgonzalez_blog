@@ -44,7 +44,14 @@ const {
 const t = useTranslations(lang);
 ---
 
-<Base title={title} description={description} image={cover?.src} lang={lang} alternates={alternates}>
+<Base
+	title={title}
+	description={description}
+	image={cover}
+	article={{ publishedTime: pubDate, modifiedTime: updatedDate, tags }}
+	lang={lang}
+	alternates={alternates}
+>
 	<article>
 		<header class="mb-8 flex flex-col gap-3">
 			{cover && (

@@ -73,3 +73,21 @@ export function findTranslation<T extends ContentEntry>(entries: T[], entry: T):
 		(other) => other.data.translationKey === entry.data.translationKey && other.data.lang !== entry.data.lang,
 	);
 }
+
+/** Covers are also the social image, cropped to 1200×627 (spec 006); Astro never upscales. */
+export const MIN_COVER = { width: 1200, height: 627 } as const;
+
+interface MaybeCovered {
+	id: string;
+	filePath?: string;
+	data: { cover?: { src: { width: number; height: number } } };
+}
+
+export function assertCoverSize(entry: MaybeCovered): void {
+	const size = entry.data.cover?.src;
+	if (size && (size.width < MIN_COVER.width || size.height < MIN_COVER.height)) {
+		throw new Error(
+			`${entry.filePath ?? entry.id}: la portada mide ${size.width}×${size.height} px y debe medir al menos ${MIN_COVER.width}×${MIN_COVER.height} px.`,
+		);
+	}
+}

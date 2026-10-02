@@ -1,6 +1,8 @@
 ---
 // Shell of every page: language, head (with hreflang), theme, header, main and footer.
 import type { ImageMetadata } from 'astro';
+import type { MetaInput } from '../lib/seo';
+import Analytics from '../components/Analytics.astro';
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
@@ -12,7 +14,10 @@ import { useTranslations } from '../i18n/utils';
 interface Props {
 	title: string;
 	description?: string;
-	image?: ImageMetadata;
+	/** Cover of the content, used for social networks (cropped to 1200×627). */
+	image?: { src: ImageMetadata; alt: string };
+	article?: MetaInput['article'];
+	noindex?: boolean;
 	lang: Lang;
 	alternates: Alternates;
 	/** `reading` for long-form text (narrow column), `wide` for listings and grids. */
@@ -20,7 +25,17 @@ interface Props {
 	mainClass?: string;
 }
 
-const { title, description, image, lang, alternates, width = 'reading', mainClass } = Astro.props;
+const {
+	title,
+	description,
+	image,
+	article,
+	noindex,
+	lang,
+	alternates,
+	width = 'reading',
+	mainClass,
+} = Astro.props;
 const t = useTranslations(lang);
 ---
 
@@ -40,9 +55,12 @@ const t = useTranslations(lang);
 			title={title}
 			description={description ?? t('site.description')}
 			image={image}
+			article={article}
+			noindex={noindex}
 			lang={lang}
 			alternates={alternates}
 		/>
+		<Analytics />
 	</head>
 	<body>
 		<SkipLink lang={lang} />

@@ -1,0 +1,33 @@
+---
+// Vercel Web Analytics and Speed Insights (spec 006), with Vercel's official HTML snippet instead
+// of npm packages. Both scripts are served by Vercel from this same domain and use no cookies.
+// They only exist on Vercel, so they are included when building there (VERCEL=1) or for the
+// functional tests (ENABLE_VERCEL_ANALYTICS=1, which stub /_vercel/**).
+
+interface Props {
+	enabled?: boolean;
+}
+
+const { enabled = process.env.VERCEL === '1' || process.env.ENABLE_VERCEL_ANALYTICS === '1' } = Astro.props;
+---
+
+{enabled && (
+	<>
+		<script is:inline>
+			window.va =
+				window.va ||
+				function (...args) {
+					(window.vaq = window.vaq || []).push(args);
+				};
+		</script>
+		<script is:inline defer src="/_vercel/insights/script.js" />
+		<script is:inline>
+			window.si =
+				window.si ||
+				function (...args) {
+					(window.siq = window.siq || []).push(args);
+				};
+		</script>
+		<script is:inline defer src="/_vercel/speed-insights/script.js" />
+	</>
+)}

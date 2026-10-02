@@ -1,6 +1,6 @@
 # Spec 005 — Comentarios (Giscus)
 
-- **Estado:** En revisión ([PR #5](https://github.com/lgonzalezesp/lgonzalez_blog/pull/5))
+- **Estado:** Hecha ([PR #5](https://github.com/lgonzalezesp/lgonzalez_blog/pull/5))
 - **Rama:** `feature/005-comments`
 
 ## Contexto / Por qué
