@@ -1,6 +1,6 @@
 # Spec 007 — Compartir en LinkedIn
 
-- **Estado:** En revisión ([PR #7](https://github.com/lgonzalezesp/lgonzalez_blog/pull/7))
+- **Estado:** Hecha ([PR #7](https://github.com/lgonzalezesp/lgonzalez_blog/pull/7))
 - **Rama:** `feature/007-linkedin-share`
 
 ## Contexto / Por qué
