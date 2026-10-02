@@ -1,0 +1,16 @@
+---
+import { BLOG_PAGE_SIZE } from '../../../../consts';
+import { getPublished } from '../../../../lib/collections';
+import { paginate } from '../../../../lib/pagination';
+import BlogIndexView from '../../../../views/BlogIndexView.astro';
+
+// Pages 2…n (page 1 is the blog index).
+export async function getStaticPaths() {
+	const pages = paginate(await getPublished('blog', 'en'), BLOG_PAGE_SIZE);
+	return pages.slice(1).map((page) => ({ params: { page: String(page.number) } }));
+}
+
+const pageNumber = Number(Astro.params.page);
+---
+
+<BlogIndexView lang="en" pageNumber={pageNumber} />

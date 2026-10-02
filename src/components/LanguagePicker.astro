@@ -13,6 +13,6 @@ const { lang, alternates } = Astro.props;
 const target = otherLang(lang);
 ---
 
-<a class="language-picker" href={switchUrl(alternates, lang)} hreflang={target} lang={target}>
+<a class="language-picker text-sm" href={switchUrl(alternates, lang)} hreflang={target} lang={target}>
 	{ui[target]['lang.name']}
 </a>

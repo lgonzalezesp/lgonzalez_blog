@@ -1,0 +1,17 @@
+---
+import type { Lang } from '../i18n/ui';
+import { useTranslations } from '../i18n/utils';
+
+interface Props {
+	lang: Lang;
+}
+
+const t = useTranslations(Astro.props.lang);
+---
+
+<a
+	href="#main"
+	class="sr-only z-50 rounded bg-bg px-4 py-2 font-bold focus:not-sr-only focus:fixed focus:top-2 focus:left-2"
+>
+	{t('a11y.skipToContent')}
+</a>

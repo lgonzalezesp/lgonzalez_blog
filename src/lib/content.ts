@@ -37,7 +37,9 @@ export function slugFromId(id: string): string {
 	return id.slice(id.indexOf('/') + 1);
 }
 
-export function assertLangMatchesFolder(entry: ContentEntry): void {
+export function assertLangMatchesFolder(
+	entry: Pick<ContentEntry, 'id' | 'filePath'> & { data: { lang: Lang } },
+): void {
 	const folder = langFromId(entry.id);
 	if (entry.data.lang !== folder) {
 		throw new Error(

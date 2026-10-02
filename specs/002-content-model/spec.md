@@ -24,7 +24,7 @@ El blog publica tres tipos de contenido: artículos, proyectos y notas cortas. U
 - [x] Contenido organizado por idioma: `src/content/<colección>/{es,en}/`.
 - [x] Un frontmatter inválido hace fallar `npm run check` con un mensaje claro.
 - [x] Los `draft: true` no aparecen en el build de producción.
-- [x] Al menos un ejemplo de cada colección en ES y EN.
+- [x] Al menos un ejemplo de cada colección en ES y EN (desde 004, en el contenido de prueba `tests/fixtures/content/`; el de `src/content/` puede sustituirse libremente).
 
 ## Pruebas
 

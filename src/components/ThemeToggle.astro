@@ -1,0 +1,45 @@
+---
+// Light/dark switch. The only client JS of the site (spec 004, plan P4): it needs to remember
+// the reader's choice. Hidden until the script runs, so without JS there is no dead button and
+// the site follows the system preference. The choice is stored in localStorage (not a cookie).
+import type { Lang } from '../i18n/ui';
+import { useTranslations } from '../i18n/utils';
+
+interface Props {
+	lang: Lang;
+}
+
+const t = useTranslations(Astro.props.lang);
+---
+
+<button
+	type="button"
+	class="theme-toggle rounded border border-border px-2 py-1 text-sm text-fg hover:bg-surface"
+	aria-pressed="false"
+	hidden
+>
+	{t('theme.dark')}
+</button>
+
+<script>
+	const root = document.documentElement;
+	const systemDark = window.matchMedia('(prefers-color-scheme: dark)');
+	const isDark = () => (root.dataset.theme ? root.dataset.theme === 'dark' : systemDark.matches);
+
+	for (const button of document.querySelectorAll<HTMLButtonElement>('.theme-toggle')) {
+		const sync = () => button.setAttribute('aria-pressed', String(isDark()));
+		sync();
+		button.hidden = false;
+		button.addEventListener('click', () => {
+			const theme = isDark() ? 'light' : 'dark';
+			root.dataset.theme = theme;
+			try {
+				localStorage.setItem('theme', theme);
+			} catch {
+				/* storage unavailable: the choice lasts for this page only */
+			}
+			sync();
+		});
+		systemDark.addEventListener('change', sync);
+	}
+</script>

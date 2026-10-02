@@ -1,0 +1,14 @@
+---
+import type { Lang } from '../i18n/ui';
+import { useTranslations } from '../i18n/utils';
+
+interface Props {
+	minutes: number;
+	lang: Lang;
+}
+
+const { minutes, lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<span>{t('post.readingTime', { minutes })}</span>

@@ -1,7 +1,7 @@
 import type { SchemaContext } from 'astro:content';
 import { z } from 'astro/zod';
 import { describe, expect, it } from 'vitest';
-import { blogSchema, noteSchema, projectSchema } from '../../../src/content/schemas';
+import { blogSchema, noteSchema, pageSchema, projectSchema } from '../../../src/content/schemas';
 
 // Stub of Astro's image() helper: in tests an image is just its path.
 const context = { image: () => z.string() } as unknown as SchemaContext;
@@ -141,5 +141,28 @@ describe('notes schema', () => {
 
 	it('rejects an empty tag', () => {
 		expect(notes.safeParse({ ...validNote, tags: [''] }).success).toBe(false);
+	});
+});
+
+describe('pages schema (004)', () => {
+	const pages = pageSchema(context);
+	const validPage = { title: 'Sobre mí', description: 'Quién soy', lang: 'es', translationKey: 'about' };
+
+	it('accepts a page with an optional photo', () => {
+		expect(pages.safeParse(validPage).success).toBe(true);
+		expect(pages.safeParse({ ...validPage, cover: { src: 'me.jpg', alt: 'Foto de Luis' } }).success).toBe(
+			true,
+		);
+	});
+
+	it.each(['title', 'description', 'lang', 'translationKey'] as const)(
+		'rejects a page without %s',
+		(field) => {
+			expect(issuePaths(pages.safeParse(without(validPage, field)))).toContain(field);
+		},
+	);
+
+	it('rejects a photo without alt text', () => {
+		expect(issuePaths(pages.safeParse({ ...validPage, cover: { src: 'me.jpg' } }))).toContain('cover.alt');
 	});
 });

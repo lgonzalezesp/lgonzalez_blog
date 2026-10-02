@@ -1,0 +1,41 @@
+---
+import { SITE_TITLE } from '../consts';
+import { sectionAlternates, tagUrl } from '../i18n/routes';
+import type { Lang } from '../i18n/ui';
+import { useTranslations } from '../i18n/utils';
+import Base from '../layouts/Base.astro';
+import { getTagGroups } from '../lib/collections';
+
+interface Props {
+	lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const groups = await getTagGroups(lang);
+---
+
+<Base
+	title={`${t('tags.title')} | ${SITE_TITLE}`}
+	description={t('tags.description')}
+	lang={lang}
+	alternates={sectionAlternates('tags')}
+>
+	<header class="mb-10">
+		<h1 class="text-3xl font-bold sm:text-4xl">{t('tags.title')}</h1>
+		<p class="mt-2 text-muted">{t('tags.description')}</p>
+	</header>
+	{groups.length === 0 && <p>{t('tags.empty')}</p>}
+	<ul class="flex flex-wrap gap-3">
+		{groups.map((group) => (
+			<li>
+				<a
+					href={tagUrl(group.label, lang)}
+					class="inline-block rounded-full border border-border px-3 py-1 no-underline hover:underline"
+				>
+					#{group.label} <span class="text-muted">({group.entries.length})</span>
+				</a>
+			</li>
+		))}
+	</ul>
+</Base>

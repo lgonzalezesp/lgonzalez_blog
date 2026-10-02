@@ -53,3 +53,14 @@ export const noteSchema = (context: SchemaContext) =>
 			.array(tag, { error: 'las notas necesitan «tags» con al menos una etiqueta' })
 			.min(1, { error: 'las notas necesitan al menos una etiqueta en «tags»' }),
 	});
+
+/** Standalone pages written in Markdown (e.g. "About"): no date, tags or drafts. */
+export const pageSchema = ({ image }: SchemaContext) =>
+	z.object({
+		title: text('title'),
+		description: text('description'),
+		lang: z.enum(LANGS, { error: '«lang» debe ser "es" o "en"' }),
+		translationKey: text('translationKey'),
+		updatedDate: date('updatedDate').optional(),
+		cover: cover(image).optional(),
+	});

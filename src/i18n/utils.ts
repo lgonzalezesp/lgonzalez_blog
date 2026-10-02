@@ -1,13 +1,19 @@
 import { type Lang, type UiKey, ui } from './ui';
 
-/** `t(key)` for one language. An unknown key throws, so missing text never reaches a page. */
+/**
+ * `t(key, params?)` for one language. `{name}` placeholders are replaced with `params.name`.
+ * An unknown key or a missing parameter throws, so broken text never reaches a page.
+ */
 export function useTranslations(lang: Lang) {
-	return function t(key: UiKey): string {
+	return function t(key: UiKey, params: Record<string, string | number> = {}): string {
 		const text = ui[lang][key];
 		if (text === undefined) {
 			throw new Error(`Falta la traducción "${key}" (${lang}) en src/i18n/ui.ts`);
 		}
-		return text;
+		return text.replace(/\{(\w+)\}/g, (_, name: string) => {
+			if (!(name in params)) throw new Error(`Falta el parámetro "${name}" para "${key}" (${lang})`);
+			return String(params[name]);
+		});
 	};
 }
 

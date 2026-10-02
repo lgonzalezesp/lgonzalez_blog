@@ -1,0 +1,39 @@
+---
+import ProjectCard from '../components/ProjectCard.astro';
+import { SITE_TITLE } from '../consts';
+import { sectionAlternates } from '../i18n/routes';
+import type { Lang } from '../i18n/ui';
+import { useTranslations } from '../i18n/utils';
+import Base from '../layouts/Base.astro';
+import { getPublished } from '../lib/collections';
+
+interface Props {
+	lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+// Featured first, then most recent.
+const projects = (await getPublished('projects', lang)).sort(
+	(a, b) => Number(b.data.featured) - Number(a.data.featured),
+);
+---
+
+<Base
+	title={`${t('projects.title')} | ${SITE_TITLE}`}
+	description={t('projects.description')}
+	lang={lang}
+	alternates={sectionAlternates('projects')}
+	width="wide"
+>
+	<header class="mb-10">
+		<h1 class="text-3xl font-bold sm:text-4xl">{t('projects.title')}</h1>
+		<p class="mt-2 text-muted">{t('projects.description')}</p>
+	</header>
+	{projects.length === 0 && <p>{t('projects.empty')}</p>}
+	<div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+		{projects.map((project) => (
+			<ProjectCard project={project} lang={lang} />
+		))}
+	</div>
+</Base>
